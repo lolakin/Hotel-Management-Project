@@ -22,7 +22,7 @@ Dashboard: Two JMenus
 6. Add Car: to add cars for the pickup service.
 7. Pick Up Info: to check the orders for the pickup service.
 8. Update Room Status: time update the details of the room. Whether it has been cleaned or not.
-9. Add Room: to add new rooms.
+9. Add Room: to add new rooms.)
 
 Hotel Management: 1 JMenuItem:
 
