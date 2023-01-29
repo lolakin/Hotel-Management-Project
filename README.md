@@ -7,9 +7,13 @@ Developed by AKINRELE LOIS OLOLADE and ADEGBITE DAMOLA
 A Hotel Management App Simulation.
 
 Login page
+
 Sign Up page
+
 Dashboard: Two JMenus
+
 (Admin: 9 JMenuItems(it requires a password to access:
+
 1. Add Items: to add items to the restaurant.
 2. Remove Items: to remove items from the restaurant.
 3. Customer Info: to check the details of customers.
@@ -21,6 +25,7 @@ Dashboard: Two JMenus
 9. Add Room: to add new rooms.
 
 Hotel Management: 1 JMenuItem:
+
 Reception: 5 JButtons:
 1. New Customer Form: requests for customer details and stores it in the database.
 2. Search Room: shows the rooms that are available.
