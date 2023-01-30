@@ -81,16 +81,15 @@ public class Question extends JFrame implements ActionListener {
             String mail = emailF.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
-                String email ="[^0-9@.][a-zA-Z0-9_\\-.]{8,}@[a-z]+(\\.[a-z]+)+$"; // minimum of 8 characters
-                Pattern p = Pattern.compile(email);
-                Matcher m = p.matcher(mail);
-                if(m.matches()){
-                    emailF.setEditable(true);
-                }
-//                else{
-//                    JOptionPane.showMessageDialog(null, "Doesn't match regex format", "Error!", JOptionPane.ERROR_MESSAGE);
-//                }
+                char ch = ke.getKeyChar();
 
+                 if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE ||  ke.getKeyCode() == KeyEvent.VK_SPACE || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK
+                         || ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT){
+                    emailF.setEditable(true);
+                 }
+                 else{
+                     JOptionPane.showMessageDialog(null, "Try again");
+                 }
             }
         });
         add(emailF);
@@ -108,10 +107,10 @@ public class Question extends JFrame implements ActionListener {
                 else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE){
                     colorF.setEditable(true);
                 }
-                else if(!(Character.isAlphabetic(ch) || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK || ke.getKeyCode() == KeyEvent.VK_SPACE
-                        || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT)){
+                else if(!(Character.isAlphabetic(ch) ||  ke.getKeyCode() == KeyEvent.VK_SPACE || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK
+                        || ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_UP|| ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT)){
                     colorF.setEditable(true);
-                    JOptionPane.showMessageDialog(null, "Enter Alphabets Only");
+                    JOptionPane.showMessageDialog(null, "Try again!");
                 }
 
             }
@@ -131,8 +130,8 @@ public class Question extends JFrame implements ActionListener {
                 else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE){
                     foodF.setEditable(true);
                 }
-                else if(!(Character.isAlphabetic(ch) || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK || ke.getKeyCode() == KeyEvent.VK_SPACE
-                        || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT)){
+                else if(!(Character.isAlphabetic(ch) ||  ke.getKeyCode() == KeyEvent.VK_SPACE || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK
+                        || ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT)){
                     foodF.setEditable(true);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only");
                 }
@@ -150,7 +149,8 @@ public class Question extends JFrame implements ActionListener {
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     ageF.setEditable(true);
                 }
-                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE){
+                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE ||  ke.getKeyCode() == KeyEvent.VK_SPACE || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK
+                        || ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT){
                     ageF.setEditable(true);
                 }
                 else {
@@ -174,8 +174,8 @@ public class Question extends JFrame implements ActionListener {
                 else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE){
                     ONameF.setEditable(true);
                 }
-                else if(!(Character.isAlphabetic(ch) || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK || ke.getKeyCode() == KeyEvent.VK_SPACE
-                        || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT)){
+                else if(!(Character.isAlphabetic(ch) ||  ke.getKeyCode() == KeyEvent.VK_SPACE || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK
+                        || ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT)){
                     ONameF.setEditable(true);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only");
                 }
@@ -213,9 +213,13 @@ public class Question extends JFrame implements ActionListener {
                 String name = ONameF.getText();
                 String email = emailF.getText();
 
+                String q = "CREATE TABLE IF NOT EXISTS question(email varchar(50), food char(30), color char(20), age int, name char(15))";
                 String query1 = "SELECT * FROM LOGIN WHERE email = '" + email + "'";
                 String query = "INSERT INTO QUESTION VALUES ('" +email + "', " + "'" + food + "', " + "'" + color + "', " + "'" + age +"', " + "'" + name +"');";
                 if (!(food.isBlank() ||color.isBlank() || age.isBlank()  || name.isBlank())) {
+                    st = conn.createStatement();
+                    st.executeUpdate(q);
+
                     ResultSet result = conn.createStatement().executeQuery(query1);
                     if (result.next()) {
                         conn.createStatement().execute(query);

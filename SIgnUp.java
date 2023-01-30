@@ -109,7 +109,7 @@ public class SIgnUp extends JFrame implements ActionListener {
                     unfield.setEditable(true);
                 }
                 else if(!(Character.isAlphabetic(ch) || ke.getKeyChar() == '_' || ke.getKeyCode() == KeyEvent.VK_SHIFT || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK || ke.getKeyCode() == KeyEvent.VK_SPACE
-                        || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT)) {
+                        || ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT)) {
                     unfield.setEditable(true);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only and _ !");
                 }
@@ -122,10 +122,20 @@ public class SIgnUp extends JFrame implements ActionListener {
         emailF = new JTextField();
         emailF.setBounds(775, 350, 150, 30);
         emailF.addKeyListener(new KeyAdapter() {
-            String email = emailF.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
-                confirmEmail(email);
+                char ch = ke.getKeyChar();
+                if(Character.isDigit(ch)) {
+                    emailF.setVisible(true);
+                }
+                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE ||  ke.getKeyCode() == KeyEvent.VK_SPACE || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK
+                        || ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT){
+                    emailF.setEditable(true);
+                }
+                else if(!(Character.isAlphabetic(ch) || ke.getKeyChar() == '@' || ke.getKeyChar() == '.' || ke.getKeyCode() == KeyEvent.VK_SHIFT)) {
+                    emailF.setEditable(true);
+                    JOptionPane.showMessageDialog(null, "Enter Alphabets, numbers, @ and . !");
+                }
 
             }
 
@@ -143,8 +153,8 @@ public class SIgnUp extends JFrame implements ActionListener {
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     psd.setEditable(true);
                 }
-                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE
-                        || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT){
+                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE || ke.getKeyCode() == KeyEvent.VK_SHIFT || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK || ke.getKeyCode() == KeyEvent.VK_SPACE
+                        || ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT){
                     psd.setEditable(true);
                 }
                 else {
@@ -165,7 +175,8 @@ public class SIgnUp extends JFrame implements ActionListener {
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     psd2.setEditable(true);
                 }
-                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT){
+                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE || ke.getKeyCode() == KeyEvent.VK_SHIFT
+                        || ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT){
                     psd2.setEditable(true);
                 }
                 else {
@@ -227,49 +238,46 @@ public class SIgnUp extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == signup) {
-            try {
-                String username = unfield.getText();
-                String Password = psd.getText();
-                String Pass = psd2.getText();
-                String mail = emailF.getText();
+            String username = unfield.getText();
+            String Password = psd.getText();
+            String Pass = psd2.getText();
+            String mail = emailF.getText();
 
-                String q = "CREATE TABLE IF NOT EXISTS login(username varchar(15), " +
-                        "email varchar(50), password varchar(8), Pass varchar(15))";
+            String q = "CREATE TABLE IF NOT EXISTS login(username varchar(15), " +
+                    "email varchar(50), password varchar(8), Pass varchar(15))";
+
+            String query1 = "SELECT * FROM LOGIN WHERE username = '" + username + "' AND email = '" + mail + "'";
+            String query = "INSERT INTO LOGIN VALUES ('" + username + "', " + "'" + mail + "', " + "'" + Password +"', " + "'" + Pass +"');";
+            Pattern pt = Pattern.compile("[^0-9@.][a-zA-Z0-9_\\-.]{8,}@[a-z]+(\\.[a-z]+)+$");
+            Matcher mt = pt.matcher(mail);
+
+            if (mt.matches()){
+                try {
+                    if (!(username.isBlank() ||mail.isBlank() || Password.isBlank()  || Pass.isBlank())) {
+                        st = conn.createStatement();
+                        st.executeUpdate(q);
+                        ResultSet result = conn.createStatement().executeQuery(query1);
+                        if (result.next()) {
+                            JOptionPane.showMessageDialog( null, "Username/Email already taken");
+                        }
+                        else if (Pass.equals(Password)){
+                            conn.createStatement().execute(query);
+                            JOptionPane.showMessageDialog(null, "Successfully registered...");
+                            new Dashboard();
+                            this.setVisible(false);
+                        }
 
 
-                String query1 = "SELECT * FROM LOGIN WHERE username = '" + username + "' AND email = '" + mail + "'";
-                String query = "INSERT INTO LOGIN VALUES ('" + username + "', " + "'" + mail + "', " + "'" + Password +"', " + "'" + Pass +"');";
-
-                if (!(username.isBlank() ||mail.isBlank() || Password.isBlank()  || Pass.isBlank())) {
-                    st = conn.createStatement();
-                    st.executeUpdate(q);
-                    ResultSet result = conn.createStatement().executeQuery(query1);
-                    if (result.next()) {
-                        JOptionPane.showMessageDialog( null, "Username/Email already taken");
+                        else JOptionPane.showMessageDialog(null, "Confirm Password failed...");
                     }
-                    else if (Pass.equals(Password)){
-                        conn.createStatement().execute(query);
-                        JOptionPane.showMessageDialog(null, "Successfully registered...");
-//						unfield.setText("");
-//						psd.setText("");
-//						psd2.setText("");
-                        new Dashboard();
-                        this.setVisible(false);
-                    }
-
-
-                    else JOptionPane.showMessageDialog(null, "Confirm Password failed...");
+                    else JOptionPane.showMessageDialog(null, "Registration Failed!!");
                 }
-
-
-                else JOptionPane.showMessageDialog(null, "Registration Failed!!");
-//				load();
+                catch(Exception ae) {
+                    System.out.println(ae);
+                }
             }
-
-
-
-            catch(Exception ae) {
-                System.out.println(ae);
+            else{
+                JOptionPane.showMessageDialog(null, "Email format isn't valid!");
             }
         }
 
@@ -277,7 +285,6 @@ public class SIgnUp extends JFrame implements ActionListener {
             setVisible(false);
             new HotelManagementSystem().setVisible(true);
         }
-
     }
 
     public void loadSql() {
@@ -295,11 +302,7 @@ public class SIgnUp extends JFrame implements ActionListener {
             System.out.println(ae);
         }
     }
-    public boolean confirmEmail(String email){
-        String Cemail ="[^0-9@.][a-zA-Z0-9_\\-.]{8,}@[a-z]+(\\.[a-z]+)+$"; // minimum of 8 characters
-        p = Pattern.compile(Cemail);
-        m = p.matcher(email);
-        return m.matches();
-    }
+
+
 
 }

@@ -82,43 +82,21 @@ public class AddCar extends JFrame implements ActionListener {
             public void keyPressed(KeyEvent ke) {
                 char ch = ke.getKeyChar();
                 if(Character.isDigit(ch)) {
-                    companyF.setText("");
-                    JOptionPane.showMessageDialog(null, "Enter Alphabets Only !");
-                    companyF.setText("");
-
+	            	 companyF.setEditable(true);
                 }
                 else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE){
                     companyF.setEditable(true);
                 }
                 else if(!(Character.isAlphabetic(ch) ||  ke.getKeyCode() == KeyEvent.VK_SPACE || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK
-                        || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT )) {
+                        || ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT
+                )) {
                     companyF.setEditable(true);
-                    JOptionPane.showMessageDialog(null, "Enter Alphabets Only !");
+                    JOptionPane.showMessageDialog(null, "Enter Alphabets and Numerics Only !");
                 }
+
             }
         });
         add(companyF);
-//        companyF.addKeyListener(new KeyAdapter() {
-//            String value = companyF.getText();
-//            @Override
-//            public void keyPressed(KeyEvent ke) {
-//                char ch = ke.getKeyChar();
-//                if(Character.isDigit(ch)) {
-//                    companyF.setEditable(true);
-////	            	 JOptionPane.showMessageDialog(null, "Enter Alphabets Only !");
-//                }
-//                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE){
-//                    companyF.setEditable(true);
-//                }
-//                else if(!(Character.isAlphabetic(ch) ||  ke.getKeyCode() == KeyEvent.VK_SPACE || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK
-//                        || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT )) {
-//                    companyF.setEditable(true);
-//                    JOptionPane.showMessageDialog(null, "Enter Alphabets and Numerics only !");
-//                }
-//
-//            }
-//        });
-//        add(companyF);
 
         JLabel modelL = new JLabel("Model: ");
         modelL.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -128,8 +106,8 @@ public class AddCar extends JFrame implements ActionListener {
 
         modelF = new JTextField();
         modelF.setBounds(140,  110,  100,  20);
-        companyF.addKeyListener(new KeyAdapter() {
-            String value = companyF.getText();
+        modelF.addKeyListener(new KeyAdapter() {
+            String value = modelF.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
                 char ch = ke.getKeyChar();
@@ -139,7 +117,8 @@ public class AddCar extends JFrame implements ActionListener {
                 else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE){
                     modelF.setEditable(true);
                 }
-                else if(!(Character.isAlphabetic(ch))) {
+                else if(!(Character.isAlphabetic(ch) ||  ke.getKeyCode() == KeyEvent.VK_SPACE || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK
+                        || ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT)) {
                     modelF.setEditable(true);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets and Numerics only !");
                 }
@@ -164,8 +143,8 @@ public class AddCar extends JFrame implements ActionListener {
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     car_noF.setEditable(true);
                 }
-                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE ||  ke.getKeyCode() == KeyEvent.VK_SPACE
-                        || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK){
+                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE ||  ke.getKeyCode() == KeyEvent.VK_SPACE || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK
+                        || ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT){
                     car_noF.setEditable(true);
                 }
                 else {
@@ -227,17 +206,21 @@ public class AddCar extends JFrame implements ActionListener {
             public void keyPressed(KeyEvent ke) {
                 char ch = ke.getKeyChar();
                 if(Character.isDigit(ch)) {
+//	            	 nameF.setEditable(true);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only !");
                 }
                 else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE){
                     colorF.setEditable(true);
                 }
-                else if(!(Character.isAlphabetic(ch))) {
+                else if(!(Character.isAlphabetic(ch) ||  ke.getKeyCode() == KeyEvent.VK_SPACE || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK
+                        || ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT)) {
                     colorF.setEditable(true);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only !");
                 }
+
             }
         });
+
         add(colorF);
 
         JLabel priceL = new JLabel("Price: ");
@@ -256,7 +239,8 @@ public class AddCar extends JFrame implements ActionListener {
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     priceF.setEditable(true);
                 }
-                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE){
+                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE ||  ke.getKeyCode() == KeyEvent.VK_SPACE || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK
+                        || ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT){
                     priceF.setEditable(true);
                 }
                 else {

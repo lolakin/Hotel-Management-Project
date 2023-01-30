@@ -24,6 +24,8 @@ import java.awt.Image;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -87,9 +89,10 @@ public class AddEmployee extends JFrame implements ActionListener {
                 else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE){
                     nameF.setEditable(true);
                 }
-                else if(!(Character.isAlphabetic(ch))) {
+                else if(!(Character.isAlphabetic(ch) ||  ke.getKeyCode() == KeyEvent.VK_SPACE || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK
+                        || ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT)) {
                     nameF.setEditable(true);
-                    JOptionPane.showMessageDialog(null, "Enter Alphabets Only!");
+                    JOptionPane.showMessageDialog(null, "Enter Alphabets Only !");
                 }
 
             }
@@ -112,7 +115,8 @@ public class AddEmployee extends JFrame implements ActionListener {
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     ageF.setEditable(true);
                 }
-                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE){
+                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE ||  ke.getKeyCode() == KeyEvent.VK_SPACE || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK
+                        || ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT){
                     ageF.setEditable(true);
                 }
                 else {
@@ -190,7 +194,8 @@ public class AddEmployee extends JFrame implements ActionListener {
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     salaryF.setEditable(true);
                 }
-                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE){
+                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE ||  ke.getKeyCode() == KeyEvent.VK_SPACE || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK
+                        || ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT){
                     salaryF.setEditable(true);
                 }
                 else {
@@ -208,16 +213,18 @@ public class AddEmployee extends JFrame implements ActionListener {
         add(phoneL);
 
         phoneF = new JTextField();
-        phoneF.setBounds(125,  330,  73,  20);
+        phoneF.setBounds(125,  330,  200,  20);
         phoneF.addKeyListener(new KeyAdapter() {
-            String value = phoneF.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
+                String value = phoneF.getText();
                 int l = value.length();
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     phoneF.setEditable(true);
                 }
-                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE){
+
+                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE ||  ke.getKeyCode() == KeyEvent.VK_SPACE || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK
+                        || ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT){
                     phoneF.setEditable(true);
                 }
                 else {
@@ -255,8 +262,9 @@ public class AddEmployee extends JFrame implements ActionListener {
 
         emailF = new JTextField();
         emailF.setBounds(125,  410,  200,  20);
+
+
         emailF.addKeyListener(new KeyAdapter() {
-            String value = emailF.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
                 char ch = ke.getKeyChar();
@@ -264,7 +272,8 @@ public class AddEmployee extends JFrame implements ActionListener {
                     emailF.setVisible(true);
 
                 }
-                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE){
+                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE ||  ke.getKeyCode() == KeyEvent.VK_SPACE || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK
+                        || ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT){
                     emailF.setEditable(true);
                 }
                 else if(!(Character.isAlphabetic(ch) || ke.getKeyChar() == '@' || ke.getKeyChar() == '.' || ke.getKeyCode() == KeyEvent.VK_SHIFT)) {
@@ -281,6 +290,7 @@ public class AddEmployee extends JFrame implements ActionListener {
         submit.setFont(new Font("times new roman", Font.PLAIN, 20));
         submit.addActionListener(this);
         submit.setBounds(325, 455, 115, 30);
+        submit.setFocusable(false);
         add(submit);
 
         getContentPane().setBackground(new Color(32, 32, 32));
@@ -306,34 +316,59 @@ public class AddEmployee extends JFrame implements ActionListener {
             String id = IdF.getText();
             String salary = salaryF.getText();
 
-            try {
-                String q = "CREATE TABLE IF NOT EXISTS employee(name char(15), age int, gender char(6), job char(30), " +
-                        "salary DECIMAL(10, 2), phone varchar(50), id bigint, email varchar(30))";
-                String query1 = "SELECT * FROM employee WHERE name = '" + name + "'";
-                String query = "INSERT INTO employee VALUES('" + name + "', " + "'" + age + "', " + "'" + gender + "', " + "'" + jobb+ "', "
-                        + "'" + salary + "', " + "'" + phone + "', " + "'" + id + "', " + "'" + email + "')";
+            Pattern pt = Pattern.compile("(0|\\+2340?)[789][01][0-9]{8}");
+            Pattern tt = Pattern.compile("[^0-9@.][a-zA-Z0-9_\\-.]{8,}@[a-z]+(\\.[a-z]+)+$");
+            Matcher mt = pt.matcher(phone);
+            Matcher mt2 = tt.matcher(email);
+            if(mt.matches()){
+                if (mt2.matches()){
+                    try {
+                        String q = "CREATE TABLE IF NOT EXISTS employee(name char(15), age int, gender char(6), job char(30), " +
+                                "salary DECIMAL(10, 2), phone varchar(50), id bigint, email varchar(30))";
+                        String qq = "SELECT * FROM employee WHERE id = '" + id + "'";
+                        String qqq = "SELECT * FROM employee WHERE email = '" + email + "'";
+                        String query1 = "SELECT * FROM employee WHERE name = '" + name + "'";
+                        String query = "INSERT INTO employee VALUES('" + name + "', " + "'" + age + "', " + "'" + gender + "', " + "'" + jobb+ "', "
+                                + "'" + salary + "', " + "'" + phone + "', " + "'" + id + "', " + "'" + email + "')";
 
-                if(!(name.isBlank() || phone.isBlank() || gender.isBlank() || id.isBlank() || age.isBlank() || email.isBlank() || salary.isBlank() )) {
-                    st = conn.createStatement();
-                    st.executeUpdate(q);
-                    ResultSet res = conn.createStatement().executeQuery(query1);
-                    if(res.next()){
-                        JOptionPane.showMessageDialog(null, "Name already exists");
+                        if(!(name.isBlank() || phone.isBlank() || gender.isBlank() || id.isBlank() || age.isBlank() || email.isBlank() || salary.isBlank() )) {
+                            st = conn.createStatement();
+                            st.executeUpdate(q);
+                            ResultSet res = conn.createStatement().executeQuery(query1);
+                            ResultSet rs = conn.createStatement().executeQuery(qq);
+                            ResultSet rss = conn.createStatement().executeQuery(qqq);
+                            if(res.next()){
+                                JOptionPane.showMessageDialog(null, "Name already exists!");
+                            }
+                            else if(rs.next()){
+                                JOptionPane.showMessageDialog(null, "ID already exists!");
+                            }
+                            else if(rss.next()){
+                                JOptionPane.showMessageDialog(null, "Email already exists!");
+                            }
+                            else {
+                                conn.createStatement().execute(query);
+                                String message = "New Employee " + name + " Added !!!";
+                                JOptionPane.showMessageDialog(null, message);
+                                this.setVisible(false);
+                            }
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(null, "Fill in the fields!");
+                        }
+
                     }
-                    else {
-                        conn.createStatement().execute(query);
-                        String message = "New Employee " + name + " Added !!!";
-                        JOptionPane.showMessageDialog(null, message);
-                        this.setVisible(false);
+                    catch(Exception ae) {
+                        System.out.println(ae);
                     }
                 }
-                else {
-                   JOptionPane.showMessageDialog(null, "Fill in the fields!");
+                else{
+                    JOptionPane.showMessageDialog(null, "Email Not Valid!");
                 }
-
             }
-            catch(Exception ae) {
-                System.out.println(ae);
+            else{
+
+                JOptionPane.showMessageDialog(null, "Phone Number Not Valid!");
             }
         }
     }

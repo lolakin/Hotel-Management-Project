@@ -19,6 +19,7 @@ public class BookFood extends JFrame implements ActionListener {
     Font font;
     ImageIcon icon, new_icon, my_image;
     String p;
+    Statement st;
     Image img;
     public BookFood(){
         loadSql();
@@ -136,11 +137,14 @@ public class BookFood extends JFrame implements ActionListener {
                 String room = roomF.getText();
                 String item = itemF.getText();
 
+                String q = "CREATE TABLE IF NOT EXISTS BookFood(roomNo int, itemName char(30))";
                 String query3 = "SELECT * FROM room WHERE availability = 'occupied'";
                 String query1 = "SELECT * FROM room WHERE room_no ='" + room + "'";
                 String query2 = "SELECT * FROM RestItem WHERE itemName ='" + item + "'";
                 String query = "INSERT INTO BookFood VALUES ('" + room + "', " + "'" + item + "');";
                 if (!(room.isBlank() || item.isBlank())) {
+                    st = conn.createStatement();
+                    st.executeUpdate(q);
                     ResultSet result = conn.createStatement().executeQuery(query1);
                     System.out.println("Hi1");
                     if (result.next()) {

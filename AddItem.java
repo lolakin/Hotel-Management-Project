@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class AddItem extends JFrame implements ActionListener {
     Font font;
@@ -18,6 +19,7 @@ public class AddItem extends JFrame implements ActionListener {
     JLabel ItemName, ItemP, ItemNo;
     JTextField ItemNameF, ItemPF, ItemNoF;
      ImageIcon icon, new_icon;
+     Statement st;
     String p;
     Image img;
 
@@ -64,7 +66,8 @@ public class AddItem extends JFrame implements ActionListener {
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     ItemNoF.setEditable(true);
                 }
-                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT){
+                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE || ke.getKeyCode() == KeyEvent.VK_SHIFT || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK || ke.getKeyCode() == KeyEvent.VK_SPACE
+                        || ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT){
                     ItemNoF.setEditable(true);
                 }
                 else {
@@ -94,8 +97,8 @@ public class AddItem extends JFrame implements ActionListener {
                 else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE){
                     ItemNameF.setEditable(true);
                 }
-                else if(!(Character.isAlphabetic(ch) || ke.getKeyChar() == '_' || ke.getKeyCode() == KeyEvent.VK_SHIFT || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK || ke.getKeyCode() == KeyEvent.VK_SPACE
-                        || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT)) {
+                else if(!(Character.isAlphabetic(ch) || ke.getKeyCode() == KeyEvent.VK_SHIFT || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK || ke.getKeyCode() == KeyEvent.VK_SPACE
+                        || ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT)) {
                     ItemNameF.setEditable(true);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only and _ !");
                 }
@@ -120,7 +123,8 @@ public class AddItem extends JFrame implements ActionListener {
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     ItemPF.setEditable(true);
                 }
-                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT){
+                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE || ke.getKeyCode() == KeyEvent.VK_SHIFT || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK || ke.getKeyCode() == KeyEvent.VK_SPACE
+                        || ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT){
                     ItemPF.setEditable(true);
                 }
                 else {
@@ -164,20 +168,30 @@ public class AddItem extends JFrame implements ActionListener {
                 String price = ItemPF.getText();
                 String ItemNo = ItemNoF.getText();
 
+                String q = "CREATE TABLE IF NOT EXISTS RestItem(itemNo int, itemName char(30), itemPrice DECIMAL(10,2))";
                 String query1 = "SELECT * FROM RestItem WHERE itemNo = '" + ItemNo + "'";
-//                String query2 = "SELECT * FROM RestItem WHERE itemNo = '" + ItemNo + "' AND itemName = '" + name + "'";
+                String query2 = "SELECT * FROM RestItem WHERE itemName = '" + name + "'";
                 String query = "INSERT INTO RestItem VALUES ('" + ItemNo + "', " + "'" + name + "', " + "'" + price + "');";
 
                 if (!(name.isBlank() ||price.isBlank() || ItemNo.isBlank())) {
+                    st = conn.createStatement();
+                    st.executeUpdate(q);
+
                     ResultSet result = conn.createStatement().executeQuery(query1);
+                    ResultSet res = conn.createStatement().executeQuery(query2);
                     if (result.next()) {
-                        JOptionPane.showMessageDialog( null, "Item/Item No already exists");
+                        JOptionPane.showMessageDialog( null, "Item No already exists");
                     }
                     else{
-                        conn.createStatement().execute(query);
-                        JOptionPane.showMessageDialog(null, "Successfully inputted...");
-                        this.setVisible(false);
-                        new Restaurant();
+                       if (res.next()){
+                           JOptionPane.showMessageDialog(null, "Item already exists");
+                       }
+                       else {
+                           conn.createStatement().execute(query);
+                           JOptionPane.showMessageDialog(null, "Successfully inputted...");
+                           this.setVisible(false);
+                           new Restaurant();
+                       }
                     }
 
 

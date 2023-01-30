@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import java.sql.Statement;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -42,6 +43,7 @@ public class NewCustomer extends JFrame implements ActionListener  {
     JButton submit, back;
     ButtonGroup genderG;
     Connection conn;
+    Statement st;
     String test;
 
     public NewCustomer() {
@@ -86,24 +88,19 @@ public class NewCustomer extends JFrame implements ActionListener  {
             public void keyPressed(KeyEvent ke) {
                 char ch = ke.getKeyChar();
                 if(Character.isDigit(ch)) {
-                    nameF.setText("");
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only !");
-                    nameF.setText("");
-
                 }
                 else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE){
                     nameF.setEditable(true);
                 }
                 else if(!(Character.isAlphabetic(ch) ||  ke.getKeyCode() == KeyEvent.VK_SPACE || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK
-                        || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT )) {
+                        || ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT)) {
                     nameF.setEditable(true);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only !");
                 }
             }
         });
         add(nameF);
-
-
 
         JLabel phoneL = new JLabel("Phone: ");
         phoneL.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -114,15 +111,16 @@ public class NewCustomer extends JFrame implements ActionListener  {
         phoneF = new JTextField();
         phoneF.setBounds(160,  110,  200,  20);
         phoneF.addKeyListener(new KeyAdapter() {
-            String value = phoneF.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
+                String value = phoneF.getText();
                 int l = value.length();
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     phoneF.setEditable(true);
                 }
-                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE ||  ke.getKeyCode() == KeyEvent.VK_SPACE
-                        || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK){
+
+                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE ||  ke.getKeyCode() == KeyEvent.VK_SPACE || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK
+                        || ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT){
                     phoneF.setEditable(true);
                 }
                 else {
@@ -255,8 +253,8 @@ public class NewCustomer extends JFrame implements ActionListener  {
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     depositF.setEditable(true);
                 }
-                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE ||  ke.getKeyCode() == KeyEvent.VK_SPACE
-                        || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT){
+                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE ||  ke.getKeyCode() == KeyEvent.VK_SPACE || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK
+                        || ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT){
                     depositF.setEditable(true);
                 }
                 else {
@@ -283,60 +281,69 @@ public class NewCustomer extends JFrame implements ActionListener  {
         back.setBounds(340, 410, 115, 30);
         add(back);
 
-
-//		holder = new PlaceHolder(nameF, "full name");
         getContentPane().setBackground(new Color(32, 32, 32));
-
         setLayout(null);
         setVisible(true);
 
     }
 
-    public static void main(String[] args) {
-        new NewCustomer();
-
-    }
+    public static void main(String[] args) {new NewCustomer();}
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == submit) {
-            try {
-                String name = nameF.getText();
-                String phone = phoneF.getText();
-                String gender = genderG.getSelection().getActionCommand();
-                String id = (String) id_C.getSelectedItem();
-//				String country = countryF.getText();
-                String country = (String)countryC.getSelectedItem();
-                String room_no = (String) room_allocated.getSelectedItem();
-                String deposit = depositF.getText();
-                
+            String name = nameF.getText();
+            String phone = phoneF.getText();
+            String gender = genderG.getSelection().getActionCommand();
+            String id = (String) id_C.getSelectedItem();
+            String country = (String)countryC.getSelectedItem();
+            String room_no = (String) room_allocated.getSelectedItem();
+            String deposit = depositF.getText();
 
-                String query1 = "SELECT * FROM CUSTOMER WHERE phone = '" + phone + "' AND id = '" + id + "'" ;
-                String query = "INSERT INTO CUSTOMER VALUES ('" + name + "', " + "'" + phone + "', " + "'" +
-                        gender + "', " + "'" + id + "', " + "'" + country + "', " + "'" + room_no + "', " + "'" + deposit + "','check_in')";
+            Pattern pt = Pattern.compile("(0|\\+2340?)[789][01][0-9]{8}");
+            Matcher mt = pt.matcher(phone);
 
-                query = "UPDATE ![](../../../../OneDrive/Pictures/DSC_3682.jpg)room SET availability = 'occupied' WHERE room_no = '" + room_no + "'";
-                conn.createStatement().execute(query);
+            if (mt.matches()){
+                try {
+                    String q = "CREATE TABLE IF NOT EXISTS customer(name varchar(20), phone varchar(11), gender char(6), id varchar(20), country char(30), room_no varchar(3), deposit decimal, check_status char(15))";
+                    String query1 = "SELECT * FROM CUSTOMER WHERE phone = '" + phone + "'" ;
+                    String query = "INSERT INTO CUSTOMER VALUES ('" + name + "', " + "'" + phone + "', " + "'" +
+                            gender + "', " + "'" + id + "', " + "'" + country + "', " + "'" + room_no + "', " + "'" + deposit + "','check_in')";
+                    String query3 = "UPDATE room SET availability = 'occupied' WHERE room_no = '" + room_no + "'";
+                    conn.createStatement().execute(query3);
+                    String queryy = "SELECT * FROM CUSTOMER WHERE room_no = '" + room_no + "'" ;
 
-                if(!(name.isBlank() || phone.isBlank() || gender.isBlank() || id.isBlank() || country.isBlank() || room_no.isBlank() || deposit.isBlank() )) {
-                    ResultSet res = conn.createStatement().executeQuery(query1);
-                    if (res.next()) {
-                        JOptionPane.showMessageDialog( null, "Phone Number or Id is already taken");
+                    if(!(name.isBlank() || phone.isBlank() || gender.isBlank() || id.isBlank() || country.isBlank() || room_no.isBlank() || deposit.isBlank() )) {
+                        st = conn.createStatement();
+                        st.executeUpdate(q);
+                        ResultSet res = conn.createStatement().executeQuery(query1);
+                        ResultSet r = conn.createStatement().executeQuery(queryy);
+                        if (res.next()) {
+                            JOptionPane.showMessageDialog( null, "Phone Number or Id is already taken");
+                        }
+                        else if (r.next()){
+                            JOptionPane.showMessageDialog(null, "Room already exists!");
+                        }
+                        else {
+                            conn.createStatement().execute(query);
+                            String message = "New Customer Added in Romm no " + room_no + " !!!";
+                            JOptionPane.showMessageDialog(null, message);
+                            this.setVisible(false);
+                        }
+
                     }
-                    else {
-                        conn.createStatement().execute(query);
-                        String message = "New Customer Added in Romm no " + room_no + " !!!";
-                        JOptionPane.showMessageDialog(null, message);
-                        this.setVisible(false);
+                    else{
+                        JOptionPane.showMessageDialog(null, "Registration failed!!!");
                     }
-
                 }
-                else JOptionPane.showMessageDialog(null, "Registration failed!!!");
-            }
 
-            catch(Exception ae) {
-                JOptionPane.showMessageDialog(null, "Fill in the fields!!!");
-//				System.out.println(ae);
+                catch(Exception ae) {
+//                    JOptionPane.showMessageDialog(null, "Fill in the fields!!!");
+                    System.out.println(ae);
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Phone Number is not valid!");
             }
         }
 
