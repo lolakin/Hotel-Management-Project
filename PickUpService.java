@@ -21,8 +21,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.text.Document;
 
 import javax.swing.JPanel;
@@ -37,6 +40,7 @@ public class PickUpService extends JFrame implements ActionListener {
     JComboBox cars;
     JTextField addressF, timeF;
     private boolean clicked = false;
+    Statement st;
 
     public PickUpService() {
         loadSql();
@@ -120,7 +124,7 @@ public class PickUpService extends JFrame implements ActionListener {
         add(timeL);
 
         timeF = new JTextField();
-        timeF.setText("hh:mm");
+        timeF.setText("hh:mm:ss");
         timeF.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -170,18 +174,36 @@ public class PickUpService extends JFrame implements ActionListener {
             String address = addressF.getText();
             String time = timeF.getText();
 
-            try {
-                String query = "INSERT INTO pickup VALUES ('" + car +"', " + "'" + address + "', " + "'" + time + "')";
-                conn.createStatement().execute(query);
-                conn.createStatement().executeUpdate("DELETE FROM pickup WHERE time = 'hh:mm'");
-                String message = "New pickup added !!!";
-                JOptionPane.showMessageDialog(null, message);
-                this.setVisible(false);
+            Pattern pt = Pattern.compile("([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]");
+            Matcher mt = pt.matcher(time);
 
+            if (mt.matches()){
+                try {
+                    String q = "CREATE TABLE IF NOT EXISTS pickup(car varchar(15), address varchar(30), time time)";
+                    String query = "INSERT INTO pickup VALUES ('" + car +"', " + "'" + address + "', " + "'" + time + "')";
+                    String qq = "DELETE FROM car WHERE  model = '" + car + "'";
+                    if(!(car.isBlank() || address.isBlank() || time.isBlank())){
+                        st = conn.createStatement();
+                        st.executeUpdate(q);
+                        conn.createStatement().execute(query);
+                        st.executeUpdate(qq);
+                        String message = "New pickup added !!!";
+                        JOptionPane.showMessageDialog(null, message);
+                        this.setVisible(false);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Fill in the fields!!!");
+                    }
+                }
+
+                catch(Exception ae) {
+                    JOptionPane.showMessageDialog(null, "Honorable Chief Agba Java " +
+                            "Developer, Akinyele Ibrahim...ko le work!!!");
+                    System.out.println(ae);
+                }
             }
-
-            catch(Exception ae) {
-                System.out.println(ae);
+            else{
+                JOptionPane.showMessageDialog(null, "Time "+ time +" is invalid 24Hours Format");
             }
         }
 

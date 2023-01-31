@@ -138,50 +138,40 @@ public class BookFood extends JFrame implements ActionListener {
                 String item = itemF.getText();
 
                 String q = "CREATE TABLE IF NOT EXISTS BookFood(roomNo int, itemName char(30))";
-                String query3 = "SELECT * FROM room WHERE availability = 'occupied'";
+                String query3 = "SELECT * FROM room WHERE room_no = '" + room + "' AND availability = 'occupied'";
                 String query1 = "SELECT * FROM room WHERE room_no ='" + room + "'";
                 String query2 = "SELECT * FROM RestItem WHERE itemName ='" + item + "'";
                 String query = "INSERT INTO BookFood VALUES ('" + room + "', " + "'" + item + "');";
                 if (!(room.isBlank() || item.isBlank())) {
+
                     st = conn.createStatement();
                     st.executeUpdate(q);
                     ResultSet result = conn.createStatement().executeQuery(query1);
-                    System.out.println("Hi1");
                     if (result.next()) {
-                        System.out.println("Hi2");
                         ResultSet rs = conn.createStatement().executeQuery(query3);
-                        System.out.println("Hi3");
                         if(rs.next()){
-                            System.out.println("Hi4");
                             ResultSet rss = conn.createStatement().executeQuery(query2);
-                            System.out.println("Hi5");
                             if(rss.next()){
-                                System.out.println("HI6");
                                 conn.createStatement().execute(query);
-                                System.out.println("Hi7");
                                 JOptionPane.showMessageDialog(null, "Food Booked...");
                                 this.setVisible(false);
                                 new Restaurant();
 
                             }
                             else{
-                                System.out.println("E1");
                                 JOptionPane.showMessageDialog(null, "Item does not exist!");
                             }
                         }
                         else{
-                            System.out.println("E2");
                             JOptionPane.showMessageDialog(null, "Room isn't available!");
                         }
 
                     }
                     else{
-                        System.out.println("E3");
                         JOptionPane.showMessageDialog(null, "Room doesn't exist!");
                     }
                 }
                 else{
-                    System.out.println("E4");
                     JOptionPane.showMessageDialog(null, "Fill in the Fields");
                 }
             }

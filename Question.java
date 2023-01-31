@@ -231,6 +231,9 @@ public class Question extends JFrame implements ActionListener {
                         JOptionPane.showMessageDialog(null, "Error! Email doesn't exist!");
                     }
                 }
+                else {
+                    JOptionPane.showMessageDialog(null, "Fields cannot be empty");
+                }
             }
             catch(Exception ae) {
                 System.out.println(ae);
