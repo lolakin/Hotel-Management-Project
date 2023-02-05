@@ -2,10 +2,7 @@ package HotelManagementJavaProject;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -13,7 +10,7 @@ import java.sql.Statement;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ForgotPassword extends JFrame implements ActionListener{
+public class ForgotPassword extends JFrame implements ActionListener, WindowListener {
     Connection conn;
     ImageIcon my_image;
     JLabel email, question, pass, Cpass;
@@ -27,6 +24,8 @@ public class ForgotPassword extends JFrame implements ActionListener{
 
     public ForgotPassword(){
         loadSql();
+
+//        addWindowListener(this);
         font = new Font("serif", Font.PLAIN, 20);
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
 
@@ -97,7 +96,11 @@ public class ForgotPassword extends JFrame implements ActionListener{
                 if(Character.isDigit(ch)) {
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only !");
                 }
-                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE){
+                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE ||  ke.getKeyCode() == KeyEvent.VK_SPACE
+                        || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK || ke.getKeyCode() == KeyEvent.VK_DOWN
+                        || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT
+                        || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT
+                        || ke.getKeyCode() == KeyEvent.VK_ALT || ke.getKeyCode() == KeyEvent.VK_F4){
                     questionF.setEditable(true);
                 }
                 else if(!(Character.isAlphabetic(ch) || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK || ke.getKeyCode() == KeyEvent.VK_SPACE
@@ -120,7 +123,11 @@ public class ForgotPassword extends JFrame implements ActionListener{
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     passF.setEditable(true);
                 }
-                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE){
+                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE ||  ke.getKeyCode() == KeyEvent.VK_SPACE
+                        || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK || ke.getKeyCode() == KeyEvent.VK_DOWN
+                        || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT
+                        || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT
+                        || ke.getKeyCode() == KeyEvent.VK_ALT || ke.getKeyCode() == KeyEvent.VK_F4){
                     passF.setEditable(true);
                 }
                 else {
@@ -141,7 +148,11 @@ public class ForgotPassword extends JFrame implements ActionListener{
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     CpassF.setEditable(true);
                 }
-                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE){
+                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE ||  ke.getKeyCode() == KeyEvent.VK_SPACE
+                        || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK || ke.getKeyCode() == KeyEvent.VK_DOWN
+                        || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT
+                        || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT
+                        || ke.getKeyCode() == KeyEvent.VK_ALT || ke.getKeyCode() == KeyEvent.VK_F4){
                     CpassF.setEditable(true);
                 }
                 else {
@@ -165,9 +176,12 @@ public class ForgotPassword extends JFrame implements ActionListener{
 
 
         getContentPane().setBackground(new Color(102, 7, 8));
+        setDefaultCloseOperation(2);
         setLayout(null);
+        setUndecorated(true);
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        addWindowListener(this);
+
     }
 
     public static void main(String args[])throws NullPointerException{
@@ -196,20 +210,16 @@ public class ForgotPassword extends JFrame implements ActionListener{
                         }
                         else{
                             System.out.println("hiiiii");
-                           if (pass.equals(confirm)){
-                               st = conn.createStatement();
-                               st.executeUpdate(query2);
-                               JOptionPane.showMessageDialog(null, "Successful!");
-                           }
-                           else{
-                               JOptionPane.showMessageDialog(null, "Password mismatch!");
-                           }
+                            if (pass.equals(confirm)){
+                                st = conn.createStatement();
+                                st.executeUpdate(query2);
+                                JOptionPane.showMessageDialog(null, "Successful!");
+                            }
+                            else JOptionPane.showMessageDialog(null, "Password mismatch!");
                         }
 
                     }
-                    else{
-                        JOptionPane.showMessageDialog(null, "Error! Email/Question not correct!");
-                    }
+                    else JOptionPane.showMessageDialog(null, "Error! Email/Question not correct!");
 
                 }
 
@@ -247,5 +257,42 @@ public class ForgotPassword extends JFrame implements ActionListener{
         p = Pattern.compile(Cemail);
         m = p.matcher(email);
         return m.matches();
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+        System.out.println("Window Opened");
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        System.out.println("Window Closing");
+        dispose();
+        new Login();
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        System.out.println("Window Closed");
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+        System.out.println("Window Minimized");
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+        System.out.println("Window Maximized");
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+        System.out.println("Window Activated");
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+        System.out.println("Window Deactivated");
     }
 }

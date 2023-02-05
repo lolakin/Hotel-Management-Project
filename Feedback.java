@@ -4,14 +4,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class Feedback extends JFrame implements ActionListener {
+public class Feedback extends JFrame implements ActionListener, WindowListener {
     JButton submit, reset;
     JTextField nameF, mailF, feedbF;
     Container cp;
@@ -38,15 +38,17 @@ public class Feedback extends JFrame implements ActionListener {
         cp=getContentPane();
         cp.setBackground(p);
 
-        my_image = new ImageIcon("hotel2.png");
+        String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
+
+        my_image = new ImageIcon(path2);
         setIconImage(my_image.getImage());
 
-        ImageIcon icon = new ImageIcon("icon.png");
-        setIconImage(icon.getImage());
 
         JLabel heading = new JLabel("FEEDBACK SURVEY");
         heading.setFont(font1);
+        heading.setForeground(Color.WHITE);
         heading.setBounds(80, 0, 440, 45);
+        cp.add(heading);
 
         JLabel name= new JLabel();
         name.setText("Name: ");
@@ -156,28 +158,29 @@ public class Feedback extends JFrame implements ActionListener {
         reset.addActionListener(this);
         cp.add(reset);
 
+        setDefaultCloseOperation(2);
         setLayout(null);
+        setUndecorated(true);
         setVisible(true);
+        addWindowListener(this);
 
     }
 
     public  static void main(String[] args){
         new Feedback();
     }
-
+//
     @Override
     public void actionPerformed(ActionEvent e) {
         boolean flag=false;
         String mail = mailF.getText();
         String name = nameF.getText();
         String age = (String) agegrp.getSelectedItem();
-        String rating = ratingBG.getSelection().getActionCommand();
+        String r;
         String feedb = feedbF.getText();
         f = new JFrame();
         String query2 = "SELECT * FROM CUSTOMER WHERE name = '" + name + "'" ;
-        String query = "CREATE TABLE IF NOT EXISTS feedback(name varchar(20), email varchar(30), ageGroup varchar(15), rating char(1), feedback varchar(200))";
-        String query1 = "INSERT INTO feedback VALUES ('" + name + "', " + "'" + mail + "', " + "'" +
-                age + "', " + "'" + rating + "', " + "'" + feedb + "')";
+        String query = "CREATE TABLE IF NOT EXISTS feedback(name varchar(20), email varchar(30), ageGroup varchar(15), rating char(15), feedback varchar(200))";
         String query3 = "SELECT * FROM LOGIN WHERE email = '" + mail + "'";
 
         if(e.getSource() == submit){
@@ -190,10 +193,36 @@ public class Feedback extends JFrame implements ActionListener {
                     if (res.next()){
                         ResultSet rs = conn.createStatement().executeQuery(query3);
                         if(rs.next()){
-                            conn.createStatement().execute(query1);
-                            JOptionPane.showMessageDialog(null, "Successfully inputted");
+                            flag = true;
+                            if(flag) {
+                                if (one.isSelected())
+                                    r = "One star";
+                                else if (two.isSelected())
+                                    r = "Two stars";
+                                else if (three.isSelected())
+                                    r = "Three stars";
+                                else if (four.isSelected())
+                                    r = "Four Stars";
+                                else
+                                    r = "Five stars";
+
+
+                                String query1 = "INSERT INTO feedback VALUES ('" + name + "', " + "'" + mail + "', " + "'" +
+                                        age + "', " + "'" + r + "', " + "'" + feedb + "')";
+                                conn.createStatement().execute(query1);
+                                String s1= "Thank you for your valuable Feedback!\n\nYour Responses:-\n";
+                                String s2= "Name: "+name +"\nEmail: "+mail +"\nAge group: "+ age +"\nRating: "+r+"\nFeedback: "+feedb;
+                                String disp =s1+s2;
+                                JOptionPane.showMessageDialog(f, disp);
+
+                            }
+
+                            System.out.println("Hi");
                             this.setVisible(false);
                             new Reception();
+
+//                            JOptionPane.showMessageDialog(null, "Successfully inputted");
+
                         }
                         else{
                             JOptionPane.showMessageDialog(null, "Email doesn't exist in our database");
@@ -204,28 +233,11 @@ public class Feedback extends JFrame implements ActionListener {
                     }
                 }
                 else{
-                    flag = true;
+
                     JOptionPane.showMessageDialog(null, "Fields cannot be empty");
                 }
 
-                if(flag)
-                {
-                    String r;
-                    if(one.isSelected())
-                        r="One star";
-                    else if(two.isSelected())
-                        r="Two stars";
-                    else if(three.isSelected())
-                        r="Three stars";
-                    else if(four.isSelected())
-                        r="Four stars";
-                    else
-                        r="Five stars";
-                    String s1= "Thank you for your valuable Feedback!\n\nYour Responses:-\n";
-                    String s2= "Name: "+name +"\nEmail: "+mail +"\nAge group: "+ age +"\nRating: "+r+"\nFeedback: "+feedb;
-                    String disp =s1+s2;
-                    JOptionPane.showMessageDialog(f, disp);
-                }
+
             }
             catch (Exception ae){
                 JOptionPane.showMessageDialog(null, ae);
@@ -259,5 +271,42 @@ public class Feedback extends JFrame implements ActionListener {
         catch (Exception ae) {
             System.out.println(ae);
         }
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+        System.out.println("Window Opened");
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        System.out.println("Window Closing");
+        dispose();
+        new Reception();
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        System.out.println("Window Closed");
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+        System.out.println("Window Minimized");
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+        System.out.println("Window Maximized");
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+        System.out.println("Window Activated");
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+        System.out.println("Window Deactivated");
     }
 }

@@ -7,13 +7,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JTable;
@@ -23,7 +20,7 @@ import net.proteanit.sql.DbUtils;
 
 import javax.swing.JOptionPane;
 
-public class PickUpInfo extends JFrame implements ActionListener {
+public class PickUpInfo extends JFrame implements ActionListener, WindowListener {
     ImageIcon my_image;
     JButton check, back;
     JTable table;
@@ -31,6 +28,7 @@ public class PickUpInfo extends JFrame implements ActionListener {
 
     public PickUpInfo() {
         loadSql();
+        setResizable(false);
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
 
         my_image = new ImageIcon(path2);
@@ -84,9 +82,11 @@ public class PickUpInfo extends JFrame implements ActionListener {
 
         load();
         getContentPane().setBackground(new Color(32, 32, 32));
-
+        setDefaultCloseOperation(2);
         setLayout(null);
+        setUndecorated(true);
         setVisible(true);
+        addWindowListener(this);
     }
 
     public static void main(String[] args) {
@@ -127,4 +127,40 @@ public class PickUpInfo extends JFrame implements ActionListener {
 
     }
 
+    @Override
+    public void windowOpened(WindowEvent e) {
+        System.out.println("Window Opened");
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        System.out.println("Window Closing");
+        dispose();
+        new Dashboard();
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        System.out.println("Window Closed");
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+        System.out.println("Window Minimized");
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+        System.out.println("Window Maximized");
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+        System.out.println("Window Activated");
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+        System.out.println("Window Deactivated");
+    }
 }

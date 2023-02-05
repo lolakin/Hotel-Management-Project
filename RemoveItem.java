@@ -2,16 +2,13 @@ package HotelManagementJavaProject;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class RemoveItem extends JFrame implements ActionListener {
+public class RemoveItem extends JFrame implements ActionListener, WindowListener {
     Connection conn;
     Font font;
     ImageIcon my_image, icon, new_icon;
@@ -24,6 +21,7 @@ public class RemoveItem extends JFrame implements ActionListener {
 
     public RemoveItem(){
         loadSql();
+        setResizable(false);
         font = new Font("Tahoma", Font.BOLD, 20);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
@@ -68,8 +66,11 @@ public class RemoveItem extends JFrame implements ActionListener {
                 else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE){
                     itemF.setEditable(true);
                 }
-                else if(!(Character.isAlphabetic(ch) || ke.getKeyChar() == '_' || ke.getKeyCode() == KeyEvent.VK_SHIFT || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK || ke.getKeyCode() == KeyEvent.VK_SPACE
-                        || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT)) {
+                else if(!(Character.isAlphabetic(ch) ||  ke.getKeyCode() == KeyEvent.VK_SPACE
+                        || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK || ke.getKeyCode() == KeyEvent.VK_DOWN
+                        || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT
+                        || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT
+                        || ke.getKeyCode() == KeyEvent.VK_ALT || ke.getKeyCode() == KeyEvent.VK_F4)) {
                     itemF.setEditable(true);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only and _ !");
                 }
@@ -96,8 +97,11 @@ public class RemoveItem extends JFrame implements ActionListener {
 
 
         getContentPane().setBackground(new Color(102, 7, 8));
+        setDefaultCloseOperation(2);
         setLayout(null);
+        setUndecorated(true);
         setVisible(true);
+        addWindowListener(this);
     }
 
     public static void main(String[] args){
@@ -151,5 +155,42 @@ public class RemoveItem extends JFrame implements ActionListener {
         catch (Exception ae) {
             System.out.println(ae);
         }
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+        System.out.println("Window Opened");
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        System.out.println("Window Closing");
+        dispose();
+        new Dashboard();
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        System.out.println("Window Closed");
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+        System.out.println("Window Minimized");
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+        System.out.println("Window Maximized");
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+        System.out.println("Window Activated");
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+        System.out.println("Window Deactivated");
     }
 }

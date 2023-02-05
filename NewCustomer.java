@@ -1,42 +1,22 @@
 package HotelManagementJavaProject;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.ButtonGroup;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.sql.Statement;
+import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.awt.event.ActionEvent;
 
-import java.awt.Color;
-import java.awt.Font;
-
-import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Random;
-
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.JOptionPane;
 //import com.placeholder.PlaceHolder;
 
-public class NewCustomer extends JFrame implements ActionListener  {
+public class NewCustomer extends JFrame implements ActionListener, WindowListener {
     ImageIcon my_image;
     JTextField nameF, phoneF, countryF, depositF, checkStatus;
     JComboBox id_C, room_allocated, countryC;
@@ -49,7 +29,7 @@ public class NewCustomer extends JFrame implements ActionListener  {
     public NewCustomer() {
         loadSql();
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
-
+        setResizable(false);
         my_image = new ImageIcon(path2);
         setIconImage(my_image.getImage());
 
@@ -93,8 +73,11 @@ public class NewCustomer extends JFrame implements ActionListener  {
                 else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE){
                     nameF.setEditable(true);
                 }
-                else if(!(Character.isAlphabetic(ch) ||  ke.getKeyCode() == KeyEvent.VK_SPACE || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK
-                        || ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT)) {
+                else if(!(Character.isAlphabetic(ch) ||  ke.getKeyCode() == KeyEvent.VK_SPACE
+                        || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK || ke.getKeyCode() == KeyEvent.VK_DOWN
+                        || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT
+                        || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT
+                        || ke.getKeyCode() == KeyEvent.VK_ALT || ke.getKeyCode() == KeyEvent.VK_F4)) {
                     nameF.setEditable(true);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only !");
                 }
@@ -119,8 +102,11 @@ public class NewCustomer extends JFrame implements ActionListener  {
                     phoneF.setEditable(true);
                 }
 
-                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE ||  ke.getKeyCode() == KeyEvent.VK_SPACE || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK
-                        || ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT){
+                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE ||  ke.getKeyCode() == KeyEvent.VK_SPACE
+                        || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK || ke.getKeyCode() == KeyEvent.VK_DOWN
+                        || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT
+                        || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT
+                        || ke.getKeyCode() == KeyEvent.VK_ALT || ke.getKeyCode() == KeyEvent.VK_F4){
                     phoneF.setEditable(true);
                 }
                 else {
@@ -253,8 +239,11 @@ public class NewCustomer extends JFrame implements ActionListener  {
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     depositF.setEditable(true);
                 }
-                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE ||  ke.getKeyCode() == KeyEvent.VK_SPACE || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK
-                        || ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT){
+                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE ||  ke.getKeyCode() == KeyEvent.VK_SPACE
+                        || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK || ke.getKeyCode() == KeyEvent.VK_DOWN
+                        || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT
+                        || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT
+                        || ke.getKeyCode() == KeyEvent.VK_ALT || ke.getKeyCode() == KeyEvent.VK_F4){
                     depositF.setEditable(true);
                 }
                 else {
@@ -282,8 +271,11 @@ public class NewCustomer extends JFrame implements ActionListener  {
         add(back);
 
         getContentPane().setBackground(new Color(32, 32, 32));
+        setDefaultCloseOperation(2);
         setLayout(null);
+        setUndecorated(true);
         setVisible(true);
+        addWindowListener(this);
 
     }
 
@@ -312,23 +304,31 @@ public class NewCustomer extends JFrame implements ActionListener  {
                     String query3 = "UPDATE room SET availability = 'occupied' WHERE room_no = '" + room_no + "'";
                     conn.createStatement().execute(query3);
                     String queryy = "SELECT * FROM CUSTOMER WHERE room_no = '" + room_no + "'" ;
+                    String dep = "SELECT * FROM Room WHERE price = '" + deposit + "' AND room_no = '" + room_no + "'";
 
-                    if(!(name.isBlank() || phone.isBlank() || gender.isBlank() || id.isBlank() || country.isBlank() || room_no.isBlank() || deposit.isBlank() )) {
+                    if(!(name.isBlank() || phone.isBlank() || gender.isBlank() || Objects.requireNonNull(id).isBlank() || Objects.requireNonNull(country).isBlank()
+                            || Objects.requireNonNull(room_no).isBlank() || deposit.isBlank() )) {
                         st = conn.createStatement();
                         st.executeUpdate(q);
+                        ResultSet rr = conn.createStatement().executeQuery(dep);
                         ResultSet res = conn.createStatement().executeQuery(query1);
                         ResultSet r = conn.createStatement().executeQuery(queryy);
-                        if (res.next()) {
+
+                        if(rr.next()){
+                            conn.createStatement().execute(query);
+                            String message = "New Customer Added in Room no " + room_no + " !!!";
+                            JOptionPane.showMessageDialog(null, message);
+                            this.setVisible(false);
+                            new Reception();
+                        }
+                        else if (res.next()) {
                             JOptionPane.showMessageDialog( null, "Phone Number or Id is already taken");
                         }
                         else if (r.next()){
-                            JOptionPane.showMessageDialog(null, "Room already exists!");
+                            JOptionPane.showMessageDialog(null, "Room is booked!");
                         }
                         else {
-                            conn.createStatement().execute(query);
-                            String message = "New Customer Added in Romm no " + room_no + " !!!";
-                            JOptionPane.showMessageDialog(null, message);
-                            this.setVisible(false);
+                            JOptionPane.showMessageDialog(null, "Wrong price for room " + room_no);
                         }
 
                     }
@@ -339,6 +339,7 @@ public class NewCustomer extends JFrame implements ActionListener  {
 
                 catch(Exception ae) {
 //                    JOptionPane.showMessageDialog(null, "Fill in the fields!!!");
+//                    JDialog d = new JDialog((Dialog) null, "Error");
                     System.out.println(ae);
                 }
             }
@@ -360,12 +361,46 @@ public class NewCustomer extends JFrame implements ActionListener  {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(url, uname, password);
-
         }
         catch (Exception ae) {
             System.out.println(ae);
         }
-
     }
 
+    @Override
+    public void windowOpened(WindowEvent e) {
+        System.out.println("Window Opened");
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        System.out.println("Window Closing");
+        dispose();
+        new Reception();
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        System.out.println("Window Closed");
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+        System.out.println("Window Minimized");
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+        System.out.println("Window Maximized");
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+        System.out.println("Window Activated");
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+        System.out.println("Window Deactivated");
+    }
 }

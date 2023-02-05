@@ -12,10 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -32,14 +29,14 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.JOptionPane;
 
-public class Dashboard extends JFrame implements ActionListener {
+public class Dashboard extends JFrame implements ActionListener, WindowListener {
 
     ImageIcon my_image;
     JPasswordField pf;
 
     public Dashboard() {
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
-
+        setResizable(false);
         my_image = new ImageIcon(path2);
         setIconImage(my_image.getImage());
 
@@ -130,10 +127,13 @@ public class Dashboard extends JFrame implements ActionListener {
         title.setFont(new Font("times new roman", Font.BOLD, 70));
         dashboard_image_label.add(title);
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setBackground(new Color(23, 32, 42));
+        setDefaultCloseOperation(2);
         setLayout(null);
+        setUndecorated(true);
         setVisible(true);
+        addWindowListener(this);
     }
 
     public static void main(String[] args) {
@@ -145,6 +145,8 @@ public class Dashboard extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals("Reception")) {
             new Reception();
+            this.setVisible(false);
+
         }
 
         else if(e.getActionCommand().equals("Add Employee")) {
@@ -155,7 +157,7 @@ public class Dashboard extends JFrame implements ActionListener {
                 String password = new String(pf.getPassword());
                 if (password.equals("1234")) {
                     new AddEmployee();
-
+                    this.setVisible(false);
                 }
                 else if(!password.equals("1234"))   {
                     JOptionPane.showMessageDialog(null, "Wrong password!!");
@@ -171,6 +173,7 @@ public class Dashboard extends JFrame implements ActionListener {
                 String password = new String(pf.getPassword());
                 if (password.equals("1234")) {
                     new AddItem();
+                    this.setVisible(false);
                 }
                 else if(!password.equals("1234"))   {
                     JOptionPane.showMessageDialog(null, "Wrong password!!");
@@ -185,6 +188,7 @@ public class Dashboard extends JFrame implements ActionListener {
                 String password = new String(pf.getPassword());
                 if (password.equals("1234")) {
                     new RemoveItem();
+                    this.setVisible(false);
                 }
                 else if(!password.equals("1234"))   {
                     JOptionPane.showMessageDialog(null, "Wrong password!!");
@@ -199,7 +203,7 @@ public class Dashboard extends JFrame implements ActionListener {
                 String password = new String(pf.getPassword());
                 if (password.equals("1234")) {
                     new AddRoom();
-
+                    this.setVisible(false);
                 }
                 else if(!password.equals("1234"))   {
                     JOptionPane.showMessageDialog(null, "Wrong password!!");
@@ -215,7 +219,7 @@ public class Dashboard extends JFrame implements ActionListener {
                 String password = new String(pf.getPassword());
                 if (password.equals("1234")) {
                     new AddCar();
-
+                    this.setVisible(false);
                 }
                 else if(!password.equals("1234"))   {
                     JOptionPane.showMessageDialog(null, "Wrong password!!");
@@ -231,7 +235,7 @@ public class Dashboard extends JFrame implements ActionListener {
                 String password = new String(pf.getPassword());
                 if (password.equals("1234")) {
                     new CustomerInfo();
-
+                    this.setVisible(false);
                 }
                 else if(!password.equals("1234"))   {
                     JOptionPane.showMessageDialog(null, "Wrong password!!");
@@ -247,6 +251,7 @@ public class Dashboard extends JFrame implements ActionListener {
                 String password = new String(pf.getPassword());
                 if (password.equals("1234")) {
                     new EmployeeInfo();
+                    this.setVisible(false);
                 }
                 else if(!password.equals("1234"))   {
                     JOptionPane.showMessageDialog(null, "Wrong password!!");
@@ -262,6 +267,7 @@ public class Dashboard extends JFrame implements ActionListener {
                 String password = new String(pf.getPassword());
                 if (password.equals("1234")) {
                     new PickUpInfo();
+                    this.setVisible(false);
                 }
                 else if(!password.equals("1234"))   {
                     JOptionPane.showMessageDialog(null, "Wrong password!!");
@@ -277,6 +283,7 @@ public class Dashboard extends JFrame implements ActionListener {
                 String password = new String(pf.getPassword());
                 if (password.equals("1234")) {
                     new UpdateRoomStatus();
+                    this.setVisible(false);
                 }
                 else if(!password.equals("1234"))   {
                     JOptionPane.showMessageDialog(null, "Wrong password!!");
@@ -290,4 +297,40 @@ public class Dashboard extends JFrame implements ActionListener {
         }
     }
 
+    @Override
+    public void windowOpened(WindowEvent e) {
+        System.out.println("Window Opened");
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        System.out.println("Window Closing");
+        dispose();
+        new Login();
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        System.out.println("Window Closed");
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+        System.out.println("Window Minimized");
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+        System.out.println("Window Maximized");
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+        System.out.println("Window Activated");
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+        System.out.println("Window Deactivated");
+    }
 }

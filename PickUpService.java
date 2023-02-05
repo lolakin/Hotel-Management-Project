@@ -2,54 +2,43 @@ package HotelManagementJavaProject;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.awt.event.ActionEvent;
-import java.awt.BorderLayout;
 import java.sql.Connection;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.swing.text.Document;
 
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 
-public class PickUpService extends JFrame implements ActionListener {
+public class PickUpService extends JFrame implements ActionListener, WindowListener {
 
     Connection conn;
     ImageIcon my_image;
     JButton submit, back;
-    JComboBox cars;
-    JTextField addressF, timeF;
+    JComboBox<String> cars;
+    JTextField addressF, timeF, priceF;
     private boolean clicked = false;
     Statement st;
 
     public PickUpService() {
         loadSql();
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
-
+        setResizable(false);
         my_image = new ImageIcon(path2);
         setIconImage(my_image.getImage());
 
-        setBounds(460, 100, 600, 675);
+        setBounds(460, 100, 650, 700);
 
         JLabel heading = new JLabel("PICKUP SERVICE");
         heading.setForeground(new Color(204, 246, 221));
@@ -91,13 +80,13 @@ public class PickUpService extends JFrame implements ActionListener {
         }
 
         String[] available_cars = cars_list.toArray(new String[cars_list.size()]);
-        cars = new JComboBox(available_cars);
+        cars = new JComboBox<>(available_cars);
         String room_no = (String) cars.getSelectedItem();
         cars.setBackground(Color.WHITE);
         cars.setBounds(275, 400, 100, 20);
         add(cars);
 
-        JLabel addressL = new JLabel("Address: ");
+        JLabel addressL = new JLabel("ADDRESS: ");
         addressL.setFont(new Font("Tahoma", Font.PLAIN, 15));
         addressL.setForeground(Color.WHITE);
         addressL.setBounds(195, 440, 150, 20);
@@ -117,7 +106,7 @@ public class PickUpService extends JFrame implements ActionListener {
         addressF.setBounds(275,  440,  150,  20);
         add(addressF);
 
-        JLabel timeL = new JLabel("Time: ");
+        JLabel timeL = new JLabel("TIME: ");
         timeL.setFont(new Font("Tahoma", Font.PLAIN, 15));
         timeL.setForeground(Color.WHITE);
         timeL.setBounds(215, 480, 150, 20);
@@ -138,13 +127,44 @@ public class PickUpService extends JFrame implements ActionListener {
         timeF.setBounds(275,  480,  100,  20);
         add(timeF);
 
+        JLabel priceL = new JLabel("PRICE: ");
+        priceL.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        priceL.setForeground(Color.WHITE);
+        priceL.setBounds(215, 520, 150, 20);
+        add(priceL);
+
+        priceF = new JTextField();
+        priceF.setBounds(275,  520,  100,  20);
+        priceF.addKeyListener(new KeyAdapter() {
+            String value = priceF.getText();
+            @Override
+            public void keyPressed(KeyEvent ke) {
+                int l = value.length();
+                if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
+                    priceF.setEditable(true);
+                }
+                else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE ||  ke.getKeyCode() == KeyEvent.VK_SPACE
+                        || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK || ke.getKeyCode() == KeyEvent.VK_DOWN
+                        || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT
+                        || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT
+                        || ke.getKeyCode() == KeyEvent.VK_ALT || ke.getKeyCode() == KeyEvent.VK_F4){
+                    priceF.setEditable(true);
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Enter only numeric digits(0-9)");
+                    priceF.setText("");
+                }
+            }
+        });
+        add(priceF);
+
         submit = new JButton("SUBMIT");
         submit.setForeground(Color.WHITE);
         submit.setBackground(new Color(66, 34, 130));
         submit.setFont(new Font("times new roman", Font.PLAIN, 20));
         submit.addActionListener(this);
         submit.setFocusable(false);
-        submit.setBounds(250, 525, 115, 30);
+        submit.setBounds(180, 565, 115, 30);
         add(submit);
 
         back = new JButton("BACK");
@@ -152,14 +172,17 @@ public class PickUpService extends JFrame implements ActionListener {
         back.setBackground(new Color(66, 34, 130));
         back.setFont(new Font("times new roman", Font.PLAIN, 20));
         back.addActionListener(this);
-        back.setBounds(250, 575, 115, 30);
+        back.setBounds(350, 565, 115, 30);
         add(back);
 
 
         getContentPane().setBackground(new Color(32, 32, 32));
-
+        setDefaultCloseOperation(2);
         setLayout(null);
+        setUndecorated(true);
         setVisible(true);
+        addWindowListener(this);
+
     }
 
     public static void main(String[] args) {
@@ -173,23 +196,34 @@ public class PickUpService extends JFrame implements ActionListener {
             String car = (String)cars.getSelectedItem();
             String address = addressF.getText();
             String time = timeF.getText();
+            String price = priceF.getText();
 
             Pattern pt = Pattern.compile("([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]");
             Matcher mt = pt.matcher(time);
 
             if (mt.matches()){
                 try {
+                    String dep = "SELECT * FROM car WHERE price = '" + price + "' AND model = '" + car + "'";
                     String q = "CREATE TABLE IF NOT EXISTS pickup(car varchar(15), address varchar(30), time time)";
                     String query = "INSERT INTO pickup VALUES ('" + car +"', " + "'" + address + "', " + "'" + time + "')";
                     String qq = "DELETE FROM car WHERE  model = '" + car + "'";
                     if(!(car.isBlank() || address.isBlank() || time.isBlank())){
                         st = conn.createStatement();
                         st.executeUpdate(q);
-                        conn.createStatement().execute(query);
-                        st.executeUpdate(qq);
-                        String message = "New pickup added !!!";
-                        JOptionPane.showMessageDialog(null, message);
-                        this.setVisible(false);
+                        ResultSet rr = conn.createStatement().executeQuery(dep);
+
+                        if (rr.next()){
+                            conn.createStatement().execute(query);
+                            st.executeUpdate(qq);
+                            String message = "New pickup added !!!";
+                            JOptionPane.showMessageDialog(null, message);
+                            this.setVisible(false);
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null, "Wrong price for car model: " + car);
+                        }
+
+
                     }
                     else{
                         JOptionPane.showMessageDialog(null, "Fill in the fields!!!");
@@ -197,8 +231,8 @@ public class PickUpService extends JFrame implements ActionListener {
                 }
 
                 catch(Exception ae) {
-                    JOptionPane.showMessageDialog(null, "Honorable Chief Agba Java " +
-                            "Developer, Akinyele Ibrahim...ko le work!!!");
+//                    JOptionPane.showMessageDialog(null, "Honorable Chief Agba Java " +
+//                            "Developer, Akinyele Ibrahim...ko le work!!!");
                     System.out.println(ae);
                 }
             }
@@ -229,4 +263,40 @@ public class PickUpService extends JFrame implements ActionListener {
     }
 
 
+    @Override
+    public void windowOpened(WindowEvent e) {
+        System.out.println("Window Opened");
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        System.out.println("Window Closing");
+        dispose();
+        new Reception();
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        System.out.println("Window Closed");
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+        System.out.println("Window Minimized");
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+        System.out.println("Window Maximized");
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+        System.out.println("Window Activated");
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+        System.out.println("Window Deactivated");
+    }
 }

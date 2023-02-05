@@ -7,6 +7,8 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -18,7 +20,7 @@ import java.util.ArrayList;
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 
-public class UpdateRoomStatus extends JFrame implements ActionListener{
+public class UpdateRoomStatus extends JFrame implements ActionListener, WindowListener {
     ImageIcon my_image;
     JTextField cleaning_statusF;
     JComboBox rooms;
@@ -27,6 +29,7 @@ public class UpdateRoomStatus extends JFrame implements ActionListener{
 
     public UpdateRoomStatus() {
         loadSql();
+        setResizable(false);
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
 
         my_image = new ImageIcon(path2);
@@ -73,7 +76,7 @@ public class UpdateRoomStatus extends JFrame implements ActionListener{
 
         //converting available rooms array list to an array
         String[] available_rooms = rooms_list.toArray(new String[rooms_list.size()]);
-        rooms = new JComboBox(available_rooms);
+        rooms = new JComboBox<>(available_rooms);
         String room_no = (String) rooms.getSelectedItem();
         rooms.setBackground(Color.WHITE);
         rooms.setBounds(140, 150, 100, 20);
@@ -120,9 +123,11 @@ public class UpdateRoomStatus extends JFrame implements ActionListener{
 
 
         getContentPane().setBackground(new Color(32, 32, 32));
-
+        setDefaultCloseOperation(2);
         setLayout(null);
+        setUndecorated(true);
         setVisible(true);
+        addWindowListener(this);
     }
 
     public static void main(String[] args) {
@@ -189,5 +194,42 @@ public class UpdateRoomStatus extends JFrame implements ActionListener{
         catch (Exception ae) {
             System.out.println(ae);
         }
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+        System.out.println("Window Opened");
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        System.out.println("Window Closing");
+        dispose();
+        new Dashboard();
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        System.out.println("Window Closed");
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+        System.out.println("Window Minimized");
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+        System.out.println("Window Maximized");
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+        System.out.println("Window Activated");
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+        System.out.println("Window Deactivated");
     }
 }

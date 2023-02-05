@@ -7,10 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -23,12 +20,12 @@ import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 
 
-public class HotelManagementSystem extends JFrame implements ActionListener{
+public class HotelManagementSystem extends JFrame implements ActionListener, WindowListener {
     ImageIcon my_image;
 
     public HotelManagementSystem() {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-
+        setResizable(false);
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
 
         my_image = new ImageIcon(path2);
@@ -67,8 +64,11 @@ public class HotelManagementSystem extends JFrame implements ActionListener{
 
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(2);
         setLayout(null);
+        setUndecorated(true);
         setVisible(true);
+        addWindowListener(this);
     }
 
     public static void main(String[] args) {
@@ -83,5 +83,40 @@ public class HotelManagementSystem extends JFrame implements ActionListener{
 
     }
 
+    @Override
+    public void windowOpened(WindowEvent e) {
+        System.out.println("Window Opened");
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        System.out.println("Window Closing");
+        dispose();
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        System.out.println("Window Closed");
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+        System.out.println("Window Minimized");
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+        System.out.println("Window Maximized");
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+        System.out.println("Window Activated");
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+        System.out.println("Window Deactivated");
+    }
 }
 

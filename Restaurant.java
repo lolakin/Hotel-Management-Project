@@ -6,21 +6,25 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 
-public class Restaurant extends JFrame implements ActionListener {
+public class Restaurant extends JFrame implements ActionListener, WindowListener {
     JButton bookfood, Home, addItem, rItem, back, logout;
     JTable table;
     ImageIcon my_image;
     Connection conn;
     Font Tfont,font;
     JPasswordField pf;
+
     public Restaurant(){
         font = new Font("Tahoma", Font.BOLD, 15);
         Tfont = new Font("arial", Font.PLAIN, 15);
         loadSql();
+        setResizable(false);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
 
@@ -64,37 +68,21 @@ public class Restaurant extends JFrame implements ActionListener {
         bookfood = new JButton("BOOK FOOD");
 //        bookfood.setIcon(new ImageIcon(getClass().getResource("C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\login.jpeg")));
         bookfood.addActionListener(this);
-        bookfood.setBounds(200, 600, 130, 30);
+        bookfood.setBounds(650, 600, 130, 30);
         bookfood.setBackground(Color.WHITE);
         bookfood.setForeground(Color.BLACK);
         bookfood.setFont(font);
         bookfood.setFocusable(false);
         add(bookfood);
 
-        addItem = new JButton("ADD ITEM");
-//        addItem.setIcon(new ImageIcon(getClass().getResource("C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\login.jpeg")));
-        addItem.addActionListener(this);
-        addItem.setBounds(650, 600, 120, 30);
-        addItem.setBackground(Color.WHITE);
-        addItem.setForeground(Color.BLACK);
-        addItem.setFont(font);
-        addItem.setFocusable(false);
-        add(addItem);
-
-        rItem = new JButton("REMOVE ITEM");
-//        rItem.setIcon(new ImageIcon(getClass().getResource("C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\login.jpeg")));
-        rItem.addActionListener(this);
-        rItem.setBounds(1050, 600, 150, 30);
-        rItem.setBackground(Color.WHITE);
-        rItem.setForeground(Color.BLACK);
-        rItem.setFont(font);
-        rItem.setFocusable(false);
-        add(rItem);
 
         load();
         getContentPane().setBackground(new Color(102, 7, 8));
+        setDefaultCloseOperation(2);
         setLayout(null);
+        setUndecorated(true);
         setVisible(true);
+        addWindowListener(this);
     }
 
     public static void main(String[] args){
@@ -117,41 +105,6 @@ public class Restaurant extends JFrame implements ActionListener {
         else if(e.getSource() == bookfood){
             this.setVisible(false);
             new BookFood();
-        }
-        else if(e.getSource() == addItem){
-            pf = new JPasswordField();
-            int psd = JOptionPane.showConfirmDialog(null, pf, "Enter Password", JOptionPane.OK_CANCEL_OPTION,
-                    JOptionPane.PLAIN_MESSAGE);
-            if(psd == JOptionPane.OK_OPTION) {
-                String password = new String(pf.getPassword());
-                if (password.equals("1234")) {
-                    this.setVisible(false);
-//                    new Restaurant().setVisible(false);
-                    new AddItem();
-
-                }
-                else if(!password.equals("1234"))   {
-                    JOptionPane.showMessageDialog(null, "Wrong password!!");
-                }
-            }
-
-        }
-        else if(e.getSource() == rItem){
-            pf = new JPasswordField();
-            int psd = JOptionPane.showConfirmDialog(null, pf, "Enter Password", JOptionPane.OK_CANCEL_OPTION,
-                    JOptionPane.PLAIN_MESSAGE);
-            if(psd == JOptionPane.OK_OPTION) {
-                String password = new String(pf.getPassword());
-                if (password.equals("1234")) {
-                    new Restaurant().setVisible(false);
-                    new RemoveItem();
-
-                }
-                else if(!password.equals("1234"))   {
-                    JOptionPane.showMessageDialog(null, "Wrong password!!");
-                }
-            }
-
         }
 
     }
@@ -178,5 +131,42 @@ public class Restaurant extends JFrame implements ActionListener {
         catch(Exception ae) {
             System.out.println(ae);
         }
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+        System.out.println("Window Opened");
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        System.out.println("Window Closing");
+        dispose();
+        new Reception();
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        System.out.println("Window Closed");
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+        System.out.println("Window Minimized");
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+        System.out.println("Window Maximized");
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+        System.out.println("Window Activated");
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+        System.out.println("Window Deactivated");
     }
 }
