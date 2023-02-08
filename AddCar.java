@@ -1,12 +1,6 @@
 package HotelManagementJavaProject;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.ButtonGroup;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
+import javax.swing.*;
 
 import java.awt.event.*;
 import java.sql.Connection;
@@ -20,10 +14,6 @@ import java.awt.Image;
 import java.sql.Statement;
 import java.util.Random;
 
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 
 public class AddCar extends JFrame implements ActionListener, WindowListener {
@@ -46,7 +36,7 @@ public class AddCar extends JFrame implements ActionListener, WindowListener {
 
         JLabel heading = new JLabel("ADD CAR");
         heading.setForeground(new Color(204, 246, 221));
-        heading.setFont(new Font("monospaced", Font.BOLD, 40));
+        heading.setFont(new Font("serif", Font.BOLD, 40));
         heading.setBounds(300,  10, 300, 35);
         add(heading);
 
@@ -72,7 +62,6 @@ public class AddCar extends JFrame implements ActionListener, WindowListener {
         companyF = new JTextField();
         companyF.setBounds(140,  70,  100,  20);
         companyF.addKeyListener(new KeyAdapter() {
-            String value = companyF.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
                 char ch = ke.getKeyChar();
@@ -102,7 +91,6 @@ public class AddCar extends JFrame implements ActionListener, WindowListener {
         modelF = new JTextField();
         modelF.setBounds(140,  110,  100,  20);
         modelF.addKeyListener(new KeyAdapter() {
-            String value = modelF.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
                 char ch = ke.getKeyChar();
@@ -134,10 +122,8 @@ public class AddCar extends JFrame implements ActionListener, WindowListener {
         car_noF = new JTextField();
         car_noF.setBounds(140,  150,  100,  20);
         car_noF.addKeyListener(new KeyAdapter() {
-            String value = car_noF.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
-                int l = value.length();
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     car_noF.setEditable(true);
                 }
@@ -202,7 +188,6 @@ public class AddCar extends JFrame implements ActionListener, WindowListener {
         colorF = new JTextField();
         colorF.setBounds(140,  290,  100,  20);
         colorF.addKeyListener(new KeyAdapter() {
-            String value = colorF.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
                 char ch = ke.getKeyChar();
@@ -236,10 +221,8 @@ public class AddCar extends JFrame implements ActionListener, WindowListener {
         priceF = new JTextField();
         priceF.setBounds(140,  330,  100,  20);
         priceF.addKeyListener(new KeyAdapter() {
-            String value = priceF.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
-                int l = value.length();
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     priceF.setEditable(true);
                 }
@@ -261,13 +244,14 @@ public class AddCar extends JFrame implements ActionListener, WindowListener {
         submit = new JButton("SUBMIT");
         submit.setForeground(Color.WHITE);
         submit.setBackground(new Color(66, 34, 130));
+        submit.setToolTipText("Add New Car");
         submit.setFont(new Font("times new roman", Font.PLAIN, 20));
         submit.addActionListener(this);
         submit.setBounds(325, 400, 115, 30);
         add(submit);
 
         getContentPane().setBackground(new Color(32, 32, 32));
-        setDefaultCloseOperation(2);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLayout(null);
         setUndecorated(true);
         setVisible(true);
@@ -285,7 +269,7 @@ public class AddCar extends JFrame implements ActionListener, WindowListener {
         String model = modelF.getText();
         String number = car_noF.getText();
         String fuel = fuel_typeG.getSelection().getActionCommand();
-        String color = colorF.getText();
+        String color = colorF.getText().toUpperCase();
         String price = priceF.getText();
 
         try {

@@ -1,12 +1,6 @@
 package HotelManagementJavaProject;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
+import javax.swing.*;
 
 import java.awt.event.*;
 import java.sql.Connection;
@@ -19,13 +13,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.util.Random;
 
-import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-
 import net.proteanit.sql.DbUtils;
-
-import javax.swing.JOptionPane;
 
 public class CustomerInfo extends JFrame implements ActionListener, WindowListener {
 
@@ -47,7 +35,7 @@ public class CustomerInfo extends JFrame implements ActionListener, WindowListen
 
         JLabel heading = new JLabel("CUSTOMER INFO");
         heading.setForeground(new Color(204, 246, 221));
-        heading.setFont(new Font("monospaced", Font.BOLD, 40));
+        heading.setFont(new Font("serif", Font.BOLD, 40));
         heading.setBounds(450, 15, 350, 35);
         add(heading);
 
@@ -122,6 +110,7 @@ public class CustomerInfo extends JFrame implements ActionListener, WindowListen
         check.setBackground(new Color(66, 34, 130));
         check.setFont(new Font("times new roman", Font.PLAIN, 20));
         check.addActionListener(this);
+        back.setToolTipText("Check customer info...");
         check.setBounds(475, 600, 115, 30);
         check.setFocusable(false);
         add(check);
@@ -137,7 +126,7 @@ public class CustomerInfo extends JFrame implements ActionListener, WindowListen
         add(back);
 
         getContentPane().setBackground(new Color(32, 32, 32));
-        setDefaultCloseOperation(2);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLayout(null);
         setUndecorated(true);
         setVisible(true);

@@ -1,11 +1,6 @@
 package HotelManagementJavaProject;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
+import javax.swing.*;
 
 import java.awt.event.*;
 import java.sql.Connection;
@@ -21,13 +16,8 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-
 //import GUI101.GUI_2;
 
-import javax.swing.JOptionPane;
 
 public class SIgnUp extends JFrame implements ActionListener, WindowListener {
     ImageIcon my_image;
@@ -40,7 +30,7 @@ public class SIgnUp extends JFrame implements ActionListener, WindowListener {
     Matcher m;
     Connection conn;
     private boolean clicked = false;
-
+    Font f = new Font("serif", Font.BOLD, 20);
     public SIgnUp() {
         loadSql();
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
@@ -66,32 +56,32 @@ public class SIgnUp extends JFrame implements ActionListener, WindowListener {
 
         JLabel userName = new JLabel("Username: ");
         userName.setForeground(Color.WHITE);
-        userName.setBounds(660, 300, 100, 30);
-        userName.setFont(new Font("serif", Font.PLAIN, 15));
+        userName.setBounds(660, 300, 150, 30);
+        userName.setFont(new Font("serif", Font.PLAIN, 25));
         add(userName);
 
         JLabel emailL = new JLabel("Email: ");
         emailL.setForeground(Color.WHITE);
-        emailL.setBounds(660, 350, 100, 30);
-        emailL.setFont(new Font("serif", Font.PLAIN, 15));
+        emailL.setBounds(660, 350, 150, 30);
+        emailL.setFont(new Font("serif", Font.PLAIN, 25));
         add(emailL);
 
         JLabel psd_label = new JLabel("Password: ");
         psd_label.setForeground(Color.WHITE);
-        psd_label.setBounds(660, 400, 100, 30);
-        psd_label.setFont(new Font("serif", Font.PLAIN, 15));
+        psd_label.setBounds(660, 400, 150, 30);
+        psd_label.setFont(new Font("serif", Font.PLAIN, 25));
         add(psd_label);
 
         JLabel psd_label2 = new JLabel("Confirm Password: ");
         psd_label2.setForeground(Color.WHITE);
-        psd_label2.setBounds(660, 450, 160, 30);
+        psd_label2.setBounds(570, 450, 200, 30);
+        psd_label2.setFont(new Font("serif", Font.PLAIN, 25));
         add(psd_label2);
 
 
         unfield = new JTextField();
-        unfield.setBounds(775, 300, 150, 30);
+        unfield.setBounds(775, 300, 190, 30);
         unfield.addKeyListener(new KeyAdapter() {
-            String value = unfield.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
                 char ch = ke.getKeyChar();
@@ -112,11 +102,12 @@ public class SIgnUp extends JFrame implements ActionListener, WindowListener {
 
             }
         });
+        unfield.setFont(f);
         add(unfield);
 
 
         emailF = new JTextField();
-        emailF.setBounds(775, 350, 150, 30);
+        emailF.setBounds(775, 350, 190, 30);
         emailF.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent ke) {
@@ -139,16 +130,15 @@ public class SIgnUp extends JFrame implements ActionListener, WindowListener {
             }
 
         });
+        emailF.setFont(f);
         add(emailF);
 
 
         psd = new JPasswordField();
-        psd.setBounds(775, 400, 150, 30);
+        psd.setBounds(775, 400, 190, 30);
         psd.addKeyListener(new KeyAdapter() {
-            String value = psd.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
-                int l = value.length();
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     psd.setEditable(true);
                 }
@@ -165,15 +155,14 @@ public class SIgnUp extends JFrame implements ActionListener, WindowListener {
                 }
             }
         });
+        psd.setFont(f);
         add(psd);
 
         psd2 = new JPasswordField();
-        psd2.setBounds(775, 450, 150, 30);
+        psd2.setBounds(775, 450, 190, 30);
         psd2.addKeyListener(new KeyAdapter() {
-            String value = psd.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
-                int l = value.length();
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     psd2.setEditable(true);
                 }
@@ -190,23 +179,26 @@ public class SIgnUp extends JFrame implements ActionListener, WindowListener {
                 }
             }
         });
+        psd2.setFont(f);
         add(psd2);
 
 
-        signup = new JButton("Sign Up");
-        signup.setBounds(660, 500, 100, 30);
+        signup = new JButton("SIGN UP");
+        signup.setBounds(660, 500, 140, 30);
         signup.setBackground(Color.GREEN);
         signup.setForeground(Color.BLACK);
-        signup.setFont(new Font("serif", Font.BOLD, 20));
+        signup.setFont(new Font("serif", Font.BOLD, 25));
+        signup.setToolTipText("Sign up for hotel elite...");
         signup.setFocusable(false);
         signup.addActionListener(this);
         add(signup);
 
-        cancel = new JButton("Cancel");
-        cancel.setBounds(780, 500, 100, 30);
+        cancel = new JButton("CANCEL");
+        cancel.setBounds(820, 500, 140, 30);
         cancel.setBackground(Color.RED);
         cancel.setForeground(Color.WHITE);
-        cancel.setFont(new Font("serif", Font.BOLD, 20));
+        cancel.setToolTipText("Cancel signup...");
+        cancel.setFont(new Font("serif", Font.BOLD, 25));
         cancel.addActionListener(this);
         cancel.setFocusable(false);
         add(cancel);
@@ -225,17 +217,16 @@ public class SIgnUp extends JFrame implements ActionListener, WindowListener {
             }
         });
         login.setForeground(Color.ORANGE);
-        login.setBounds(664, 550, 250, 30);
+        login.setBounds(600, 550, 400, 100);
+        login.setFont(new Font("serif", Font.PLAIN, 25));
         add(login);
 
         getContentPane().setBackground(new Color(11, 9, 10));
-        setDefaultCloseOperation(2);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLayout(null);
         setUndecorated(true);
         setVisible(true);
         addWindowListener(this);
-
-
     }
 
     public static void main(String[] args) {
@@ -246,7 +237,7 @@ public class SIgnUp extends JFrame implements ActionListener, WindowListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == signup) {
-            String username = unfield.getText();
+            String username = unfield.getText().toUpperCase();
             String Password = psd.getText();
             String Pass = psd2.getText();
             String mail = emailF.getText();

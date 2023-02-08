@@ -1,11 +1,7 @@
 package HotelManagementJavaProject;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
+import javax.swing.*;
+
 import net.proteanit.sql.DbUtils;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -17,8 +13,6 @@ import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Font;
-import javax.swing.JRadioButton;
-import javax.swing.JTable;
 
 public class SearchRoom extends JFrame implements ActionListener, WindowListener {
     ImageIcon my_image;
@@ -40,7 +34,7 @@ public class SearchRoom extends JFrame implements ActionListener, WindowListener
 
         JLabel heading = new JLabel("SEARCH ROOM");
         heading.setForeground(new Color(204, 246, 221));
-        heading.setFont(new Font("monospaced", Font.BOLD, 40));
+        heading.setFont(new Font("serif", Font.BOLD, 40));
         heading.setBounds(345, 15, 300, 35);
         add(heading);
 
@@ -119,6 +113,7 @@ public class SearchRoom extends JFrame implements ActionListener, WindowListener
         check.setForeground(Color.WHITE);
         check.setFocusable(false);
         check.setBackground(new Color(66, 34, 130));
+        check.setToolTipText("Check for room details!");
         check.setFont(new Font("times new roman", Font.PLAIN, 20));
         check.addActionListener(this);
         check.setBounds(360, 500, 115, 30);
@@ -127,6 +122,7 @@ public class SearchRoom extends JFrame implements ActionListener, WindowListener
         back = new JButton("BACK");
         back.setForeground(Color.WHITE);
         back.setFocusable(false);
+        back.setToolTipText("Move Back");
         back.setBackground(new Color(66, 34, 130));
         back.setFont(new Font("times new roman", Font.PLAIN, 20));
         back.addActionListener(this);
@@ -134,10 +130,11 @@ public class SearchRoom extends JFrame implements ActionListener, WindowListener
         add(back);
 
         getContentPane().setBackground(new Color(32, 32, 32));
-        setDefaultCloseOperation(2);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLayout(null);
         setUndecorated(true);
         setVisible(true);
+        setLocationRelativeTo(null);
         addWindowListener(this);
     }
 

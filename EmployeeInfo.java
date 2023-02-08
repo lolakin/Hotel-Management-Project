@@ -1,13 +1,6 @@
 package HotelManagementJavaProject;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.ButtonGroup;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
+import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -18,14 +11,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Random;
 
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-
 import net.proteanit.sql.DbUtils;
-
-import javax.swing.JOptionPane;
 
 public class EmployeeInfo extends JFrame implements ActionListener, WindowListener {
 
@@ -40,12 +26,11 @@ public class EmployeeInfo extends JFrame implements ActionListener, WindowListen
         my_image = new ImageIcon(path2);
         setIconImage(my_image.getImage());
 
-//        setBounds(150, 100, 1250, 700);
 
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         JLabel heading = new JLabel("EMPLOYEE INFO");
         heading.setForeground(new Color(204, 246, 221));
-        heading.setFont(new Font("monospaced", Font.BOLD, 40));
+        heading.setFont(new Font("serif", Font.BOLD, 40));
         heading.setBounds(450,  15, 350, 35);
         add(heading);
 
@@ -101,7 +86,6 @@ public class EmployeeInfo extends JFrame implements ActionListener, WindowListen
 
         table = new JTable();
         table.setBackground(new Color(32, 32, 32));
-//		table.setBackground(Color.BLUE);
         table.setForeground(Color.WHITE);
         table.setFont(new Font("arial", Font.PLAIN, 15));
         table.setRowHeight(20);
@@ -115,12 +99,13 @@ public class EmployeeInfo extends JFrame implements ActionListener, WindowListen
         back.addActionListener(this);
         back.setBounds(550, 600, 100, 30);
         back.setFocusable(false);
+        back.setToolTipText("Move Back");
         add(back);
 
         load();
 
         getContentPane().setBackground(new Color(32, 32, 32));
-        setDefaultCloseOperation(2);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLayout(null);
         setUndecorated(true);
         setVisible(true);

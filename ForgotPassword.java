@@ -1,12 +1,15 @@
 package HotelManagementJavaProject;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,6 +23,7 @@ public class ForgotPassword extends JFrame implements ActionListener, WindowList
     JButton submit;
     Statement st;
     Pattern p;
+    public static String IMAGE_URL = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\Morgan Freeman.jpeg";
     Matcher m;
 
     public ForgotPassword(){
@@ -176,12 +180,48 @@ public class ForgotPassword extends JFrame implements ActionListener, WindowList
 
 
         getContentPane().setBackground(new Color(102, 7, 8));
-        setDefaultCloseOperation(2);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLayout(null);
         setUndecorated(true);
         setVisible(true);
         addWindowListener(this);
 
+    }
+
+    private static void createAndShowGUI()
+    {
+        SwingUtilities.invokeLater(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                try
+                {
+                    JDialog dialog = new JDialog();
+                    dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                    dialog.setTitle("Image Loading Demo");
+
+                    ImageIcon new_login_image = new ImageIcon(IMAGE_URL);
+
+                    JLabel login_image_label = new  JLabel(new_login_image);
+                    dialog.add(login_image_label);
+
+//                    dialog.add(new JLabel(new ImageIcon(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(IMAGE_URL))))));
+                    JLabel error = new JLabel("Error occurred!");
+                    error.setFont(new Font("Serif", Font.BOLD, 30));
+                    error.setForeground(Color.WHITE);
+                    login_image_label.add(error);
+
+                    dialog.pack();
+                    dialog.setLocationByPlatform(true);
+                    dialog.setVisible(true);
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     public static void main(String args[])throws NullPointerException{
@@ -214,6 +254,11 @@ public class ForgotPassword extends JFrame implements ActionListener, WindowList
                                 st = conn.createStatement();
                                 st.executeUpdate(query2);
                                 JOptionPane.showMessageDialog(null, "Successful!");
+                                emailF.setText("");
+                                questionF.setText("");
+                                passF.setText("");
+                                CpassF.setText("");
+
                             }
                             else JOptionPane.showMessageDialog(null, "Password mismatch!");
                         }
@@ -222,19 +267,17 @@ public class ForgotPassword extends JFrame implements ActionListener, WindowList
                     else JOptionPane.showMessageDialog(null, "Error! Email/Question not correct!");
 
                 }
-
-//                UPDATE Customers
-//                SET ContactName = 'Alfred Schmidt', City= 'Frankfurt'
-//                WHERE CustomerID = 1;
+                else{
+//                    createAndShowGUI();
+                    JOptionPane.showMessageDialog(null, "Fields cannot be empty!");
+                }
 
             }
             catch(Exception ae) {
+                createAndShowGUI();
                 System.out.println(ae);
             }
         }
-//        else if(e.getSource() == ){
-//
-//        }
     }
 
     public void loadSql() {

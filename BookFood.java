@@ -55,10 +55,8 @@ public class BookFood extends JFrame implements ActionListener, WindowListener {
         roomF = new JTextField();
         roomF.setBounds(650,  200,  300,  30);
         roomF.addKeyListener(new KeyAdapter() {
-            String value = roomF.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
-                int l = value.length();
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     roomF.setEditable(true);
                 }
@@ -86,7 +84,6 @@ public class BookFood extends JFrame implements ActionListener, WindowListener {
         itemF = new JTextField();
         itemF.setBounds(650, 290, 300, 30);
         itemF.addKeyListener(new KeyAdapter() {
-            String value = itemF.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
                 char ch = ke.getKeyChar();
@@ -117,10 +114,8 @@ public class BookFood extends JFrame implements ActionListener, WindowListener {
         priceF = new JTextField();
         priceF.setBounds(650,  380,  300,  30);
         priceF.addKeyListener(new KeyAdapter() {
-            String value = priceF.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
-                int l = value.length();
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     priceF.setEditable(true);
                 }
@@ -143,9 +138,11 @@ public class BookFood extends JFrame implements ActionListener, WindowListener {
         icon = new ImageIcon(p);
         img = icon.getImage().getScaledInstance(30, 40, Image.SCALE_DEFAULT);
         new_icon = new ImageIcon(img);
+
+
         order = new JButton(new_icon);
         order.setText("ORDER FOOD");
-        order.setToolTipText("Go Back");
+        order.setToolTipText("Order items from the restaurant");
         order.setBounds(590, 470, 200, 70);
         order.setBackground(Color.WHITE);
         order.setForeground(Color.BLACK);
@@ -159,6 +156,7 @@ public class BookFood extends JFrame implements ActionListener, WindowListener {
         getContentPane().setBackground(new Color(102, 7, 8));
         setLayout(null);
         setUndecorated(true);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
         addWindowListener(this);
     }

@@ -1,11 +1,6 @@
 package HotelManagementJavaProject;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
+import javax.swing.*;
 
 import java.awt.event.*;
 import java.awt.BorderLayout;
@@ -15,13 +10,10 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.util.Random;
 
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.JOptionPane;
-
 
 public class HotelManagementSystem extends JFrame implements ActionListener, WindowListener {
     ImageIcon my_image;
+    JButton button, exit;
 
     public HotelManagementSystem() {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -47,24 +39,31 @@ public class HotelManagementSystem extends JFrame implements ActionListener, Win
         JLabel heading = new JLabel("Hotel Elite");
         heading.setForeground(new Color(0, 0, 204));
 
-        heading.setBounds(560, 30,  1000, 100);
-        heading.setFont(new Font("times new roman", Font.ITALIC, 70));
+        heading.setBounds(580, 30,  1000, 100);
+        heading.setFont(new Font("times new roman", Font.ITALIC, 80));
 
         main_image_label.add(heading);
 
-        JButton button = new JButton("Continue");
-        button.setBounds(50, 50, 150, 50);
+        exit = new JButton("EXIT");
+        exit.setBounds(260, 150, 150, 50);
+        exit.setBackground(new Color(66, 34, 130));
+        exit.setForeground(Color.WHITE);
+        exit.setFocusable(false);
+        exit.setToolTipText("Exit Program");
+        exit.setFont(new Font("serif", Font.BOLD, 20));
+        exit.addActionListener(this);
+        main_image_label.add(exit);
+
+        button = new JButton("CONTINUE");
+        button.setBounds(260, 250, 150, 50);
         button.setBackground(new Color(66, 34, 130));
         button.setForeground(Color.WHITE);
         button.setFocusable(false);
-        button.setFont(new Font("times new roman", Font.PLAIN, 20));
-
-        button.addActionListener(this);
+        button.setToolTipText("Move To Sign Up Page");
+        button.setFont(new Font("serif", Font.BOLD, 20));
         main_image_label.add(button);
 
-
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setDefaultCloseOperation(2);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLayout(null);
         setUndecorated(true);
         setVisible(true);
@@ -78,8 +77,16 @@ public class HotelManagementSystem extends JFrame implements ActionListener, Win
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        new SIgnUp().setVisible(true);
-        this.setVisible(false);
+        if (e.getSource() == button){
+            new SIgnUp().setVisible(true);
+            this.setVisible(false);
+        }
+        else if (e.getSource() == exit){
+            this.setVisible(false);
+            JOptionPane.showMessageDialog(null, "Exit Successful \n" +
+                    "Do come again!");
+        }
+
 
     }
 
@@ -92,6 +99,8 @@ public class HotelManagementSystem extends JFrame implements ActionListener, Win
     public void windowClosing(WindowEvent e) {
         System.out.println("Window Closing");
         dispose();
+        JOptionPane.showMessageDialog(null, "Exit Successful \n" +
+                "Do come again!");
     }
 
     @Override

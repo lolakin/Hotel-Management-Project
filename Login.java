@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,7 +21,7 @@ public class Login extends JFrame implements ActionListener, WindowListener {
     String username;
     String Password = "";
     Connection conn;
-//    static SIgnUp sign = new SIgnUp();
+    Font f = new Font("serif", Font.BOLD, 20);
     private boolean clicked = false;
 
     public Login() {
@@ -43,7 +44,7 @@ public class Login extends JFrame implements ActionListener, WindowListener {
 
         JLabel login_image_label = new  JLabel(new_login_image);
 
-        login_image_label.setBounds(650,  150,  200,  200);
+        login_image_label.setBounds(680,  150,  200,  200);
         login_image_label.setBackground(new Color(63, 10, 10));
         add(login_image_label);
 
@@ -59,47 +60,51 @@ public class Login extends JFrame implements ActionListener, WindowListener {
                 }
             }
         });
+        question.setFont(new Font("serif", Font.PLAIN, 25));
         question.setForeground(Color.ORANGE);
         question.setBounds(664, 400, 270, 30);
         add(question);
 
         JLabel userName = new JLabel("Username: ");
         userName.setForeground(Color.WHITE);
-        userName.setBounds(660, 450, 100, 30);
-        userName.setFont(new Font("serif", Font.PLAIN, 15));
+        userName.setBounds(660, 450, 150, 30);
+        userName.setFont(new Font("serif", Font.PLAIN, 25));
         add(userName);
 
         JLabel psd_label = new JLabel("Password: ");
         psd_label.setForeground(Color.WHITE);
-        psd_label.setBounds(660, 500, 100, 30);
+        psd_label.setBounds(660, 500, 150, 30);
+        psd_label.setFont(new Font("serif", Font.PLAIN, 25));
         add(psd_label);
 
         unfield = new JTextField();
-        unfield.setBounds(735, 450, 150, 30);
+        unfield.setBounds(775, 450, 190, 30);
+        unfield.setFont(f);
         add(unfield);
 
         psd = new JPasswordField();
-        psd.setBounds(735, 500, 150, 30);
+        psd.setBounds(775, 500, 190, 30);
+        psd.setFont(f);
         add(psd);
 
 
-        Login = new JButton("Login");
-        Login.setBounds(660, 550, 100, 30);
+        Login = new JButton("LOGIN");
+        Login.setBounds(660, 550, 140, 30);
         Login.setBackground(Color.GREEN);
         Login.setForeground(Color.BLACK);
-        Login.setFont(new Font("serif", Font.BOLD, 20));
+        Login.setFont(new Font("serif", Font.BOLD, 25));
         Login.addActionListener(this);
         add(Login);
 
-        cancel = new JButton("Cancel");
-        cancel.setBounds(780, 550, 100, 30);
+        cancel = new JButton("CANCEL");
+        cancel.setBounds(820, 550, 140, 30);
         cancel.setBackground(Color.RED);
         cancel.setForeground(Color.WHITE);
-        cancel.setFont(new Font("serif", Font.BOLD, 20));
+        cancel.setFont(new Font("serif", Font.BOLD, 25));
         cancel.addActionListener(this);
         add(cancel);
 
-        signup = new JLabel("Don't Have an Account? "
+        signup = new JLabel("Don't Have An Account? "
                 + "SIGN UP!");
         signup.addMouseListener(new MouseAdapter() {
             @Override
@@ -113,7 +118,8 @@ public class Login extends JFrame implements ActionListener, WindowListener {
             }
         });
         signup.setForeground(Color.ORANGE);
-        signup.setBounds(664, 600, 250, 30);
+        signup.setBounds(664, 600, 400, 30);
+        signup.setFont(new Font("serif", Font.PLAIN, 25));
         add(signup);
 
 
@@ -132,8 +138,8 @@ public class Login extends JFrame implements ActionListener, WindowListener {
             }
         });
         changePass.setForeground(Color.orange);
-        changePass.setBounds(664, 620, 190, 30);
-        changePass.setFont(new Font("serif", Font.PLAIN, 15));
+        changePass.setBounds(664, 650, 190, 30);
+        changePass.setFont(new Font("serif", Font.PLAIN, 20));
         add(changePass);
 
         JLabel forgot = new JLabel("Forgot Password?");
@@ -141,49 +147,49 @@ public class Login extends JFrame implements ActionListener, WindowListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                try{
-                   if (!clicked) {
+                   if (!clicked ) {
                        mail = new JTextField();
-//                       String mail = sign.emailF.getText();
-                       String ans = mail.getText();
-                       String query = "SELECT * FROM LOGIN WHERE EMAIL = '" + ans + "'";
+
                        int response = JOptionPane.showConfirmDialog(null, mail, "Enter your Email", JOptionPane.OK_CANCEL_OPTION,
                                JOptionPane.PLAIN_MESSAGE);
-                       System.out.println("kkkkk");
                        if (response == JOptionPane.OK_OPTION) {
-                           System.out.println("llllll");
-                           ResultSet result = conn.createStatement().executeQuery(query);
-                           System.out.println("pppppp");
-                           if(mail.equals(result)){
-                               System.out.println("ooooo");
-                               clicked = true;
-                               setVisible(false);
-                               new ForgotPassword();
-                           }
-//                           if (result.next()) {
-//                               System.out.println("ooooo");
-//                               clicked = true;
-//                               setVisible(false);
-//                               new ForgotPassword();
-//                           }
-                           else{
-                               JOptionPane.showMessageDialog(null, "Email does not exist!");
+                           mail.setBackground(Color.black);
+                           mail.setForeground(Color.WHITE);
+                           String ans = mail.getText();
+                           System.out.println(ans);
+                           String query = "SELECT Email FROM LOGIN WHERE email = '" + ans + "'";
+                           Statement st = conn.createStatement();
+                           ResultSet result = st.executeQuery(query);
+
+                           while ( result.next()) {
+                               JOptionPane.showMessageDialog(null, result.getString("Email"));
+                               if (ans.equals(result.getString(1))) {
+                                   JOptionPane.showMessageDialog(null, "Success");
+                                   clicked = true;
+                                   setVisible(false);
+                                   new ForgotPassword();
+                               }
+                               else {
+                                   JOptionPane.showMessageDialog(null, "Email does not exist!");
+                               }
                            }
                        }
                    }
                }
                catch(Exception ae) {
+                   ae.printStackTrace();
                    System.out.println(ae);
                }
 
             }
         });
         forgot.setForeground(Color.orange);
-        forgot.setBounds(880, 620, 190, 30);
-        forgot.setFont(new Font("serif", Font.PLAIN, 15));
+        forgot.setBounds(840, 650, 230, 30);
+        forgot.setFont(new Font("serif", Font.PLAIN, 20));
         add(forgot);
 
         getContentPane().setBackground(new Color(11, 9, 10));
-        setDefaultCloseOperation(2);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLayout(null);
         setUndecorated(true);
         setVisible(true);

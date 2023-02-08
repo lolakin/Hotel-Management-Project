@@ -1,10 +1,6 @@
 package HotelManagementJavaProject;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
+import javax.swing.*;
 
 import java.awt.event.*;
 import java.sql.DriverManager;
@@ -17,9 +13,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.swing.JTextField;
-import javax.swing.JOptionPane;
 
 public class PickUpService extends JFrame implements ActionListener, WindowListener {
 
@@ -42,7 +35,7 @@ public class PickUpService extends JFrame implements ActionListener, WindowListe
 
         JLabel heading = new JLabel("PICKUP SERVICE");
         heading.setForeground(new Color(204, 246, 221));
-        heading.setFont(new Font("monospaced", Font.BOLD, 40));
+        heading.setFont(new Font("serif", Font.BOLD, 40));
         heading.setBounds(125,  5, 500, 50);
         add(heading);
 
@@ -177,9 +170,10 @@ public class PickUpService extends JFrame implements ActionListener, WindowListe
 
 
         getContentPane().setBackground(new Color(32, 32, 32));
-        setDefaultCloseOperation(2);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLayout(null);
         setUndecorated(true);
+        setLocationRelativeTo(null);
         setVisible(true);
         addWindowListener(this);
 

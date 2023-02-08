@@ -66,7 +66,6 @@ public class Restaurant extends JFrame implements ActionListener, WindowListener
         add(table);
 
         bookfood = new JButton("BOOK FOOD");
-//        bookfood.setIcon(new ImageIcon(getClass().getResource("C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\login.jpeg")));
         bookfood.addActionListener(this);
         bookfood.setBounds(650, 600, 130, 30);
         bookfood.setBackground(Color.WHITE);
@@ -75,10 +74,9 @@ public class Restaurant extends JFrame implements ActionListener, WindowListener
         bookfood.setFocusable(false);
         add(bookfood);
 
-
         load();
         getContentPane().setBackground(new Color(102, 7, 8));
-        setDefaultCloseOperation(2);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLayout(null);
         setUndecorated(true);
         setVisible(true);

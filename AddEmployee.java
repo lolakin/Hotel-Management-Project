@@ -1,37 +1,24 @@
 package HotelManagementJavaProject;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.ButtonGroup;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
+import javax.swing.*;
 
 import java.awt.event.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-import javax.swing.JOptionPane;
 
 public class AddEmployee extends JFrame implements ActionListener, WindowListener {
     ImageIcon my_image;
     JTextField nameF, genderF, ageF, salaryF, phoneF, IdF, emailF;
     ButtonGroup genderG;
-    JComboBox job, id_C;
+    JComboBox<String> job;
+    JComboBox id_C;
     JButton submit;
     Connection conn;
     Statement st;
@@ -48,7 +35,7 @@ public class AddEmployee extends JFrame implements ActionListener, WindowListene
 
         JLabel heading = new JLabel("ADD EMPLOYEE");
         heading.setForeground(new Color(204, 246, 221));
-        heading.setFont(new Font("monospaced", Font.BOLD, 40));
+        heading.setFont(new Font("serif", Font.BOLD, 40));
         heading.setBounds(250,  10, 300, 35);
         add(heading);
 
@@ -74,12 +61,10 @@ public class AddEmployee extends JFrame implements ActionListener, WindowListene
         nameF = new JTextField();
         nameF.setBounds(125, 70, 200, 20);
         nameF.addKeyListener(new KeyAdapter() {
-            String value = nameF.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
                 char ch = ke.getKeyChar();
                 if(Character.isDigit(ch)) {
-//	            	 nameF.setEditable(true);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only !");
                 }
                 else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE){
@@ -168,9 +153,9 @@ public class AddEmployee extends JFrame implements ActionListener, WindowListene
         jobL.setFont(new Font("Tahoma", Font.PLAIN, 15));
         add(jobL);
 
-        String job_list[] = {"Restaurant Manager", "Kitchen Staff", "Head Chef", "Room Service",
+        String[] job_list = {"Restaurant Manager", "Kitchen Staff", "Head Chef", "Room Service",
                 "Hotel Porter", "Front Desk Employee", "Waiter/Waitress", "Driver", "Housekeeping"};
-        job = new JComboBox(job_list);
+        job = new JComboBox<>(job_list);
 
         String id = (String)job.getSelectedItem();
         job.setBackground(Color.WHITE);
@@ -187,10 +172,8 @@ public class AddEmployee extends JFrame implements ActionListener, WindowListene
         salaryF = new JTextField();
         salaryF.setBounds(125, 290, 200, 20);
         salaryF.addKeyListener(new KeyAdapter() {
-            String value = ageF.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
-                int l = value.length();
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     salaryF.setEditable(true);
                 }
@@ -219,8 +202,6 @@ public class AddEmployee extends JFrame implements ActionListener, WindowListene
         phoneF.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent ke) {
-                String value = phoneF.getText();
-                int l = value.length();
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     phoneF.setEditable(true);
                 }
@@ -249,15 +230,6 @@ public class AddEmployee extends JFrame implements ActionListener, WindowListene
         IdF = new JTextField();
         IdF.setBounds(125, 370, 200, 20);
         add(IdF);
-
-
-//		String id_list[] = {"NIN", "Passport", "Driving License", "Voter ID"};
-//		id_C = new JComboBox(id_list);
-
-//		String id_ = (String)id_C.getSelectedItem();
-//		id_C.setBackground(Color.WHITE);
-//		id_C.setBounds(125, 370, 200, 20);
-//		add(id_C);
 
         JLabel emailL = new JLabel("EMAIL: ");
         emailL.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -297,12 +269,13 @@ public class AddEmployee extends JFrame implements ActionListener, WindowListene
         submit.setBackground(new Color(66, 34, 130));
         submit.setFont(new Font("times new roman", Font.PLAIN, 20));
         submit.addActionListener(this);
+        submit.setToolTipText("Add New Employee");
         submit.setBounds(325, 455, 115, 30);
         submit.setFocusable(false);
         add(submit);
 
         getContentPane().setBackground(new Color(32, 32, 32));
-        setDefaultCloseOperation(2);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLayout(null);
         setUndecorated(true);
         setVisible(true);

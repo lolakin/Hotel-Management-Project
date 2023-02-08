@@ -97,7 +97,7 @@ public class RemoveItem extends JFrame implements ActionListener, WindowListener
 
 
         getContentPane().setBackground(new Color(102, 7, 8));
-        setDefaultCloseOperation(2);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLayout(null);
         setUndecorated(true);
         setVisible(true);

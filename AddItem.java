@@ -57,10 +57,8 @@ public class AddItem extends JFrame implements ActionListener, WindowListener {
         ItemNoF = new JTextField();
         ItemNoF.setBounds(650,  200,  300,  30);
         ItemNoF.addKeyListener(new KeyAdapter() {
-            String value = ItemNoF.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
-                int l = value.length();
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     ItemNoF.setEditable(true);
                 }
@@ -88,7 +86,6 @@ public class AddItem extends JFrame implements ActionListener, WindowListener {
         ItemNameF = new JTextField();
         ItemNameF.setBounds(650, 290, 300, 30);
         ItemNameF.addKeyListener(new KeyAdapter() {
-            String value = ItemNameF.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
                 char ch = ke.getKeyChar();
@@ -120,10 +117,8 @@ public class AddItem extends JFrame implements ActionListener, WindowListener {
         ItemPF = new JTextField();
         ItemPF.setBounds(650,  380,  300,  30);
         ItemPF.addKeyListener(new KeyAdapter() {
-            String value = ItemPF.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
-                int l = value.length();
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     ItemPF.setEditable(true);
                 }
@@ -146,9 +141,11 @@ public class AddItem extends JFrame implements ActionListener, WindowListener {
         icon = new ImageIcon(p);
         img = icon.getImage().getScaledInstance(80, 70, Image.SCALE_DEFAULT);
         new_icon = new ImageIcon(img);
+
+
         add = new JButton(new_icon);
         add.setText("ADD ITEM");
-        add.setToolTipText("Go Back");
+        add.setToolTipText("Add a new item into the restaurant...");
         add.setBounds(590, 450, 200, 100);
         add.setBackground(Color.WHITE);
         add.setForeground(Color.BLACK);
@@ -158,7 +155,7 @@ public class AddItem extends JFrame implements ActionListener, WindowListener {
         add(add);
 
         getContentPane().setBackground(new Color(102, 7, 8));
-        setDefaultCloseOperation(2);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLayout(null);
         setUndecorated(true);
         setVisible(true);

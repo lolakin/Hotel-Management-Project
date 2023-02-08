@@ -13,13 +13,13 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 
 import java.util.ArrayList;
-import java.util.Random;
-//import com.placeholder.PlaceHolder;
 
 public class NewCustomer extends JFrame implements ActionListener, WindowListener {
     ImageIcon my_image;
     JTextField nameF, phoneF, countryF, depositF, checkStatus;
-    JComboBox id_C, room_allocated, countryC;
+    JComboBox<String> id_C;
+    JComboBox<String> room_allocated;
+    JComboBox<String> countryC;
     JButton submit, back;
     ButtonGroup genderG;
     Connection conn;
@@ -34,11 +34,10 @@ public class NewCustomer extends JFrame implements ActionListener, WindowListene
         setIconImage(my_image.getImage());
 
         setBounds(425, 150, 700, 500);
-//		PlaceHolder holder;
 
         JLabel heading = new JLabel("New Customer");
         heading.setForeground(new Color(204, 246, 221));
-        heading.setFont(new Font("monospaced", Font.BOLD, 40));
+        heading.setFont(new Font("serif", Font.BOLD, 40));
         heading.setBounds(190, 10, 290, 40);
         add(heading);
 
@@ -63,7 +62,6 @@ public class NewCustomer extends JFrame implements ActionListener, WindowListene
         nameF = new JTextField();
         nameF.setBounds(160,  70,  200,  20);
         nameF.addKeyListener(new KeyAdapter() {
-            String value = nameF.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
                 char ch = ke.getKeyChar();
@@ -160,8 +158,8 @@ public class NewCustomer extends JFrame implements ActionListener, WindowListene
         add(idL);
 
 
-        String id_list[] = {"NIN", "Passport", "Driving License", "Voter ID"};
-        id_C = new JComboBox(id_list);
+        String[] id_list = {"NIN", "Passport", "Driving License", "Voter ID"};
+        id_C = new JComboBox<>(id_list);
 
         String id = (String)id_C.getSelectedItem();
         id_C.setBackground(Color.WHITE);
@@ -175,7 +173,7 @@ public class NewCustomer extends JFrame implements ActionListener, WindowListene
         countryL.setBounds(50, 290, 70, 20);
         add(countryL);
 
-        String country_list[] = {"Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia",
+        String[] country_list = {"Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia",
                 "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia",
                 "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Côte d'Ivoire", "Cabo Verde", "Cambodia",
                 "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo (Congo-Brazzaville)", "Costa Rica", "Croatia", "Cuba", "Cyprus",
@@ -189,9 +187,8 @@ public class NewCustomer extends JFrame implements ActionListener, WindowListene
                 "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan",
                 "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu",
                 "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States of America", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"};
-        countryC = new JComboBox(country_list);
+        countryC = new JComboBox<>(country_list);
         countryC.setEditable(true);
-        String country = (String)countryC.getSelectedItem();
         countryC.setBackground(Color.WHITE);
         countryC.setBounds(160, 290, 200, 20);
         add(countryC);
@@ -217,7 +214,7 @@ public class NewCustomer extends JFrame implements ActionListener, WindowListene
         }
 
         String[] available_rooms = available_rooms_list.toArray(new String[available_rooms_list.size()]);
-        room_allocated = new JComboBox(available_rooms);
+        room_allocated = new JComboBox<>(available_rooms);
         String room_no = (String) room_allocated.getSelectedItem();
         room_allocated.setBackground(Color.WHITE);
         room_allocated.setBounds(160, 330, 200, 20);
@@ -232,10 +229,8 @@ public class NewCustomer extends JFrame implements ActionListener, WindowListene
         depositF = new JTextField();
         depositF.setBounds(160, 370, 200, 20);
         depositF.addKeyListener(new KeyAdapter() {
-            String value = depositF.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
-                int l = value.length();
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     depositF.setEditable(true);
                 }
@@ -256,6 +251,7 @@ public class NewCustomer extends JFrame implements ActionListener, WindowListene
 
         submit = new JButton("SUBMIT");
         submit.setForeground(Color.WHITE);
+        submit.setToolTipText("Submit form");
         submit.setBackground(new Color(66, 34, 130));
         submit.setFont(new Font("times new roman", Font.PLAIN, 20));
         submit.addActionListener(this);
@@ -264,6 +260,7 @@ public class NewCustomer extends JFrame implements ActionListener, WindowListene
 
         back = new JButton("BACK");
         back.setForeground(Color.WHITE);
+        back.setToolTipText("Move Back");
         back.setBackground(new Color(66, 34, 130));
         back.setFont(new Font("times new roman", Font.PLAIN, 20));
         back.addActionListener(this);
@@ -271,7 +268,7 @@ public class NewCustomer extends JFrame implements ActionListener, WindowListene
         add(back);
 
         getContentPane().setBackground(new Color(32, 32, 32));
-        setDefaultCloseOperation(2);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLayout(null);
         setUndecorated(true);
         setVisible(true);
@@ -284,13 +281,13 @@ public class NewCustomer extends JFrame implements ActionListener, WindowListene
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == submit) {
-            String name = nameF.getText();
-            String phone = phoneF.getText();
+            String name = nameF.getText().toUpperCase();
+            String phone = phoneF.getText().toUpperCase();
             String gender = genderG.getSelection().getActionCommand();
             String id = (String) id_C.getSelectedItem();
             String country = (String)countryC.getSelectedItem();
             String room_no = (String) room_allocated.getSelectedItem();
-            String deposit = depositF.getText();
+            String deposit = depositF.getText().toUpperCase();
 
             Pattern pt = Pattern.compile("(0|\\+2340?)[789][01][0-9]{8}");
             Matcher mt = pt.matcher(phone);

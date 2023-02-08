@@ -1,10 +1,6 @@
 package HotelManagementJavaProject;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
+import javax.swing.*;
 
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -17,8 +13,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 import java.util.ArrayList;
-import javax.swing.JTextField;
-import javax.swing.JOptionPane;
 
 public class UpdateRoomStatus extends JFrame implements ActionListener, WindowListener {
     ImageIcon my_image;
@@ -123,7 +117,7 @@ public class UpdateRoomStatus extends JFrame implements ActionListener, WindowLi
 
 
         getContentPane().setBackground(new Color(32, 32, 32));
-        setDefaultCloseOperation(2);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLayout(null);
         setUndecorated(true);
         setVisible(true);

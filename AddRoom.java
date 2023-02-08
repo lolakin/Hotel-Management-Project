@@ -1,12 +1,6 @@
 package HotelManagementJavaProject;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.ButtonGroup;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
+import javax.swing.*;
 
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -22,11 +16,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.util.Random;
-
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-import javax.swing.JOptionPane;
 
 public class AddRoom extends JFrame implements ActionListener, WindowListener {
     ImageIcon my_image;
@@ -47,7 +36,7 @@ public class AddRoom extends JFrame implements ActionListener, WindowListener {
 
         JLabel heading = new JLabel("ADD ROOMS");
         heading.setForeground(new Color(204, 246, 221));
-        heading.setFont(new Font("monospaced", Font.BOLD, 40));
+        heading.setFont(new Font("serif", Font.BOLD, 40));
         heading.setBounds(270, 7, 250, 35);
         add(heading);
 
@@ -168,6 +157,7 @@ public class AddRoom extends JFrame implements ActionListener, WindowListener {
         submit = new JButton("SUBMIT");
         submit.setFocusable(false);
         submit.setForeground(Color.WHITE);
+        submit.setToolTipText("Add a new room...");
         submit.setBackground(new Color(66, 34, 130));
         submit.setFont(new Font("times new roman", Font.PLAIN, 20));
         submit.addActionListener(this);
@@ -176,6 +166,7 @@ public class AddRoom extends JFrame implements ActionListener, WindowListener {
 
         getContentPane().setBackground(new Color(32, 32, 32));setDefaultCloseOperation(2);
         setLayout(null);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
         setVisible(true);
         addWindowListener(this);

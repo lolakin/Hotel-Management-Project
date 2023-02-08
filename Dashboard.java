@@ -1,16 +1,6 @@
 package HotelManagementJavaProject;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.ButtonGroup;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
+import javax.swing.*;
 
 import java.awt.event.*;
 
@@ -21,16 +11,7 @@ import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Random;
 
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JRadioButton;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.JOptionPane;
-
 public class Dashboard extends JFrame implements ActionListener, WindowListener {
-
     ImageIcon my_image;
     JPasswordField pf;
 
@@ -45,10 +26,8 @@ public class Dashboard extends JFrame implements ActionListener, WindowListener 
         JMenuBar menu_bar = new JMenuBar();
         menu_bar.setBackground(new Color(23, 32, 42));
 
-        UIManager.put("Menu.font", new Font("Verdana", Font.BOLD, 15));
-//		menu_bar.setFont(new Font("Verdana", Font.BOLD, 15));
+        UIManager.put("Menu.font", new Font("Verdana", Font.BOLD, 25));
         setJMenuBar(menu_bar);
-
 
         JMenu menu1 = new JMenu("Hotel Management");
         menu1.setForeground(new Color(171, 235, 198));
@@ -98,13 +77,17 @@ public class Dashboard extends JFrame implements ActionListener, WindowListener 
         item10.addActionListener(this);
         menu2.add(item10);
 
-        JButton logout = new JButton("Log Out");
+        JMenuItem item11 = new JMenuItem("Feedback Info");
+        item11.addActionListener(this);
+        menu2.add(item11);
+
+        JButton logout = new JButton("LOG OUT");
         logout.setForeground(Color.BLACK);
         logout.setBackground(Color.RED);
-//        logout.setBackground(new Color(63, 10, 10));
+        logout.setToolTipText("Go back to the login page...");
         logout.addActionListener(this);
         logout.setFocusable(false);
-        logout.setFont(new Font("verdana", Font.BOLD, 15));
+        logout.setFont(new Font("verdana", Font.BOLD, 20));
         menu_bar.add(logout);
 
         String path = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\dashboard.jpg";
@@ -120,16 +103,14 @@ public class Dashboard extends JFrame implements ActionListener, WindowListener 
         dashboard_image_label.setBounds(0,  0,  1550,  820);
         add(dashboard_image_label);
 
-
         JLabel title = new JLabel("HOTEL ELITE");
         title.setBounds(420, 50, 1500, 200);
         title.setForeground(Color.BLACK);
         title.setFont(new Font("times new roman", Font.BOLD, 70));
         dashboard_image_label.add(title);
 
-//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setBackground(new Color(23, 32, 42));
-        setDefaultCloseOperation(2);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLayout(null);
         setUndecorated(true);
         setVisible(true);
@@ -138,7 +119,6 @@ public class Dashboard extends JFrame implements ActionListener, WindowListener 
 
     public static void main(String[] args) {
         new Dashboard();
-
     }
 
     @Override
@@ -146,7 +126,6 @@ public class Dashboard extends JFrame implements ActionListener, WindowListener 
         if(e.getActionCommand().equals("Reception")) {
             new Reception();
             this.setVisible(false);
-
         }
 
         else if(e.getActionCommand().equals("Add Employee")) {
@@ -159,7 +138,7 @@ public class Dashboard extends JFrame implements ActionListener, WindowListener 
                     new AddEmployee();
                     this.setVisible(false);
                 }
-                else if(!password.equals("1234"))   {
+                else {
                     JOptionPane.showMessageDialog(null, "Wrong password!!");
                 }
             }
@@ -175,7 +154,7 @@ public class Dashboard extends JFrame implements ActionListener, WindowListener 
                     new AddItem();
                     this.setVisible(false);
                 }
-                else if(!password.equals("1234"))   {
+                else {
                     JOptionPane.showMessageDialog(null, "Wrong password!!");
                 }
             }
@@ -190,7 +169,7 @@ public class Dashboard extends JFrame implements ActionListener, WindowListener 
                     new RemoveItem();
                     this.setVisible(false);
                 }
-                else if(!password.equals("1234"))   {
+                else {
                     JOptionPane.showMessageDialog(null, "Wrong password!!");
                 }
             }
@@ -205,7 +184,7 @@ public class Dashboard extends JFrame implements ActionListener, WindowListener 
                     new AddRoom();
                     this.setVisible(false);
                 }
-                else if(!password.equals("1234"))   {
+                else {
                     JOptionPane.showMessageDialog(null, "Wrong password!!");
                 }
             }
@@ -221,7 +200,7 @@ public class Dashboard extends JFrame implements ActionListener, WindowListener 
                     new AddCar();
                     this.setVisible(false);
                 }
-                else if(!password.equals("1234"))   {
+                else {
                     JOptionPane.showMessageDialog(null, "Wrong password!!");
                 }
             }
@@ -237,7 +216,7 @@ public class Dashboard extends JFrame implements ActionListener, WindowListener 
                     new CustomerInfo();
                     this.setVisible(false);
                 }
-                else if(!password.equals("1234"))   {
+                else {
                     JOptionPane.showMessageDialog(null, "Wrong password!!");
                 }
             }
@@ -253,7 +232,7 @@ public class Dashboard extends JFrame implements ActionListener, WindowListener 
                     new EmployeeInfo();
                     this.setVisible(false);
                 }
-                else if(!password.equals("1234"))   {
+                else {
                     JOptionPane.showMessageDialog(null, "Wrong password!!");
                 }
             }
@@ -269,7 +248,7 @@ public class Dashboard extends JFrame implements ActionListener, WindowListener 
                     new PickUpInfo();
                     this.setVisible(false);
                 }
-                else if(!password.equals("1234"))   {
+                else {
                     JOptionPane.showMessageDialog(null, "Wrong password!!");
                 }
             }
@@ -285,7 +264,23 @@ public class Dashboard extends JFrame implements ActionListener, WindowListener 
                     new UpdateRoomStatus();
                     this.setVisible(false);
                 }
-                else if(!password.equals("1234"))   {
+                else {
+                    JOptionPane.showMessageDialog(null, "Wrong password!!");
+                }
+            }
+        }
+
+        else if(e.getActionCommand().equals("Feedback Info")) {
+            pf = new JPasswordField();
+            int psd = JOptionPane.showConfirmDialog(null, pf, "Enter Password", JOptionPane.OK_CANCEL_OPTION,
+                    JOptionPane.PLAIN_MESSAGE);
+            if(psd == JOptionPane.OK_OPTION) {
+                String password = new String(pf.getPassword());
+                if (password.equals("1234")) {
+                    new FeedbackInfo();
+                    this.setVisible(false);
+                }
+                else {
                     JOptionPane.showMessageDialog(null, "Wrong password!!");
                 }
             }

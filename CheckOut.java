@@ -1,31 +1,18 @@
 package HotelManagementJavaProject;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
+import javax.swing.*;
 
 import java.awt.event.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Image;
 import java.util.ArrayList;
-import java.util.Random;
-
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.JOptionPane;
 
 public class CheckOut extends JFrame implements ActionListener, WindowListener {
     ImageIcon my_image;
-    JComboBox rooms;
+    JComboBox<String> rooms;
     JButton submit, back;
     Connection conn;
 
@@ -41,7 +28,7 @@ public class CheckOut extends JFrame implements ActionListener, WindowListener {
 
         JLabel heading = new JLabel("CHECK OUT");
         heading.setForeground(new Color(204, 246, 221));
-        heading.setFont(new Font("monospaced", Font.BOLD, 40));
+        heading.setFont(new Font("serif", Font.BOLD, 40));
         heading.setBounds(125, 5, 500, 50);
         add(heading);
 
@@ -74,7 +61,7 @@ public class CheckOut extends JFrame implements ActionListener, WindowListener {
 
         }
         String[] available_rooms = rooms_list.toArray(new String[rooms_list.size()]);
-        rooms = new JComboBox(available_rooms);
+        rooms = new JComboBox<>(available_rooms);
         String room_no = (String) rooms.getSelectedItem();
         rooms.setBackground(Color.WHITE);
         rooms.setBounds(150, 75, 100, 20);
@@ -83,6 +70,7 @@ public class CheckOut extends JFrame implements ActionListener, WindowListener {
         submit = new JButton("SUBMIT");
         submit.setForeground(Color.WHITE);
         submit.setBackground(new Color(66, 34, 130));
+        submit.setToolTipText("Check Out...");
         submit.setFont(new Font("times new roman", Font.PLAIN, 20));
         submit.addActionListener(this);
         submit.setBounds(70, 125, 115, 30);
@@ -91,6 +79,7 @@ public class CheckOut extends JFrame implements ActionListener, WindowListener {
         back = new JButton("BACK");
         back.setForeground(Color.WHITE);
         back.setBackground(new Color(66, 34, 130));
+        back.setToolTipText("Move Back");
         back.setFont(new Font("times new roman", Font.PLAIN, 20));
         back.addActionListener(this);
         back.setBounds(70, 175, 115, 30);
@@ -98,8 +87,7 @@ public class CheckOut extends JFrame implements ActionListener, WindowListener {
 
 
         getContentPane().setBackground(new Color(32, 32, 32));
-
-        setDefaultCloseOperation(2);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLayout(null);
         setUndecorated(true);
         setVisible(true);
