@@ -1,6 +1,7 @@
 package HotelManagementJavaProject;
 
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
 
 import java.awt.event.*;
 import java.sql.Connection;
@@ -13,13 +14,24 @@ import net.proteanit.sql.DbUtils;
 
 public class PickUpInfo extends JFrame implements ActionListener, WindowListener {
     ImageIcon my_image;
-    JButton check, back;
+    JButton back;
     JTable table;
     Connection conn;
+    Font fn;
 
     public PickUpInfo() {
         loadSql();
+
+        UIManager.put("OptionPane.messageFont", new Font("System", Font.PLAIN, 20));
+        UIManager.put("OptionPane.buttonFont", new Font("System", Font.BOLD, 25));
+        UIManager.put("OptionPane.background",new ColorUIResource(Color.BLACK));
+        UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 24));
+        UIManager.put("ToolTip.foreground", Color.BLACK);
+        UIManager.put("ToolTip.background", Color.white);
+
         setResizable(false);
+        fn = new Font("Tahoma", Font.BOLD, 20);
+
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
 
         my_image = new ImageIcon(path2);
@@ -56,8 +68,8 @@ public class PickUpInfo extends JFrame implements ActionListener, WindowListener
         table = new JTable();
         table.setBackground(new Color(32, 32, 32));
         table.setForeground(Color.WHITE);
-        table.setFont(new Font("arial", Font.PLAIN, 15));
-        table.setRowHeight(20);
+        table.setFont(fn);
+        table.setRowHeight(25);
         table.setBounds(0, 160, 700, 400);
         add(table);
 
@@ -66,6 +78,7 @@ public class PickUpInfo extends JFrame implements ActionListener, WindowListener
         back.setBackground(new Color(66, 34, 130));
         back.setFont(new Font("times new roman", Font.PLAIN, 20));
         back.addActionListener(this);
+        back.setToolTipText("Back to dashboard...");
         back.setBounds(300, 600, 100, 30);
         back.setFocusable(false);
         add(back);
@@ -102,6 +115,8 @@ public class PickUpInfo extends JFrame implements ActionListener, WindowListener
 
         }
         catch (Exception ae) {
+            UIManager.put("Button.background", Color.BLACK);
+            UIManager.put("Button.foreground", Color.white);
             JOptionPane.showMessageDialog(null, "Error Occurred." +
                     " Will be resolved in the next update." +
                     " Thanks.");
@@ -116,6 +131,8 @@ public class PickUpInfo extends JFrame implements ActionListener, WindowListener
             table.setModel(DbUtils.resultSetToTableModel(result));
         }
         catch(Exception ae) {
+            UIManager.put("Button.background", Color.BLACK);
+            UIManager.put("Button.foreground", Color.white);
             JOptionPane.showMessageDialog(null, "Error Occurred." +
                     " Will be resolved in the next update." +
                     " Thanks.");

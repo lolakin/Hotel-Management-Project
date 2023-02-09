@@ -1,6 +1,7 @@
 package HotelManagementJavaProject;
 
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.Connection;
@@ -18,8 +19,17 @@ public class BookFood extends JFrame implements ActionListener, WindowListener {
     String p;
     Statement st;
     Image img;
+
     public BookFood(){
         loadSql();
+
+        UIManager.put("OptionPane.messageFont", new Font("System", Font.PLAIN, 20));
+        UIManager.put("OptionPane.buttonFont", new Font("System", Font.BOLD, 25));
+        UIManager.put("OptionPane.background",new ColorUIResource(Color.BLACK));
+        UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 24));
+        UIManager.put("ToolTip.foreground", Color.BLACK);
+        UIManager.put("ToolTip.background", Color.white);
+
         setResizable(false);
         font = new Font("serif", Font.BOLD, 25);
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
@@ -37,7 +47,7 @@ public class BookFood extends JFrame implements ActionListener, WindowListener {
 
         back = new JButton(new_icon);
         back.setText("BACK");
-        back.setToolTipText("Move Back");
+        back.setToolTipText("Back to restaurant...");
         back.setBounds(1255, 1, 100, 30);
         back.setBackground(Color.WHITE);
         back.setForeground(Color.BLACK);
@@ -68,6 +78,8 @@ public class BookFood extends JFrame implements ActionListener, WindowListener {
                     roomF.setEditable(true);
                 }
                 else {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter only numeric digits(0-9)");
                     roomF.setText("");
                 }
@@ -88,6 +100,8 @@ public class BookFood extends JFrame implements ActionListener, WindowListener {
             public void keyPressed(KeyEvent ke) {
                 char ch = ke.getKeyChar();
                 if(Character.isDigit(ch)) {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only !");
                 }
                 else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE){
@@ -98,6 +112,8 @@ public class BookFood extends JFrame implements ActionListener, WindowListener {
                         || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT
                         || ke.getKeyCode() == KeyEvent.VK_ALT || ke.getKeyCode() == KeyEvent.VK_F4 )) {
                     itemF.setEditable(true);
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only and _ !");
                 }
 
@@ -127,6 +143,8 @@ public class BookFood extends JFrame implements ActionListener, WindowListener {
                     priceF.setEditable(true);
                 }
                 else {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter only numeric digits(0-9)");
                     priceF.setText("");
                 }
@@ -174,6 +192,7 @@ public class BookFood extends JFrame implements ActionListener, WindowListener {
                 String price = priceF.getText();
 
 
+                String depA = "SELECT itemPrice FROM RestItem WHERE itemName = '" + item + "'";
                 String dep = "SELECT * FROM RestItem WHERE itemPrice = '" + price + "' AND itemName = '" + item + "'";
                 String q = "CREATE TABLE IF NOT EXISTS BookFood(roomNo int, itemName char(30))";
                 String query3 = "SELECT * FROM room WHERE room_no = '" + room + "' AND availability = 'occupied'";
@@ -192,35 +211,52 @@ public class BookFood extends JFrame implements ActionListener, WindowListener {
                             if(rss.next()){
                                 ResultSet rr = conn.createStatement().executeQuery(dep);
                                 if (rr.next()){
+                                    UIManager.put("Button.background", Color.BLACK);
+                                    UIManager.put("Button.foreground", Color.white);
                                     conn.createStatement().execute(query);
                                     JOptionPane.showMessageDialog(null, "Food Booked...");
                                     this.setVisible(false);
                                     new Restaurant();
                                 }
                                 else{
+                                    ResultSet dA = conn.createStatement().executeQuery(depA);
+                                    dA.next();
+                                    String ma = dA.getString(1);
+                                    String m = "The price for item " + item + " is: " + ma;
+                                    UIManager.put("Button.background", Color.BLACK);
+                                    UIManager.put("Button.foreground", Color.white);
                                     JOptionPane.showMessageDialog(null, "Wrong price for item: " + item);
+                                    JOptionPane.showMessageDialog(null, m);
                                 }
-
-
                             }
                             else{
+                                UIManager.put("Button.background", Color.BLACK);
+                                UIManager.put("Button.foreground", Color.white);
                                 JOptionPane.showMessageDialog(null, "Item does not exist!");
                             }
                         }
                         else{
+                            UIManager.put("Button.background", Color.BLACK);
+                            UIManager.put("Button.foreground", Color.white);
                             JOptionPane.showMessageDialog(null, "Room isn't available!");
                         }
 
                     }
                     else{
+                        UIManager.put("Button.background", Color.BLACK);
+                        UIManager.put("Button.foreground", Color.white);
                         JOptionPane.showMessageDialog(null, "Room doesn't exist!");
                     }
                 }
                 else{
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Fill in the Fields");
                 }
             }
             catch (Exception ae) {
+                UIManager.put("Button.background", Color.BLACK);
+                UIManager.put("Button.foreground", Color.white);
                 JOptionPane.showMessageDialog(null, "Error Occurred." +
                         " Will be resolved in the next update." +
                         " Thanks.");
@@ -243,6 +279,8 @@ public class BookFood extends JFrame implements ActionListener, WindowListener {
             conn = DriverManager.getConnection(url, uname, password);
         }
         catch (Exception ae) {
+            UIManager.put("Button.background", Color.BLACK);
+            UIManager.put("Button.foreground", Color.white);
             JOptionPane.showMessageDialog(null, "Error Occurred." +
                     " Will be resolved in the next update." +
                     " Thanks.");

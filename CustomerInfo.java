@@ -1,6 +1,7 @@
 package HotelManagementJavaProject;
 
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
 
 import java.awt.event.*;
 import java.sql.Connection;
@@ -22,9 +23,19 @@ public class CustomerInfo extends JFrame implements ActionListener, WindowListen
     JTable table;
     JCheckBox foreigner;
     Connection conn;
+    Font fn;
 
     public CustomerInfo() {
         loadSql();
+
+        UIManager.put("OptionPane.messageFont", new Font("System", Font.PLAIN, 20));
+        UIManager.put("OptionPane.buttonFont", new Font("System", Font.BOLD, 25));
+        UIManager.put("OptionPane.background",new ColorUIResource(Color.BLACK));
+        UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 24));
+        UIManager.put("ToolTip.foreground", Color.BLACK);
+        UIManager.put("ToolTip.background", Color.white);
+
+        fn = new Font("Tahoma", Font.BOLD, 20);
         setResizable(false);
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
 
@@ -66,7 +77,6 @@ public class CustomerInfo extends JFrame implements ActionListener, WindowListen
         gender.setBounds(360,  115,  70,  30);
         add(gender);
 
-
         id = new JLabel("ID");
         id.setFont(new Font("Tahoma", Font.BOLD, 15));
         id.setForeground(Color.WHITE);
@@ -100,8 +110,8 @@ public class CustomerInfo extends JFrame implements ActionListener, WindowListen
         table = new JTable();
         table.setBackground(new Color(32, 32, 32));
         table.setForeground(Color.WHITE);
-        table.setFont(new Font("arial", Font.PLAIN, 15));
-        table.setRowHeight(20);
+        table.setFont(fn);
+        table.setRowHeight(25);
         table.setBounds(0, 160, 1250, 400);
         add(table);
 
@@ -114,7 +124,6 @@ public class CustomerInfo extends JFrame implements ActionListener, WindowListen
         check.setBounds(475, 600, 115, 30);
         check.setFocusable(false);
         add(check);
-
 
         back = new JButton("BACK");
         back.setForeground(Color.WHITE);
@@ -135,7 +144,6 @@ public class CustomerInfo extends JFrame implements ActionListener, WindowListen
 
     public static void main(String[] args) {
         new CustomerInfo();
-
     }
 
     @Override
@@ -155,6 +163,8 @@ public class CustomerInfo extends JFrame implements ActionListener, WindowListen
                 }
             }
             catch(Exception ae) {
+                UIManager.put("Button.background", Color.BLACK);
+                UIManager.put("Button.foreground", Color.white);
                 JOptionPane.showMessageDialog(null, "Error Occurred." +
                         " Will be resolved in the next update." +
                         " Thanks.");
@@ -178,6 +188,8 @@ public class CustomerInfo extends JFrame implements ActionListener, WindowListen
 
         }
         catch (Exception ae) {
+            UIManager.put("Button.background", Color.BLACK);
+            UIManager.put("Button.foreground", Color.white);
             JOptionPane.showMessageDialog(null, "Error Occurred." +
                     " Will be resolved in the next update." +
                     " Thanks.");

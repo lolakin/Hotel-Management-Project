@@ -1,6 +1,7 @@
 package HotelManagementJavaProject;
 
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
 
 import java.awt.event.*;
 import java.sql.DriverManager;
@@ -26,6 +27,14 @@ public class PickUpService extends JFrame implements ActionListener, WindowListe
 
     public PickUpService() {
         loadSql();
+
+        UIManager.put("OptionPane.messageFont", new Font("System", Font.PLAIN, 20));
+        UIManager.put("OptionPane.buttonFont", new Font("System", Font.BOLD, 25));
+        UIManager.put("OptionPane.background",new ColorUIResource(Color.BLACK));
+        UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 24));
+        UIManager.put("ToolTip.foreground", Color.BLACK);
+        UIManager.put("ToolTip.background", Color.white);
+
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
         setResizable(false);
         my_image = new ImageIcon(path2);
@@ -129,10 +138,8 @@ public class PickUpService extends JFrame implements ActionListener, WindowListe
         priceF = new JTextField();
         priceF.setBounds(275,  520,  100,  20);
         priceF.addKeyListener(new KeyAdapter() {
-            String value = priceF.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
-                int l = value.length();
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     priceF.setEditable(true);
                 }
@@ -144,6 +151,8 @@ public class PickUpService extends JFrame implements ActionListener, WindowListe
                     priceF.setEditable(true);
                 }
                 else {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter only numeric digits(0-9)");
                     priceF.setText("");
                 }
@@ -156,6 +165,7 @@ public class PickUpService extends JFrame implements ActionListener, WindowListe
         submit.setBackground(new Color(66, 34, 130));
         submit.setFont(new Font("times new roman", Font.PLAIN, 20));
         submit.addActionListener(this);
+        submit.setToolTipText("Book a ride!");
         submit.setFocusable(false);
         submit.setBounds(180, 565, 115, 30);
         add(submit);
@@ -165,6 +175,7 @@ public class PickUpService extends JFrame implements ActionListener, WindowListe
         back.setBackground(new Color(66, 34, 130));
         back.setFont(new Font("times new roman", Font.PLAIN, 20));
         back.addActionListener(this);
+        back.setToolTipText("Back to reception...");
         back.setBounds(350, 565, 115, 30);
         add(back);
 
@@ -197,16 +208,20 @@ public class PickUpService extends JFrame implements ActionListener, WindowListe
 
             if (mt.matches()){
                 try {
+                    String depA = "SELECT price FROM car WHERE model = '" + car + "'";
                     String dep = "SELECT * FROM car WHERE price = '" + price + "' AND model = '" + car + "'";
                     String q = "CREATE TABLE IF NOT EXISTS pickup(car varchar(15), address varchar(30), time time)";
                     String query = "INSERT INTO pickup VALUES ('" + car +"', " + "'" + address + "', " + "'" + time + "')";
                     String qq = "DELETE FROM car WHERE  model = '" + car + "'";
+                    assert car != null;
                     if(!(car.isBlank() || address.isBlank() || time.isBlank())){
                         st = conn.createStatement();
                         st.executeUpdate(q);
                         ResultSet rr = conn.createStatement().executeQuery(dep);
 
                         if (rr.next()){
+                            UIManager.put("Button.background", Color.BLACK);
+                            UIManager.put("Button.foreground", Color.white);
                             conn.createStatement().execute(query);
                             st.executeUpdate(qq);
                             String message = "New pickup added !!!";
@@ -214,17 +229,26 @@ public class PickUpService extends JFrame implements ActionListener, WindowListe
                             this.setVisible(false);
                         }
                         else{
+                            ResultSet dA = conn.createStatement().executeQuery(depA);
+                            dA.next();
+                            String ma = dA.getString(1);
+                            String m = "The price for car model: " + car + " is: " + ma;
+                            UIManager.put("Button.background", Color.BLACK);
+                            UIManager.put("Button.foreground", Color.white);
                             JOptionPane.showMessageDialog(null, "Wrong price for car model: " + car);
+                            JOptionPane.showMessageDialog(null, m);
                         }
-
-
                     }
                     else{
+                        UIManager.put("Button.background", Color.BLACK);
+                        UIManager.put("Button.foreground", Color.white);
                         JOptionPane.showMessageDialog(null, "Fill in the fields!!!");
                     }
                 }
 
                 catch(Exception ae) {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Error Occurred." +
                             " Will be resolved in the next update." +
                             " Thanks.");
@@ -232,6 +256,8 @@ public class PickUpService extends JFrame implements ActionListener, WindowListe
                 }
             }
             else{
+                UIManager.put("Button.background", Color.BLACK);
+                UIManager.put("Button.foreground", Color.white);
                 JOptionPane.showMessageDialog(null, "Time "+ time +" is invalid 24Hours Format");
             }
         }
@@ -253,6 +279,8 @@ public class PickUpService extends JFrame implements ActionListener, WindowListe
 
         }
         catch (Exception ae) {
+            UIManager.put("Button.background", Color.BLACK);
+            UIManager.put("Button.foreground", Color.white);
             JOptionPane.showMessageDialog(null, "Error Occurred." +
                     " Will be resolved in the next update." +
                     " Thanks.");

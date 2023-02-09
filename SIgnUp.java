@@ -1,6 +1,7 @@
 package HotelManagementJavaProject;
 
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
 
 import java.awt.event.*;
 import java.sql.Connection;
@@ -31,8 +32,15 @@ public class SIgnUp extends JFrame implements ActionListener, WindowListener {
     Connection conn;
     private boolean clicked = false;
     Font f = new Font("serif", Font.BOLD, 20);
+
     public SIgnUp() {
         loadSql();
+        UIManager.put("OptionPane.messageFont", new Font("System", Font.PLAIN, 20));
+        UIManager.put("OptionPane.buttonFont", new Font("System", Font.BOLD, 25));
+        UIManager.put("OptionPane.background",new ColorUIResource(Color.BLUE));
+        UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 24));
+        UIManager.put("ToolTip.foreground", Color.BLACK);
+        UIManager.put("ToolTip.background", Color.white);
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
         setResizable(false);
         my_image = new ImageIcon(path2);
@@ -97,6 +105,8 @@ public class SIgnUp extends JFrame implements ActionListener, WindowListener {
                         || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT
                         || ke.getKeyCode() == KeyEvent.VK_ALT || ke.getKeyCode() == KeyEvent.VK_F4)) {
                     unfield.setEditable(true);
+                    UIManager.put("Button.background", Color.BLUE);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only and _ !");
                 }
 
@@ -124,6 +134,8 @@ public class SIgnUp extends JFrame implements ActionListener, WindowListener {
                 }
                 else if(!(Character.isAlphabetic(ch) || ke.getKeyChar() == '@' || ke.getKeyChar() == '.')) {
                     emailF.setEditable(true);
+                    UIManager.put("Button.background", Color.BLUE);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets, numbers, @ and . !");
                 }
 
@@ -150,6 +162,8 @@ public class SIgnUp extends JFrame implements ActionListener, WindowListener {
                     psd.setEditable(true);
                 }
                 else {
+                    UIManager.put("Button.background", Color.BLUE);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter only numeric digits(0-9)");
                     psd.setText("");
                 }
@@ -174,6 +188,8 @@ public class SIgnUp extends JFrame implements ActionListener, WindowListener {
                     psd2.setEditable(true);
                 }
                 else {
+                    UIManager.put("Button.background", Color.BLUE);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter only numeric digits(0-9)");
                     psd2.setText("");
                 }
@@ -257,21 +273,33 @@ public class SIgnUp extends JFrame implements ActionListener, WindowListener {
                         st.executeUpdate(q);
                         ResultSet result = conn.createStatement().executeQuery(query1);
                         if (result.next()) {
+                            UIManager.put("Button.background", Color.BLUE);
+                            UIManager.put("Button.foreground", Color.white);
                             JOptionPane.showMessageDialog( null, "Username/Email already taken");
                         }
                         else if (Pass.equals(Password)){
                             conn.createStatement().execute(query);
+                            UIManager.put("Button.background", Color.BLUE);
+                            UIManager.put("Button.foreground", Color.white);
                             JOptionPane.showMessageDialog(null, "Successfully registered...");
                             new Dashboard();
                             this.setVisible(false);
                         }
 
 
-                        else JOptionPane.showMessageDialog(null, "Confirm Password failed...");
+                        else{
+                            UIManager.put("Button.background", Color.BLUE);
+                            UIManager.put("Button.foreground", Color.white);
+                            JOptionPane.showMessageDialog(null, "Confirm Password failed...");}
                     }
-                    else JOptionPane.showMessageDialog(null, "Registration Failed!!");
+                    else{
+                        UIManager.put("Button.background", Color.BLUE);
+                        UIManager.put("Button.foreground", Color.white);
+                        JOptionPane.showMessageDialog(null, "Registration Failed!!");}
                 }
                 catch(Exception ae) {
+                    UIManager.put("Button.background", Color.BLUE);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Error Occurred." +
                             " Will be resolved in the next update." +
                             " Thanks.");
@@ -279,6 +307,8 @@ public class SIgnUp extends JFrame implements ActionListener, WindowListener {
                 }
             }
             else{
+                UIManager.put("Button.background", Color.BLUE);
+                UIManager.put("Button.foreground", Color.white);
                 JOptionPane.showMessageDialog(null, "Email format isn't valid!");
             }
         }
@@ -294,13 +324,12 @@ public class SIgnUp extends JFrame implements ActionListener, WindowListener {
         String url = "jdbc:mysql://localhost:3306/master";
 
         try {
-
             Class.forName("com.mysql.cj.jdbc.Driver");
-
             conn = DriverManager.getConnection(url, uname, password);
-
         }
         catch (Exception ae) {
+            UIManager.put("Button.background", Color.BLUE);
+            UIManager.put("Button.foreground", Color.white);
             JOptionPane.showMessageDialog(null, "Error Occurred." +
                     " Will be resolved in the next update." +
                     " Thanks.");

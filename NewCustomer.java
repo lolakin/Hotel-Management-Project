@@ -1,6 +1,7 @@
 package HotelManagementJavaProject;
 
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.Statement;
@@ -24,10 +25,16 @@ public class NewCustomer extends JFrame implements ActionListener, WindowListene
     ButtonGroup genderG;
     Connection conn;
     Statement st;
-    String test;
 
     public NewCustomer() {
         loadSql();
+        UIManager.put("OptionPane.messageFont", new Font("System", Font.PLAIN, 20));
+        UIManager.put("OptionPane.buttonFont", new Font("System", Font.BOLD, 25));
+        UIManager.put("OptionPane.background",new ColorUIResource(Color.BLACK));
+        UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 24));
+        UIManager.put("ToolTip.foreground", Color.BLACK);
+        UIManager.put("ToolTip.background", Color.white);
+
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
         setResizable(false);
         my_image = new ImageIcon(path2);
@@ -77,6 +84,8 @@ public class NewCustomer extends JFrame implements ActionListener, WindowListene
                         || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT
                         || ke.getKeyCode() == KeyEvent.VK_ALT || ke.getKeyCode() == KeyEvent.VK_F4)) {
                     nameF.setEditable(true);
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only !");
                 }
             }
@@ -108,6 +117,8 @@ public class NewCustomer extends JFrame implements ActionListener, WindowListene
                     phoneF.setEditable(true);
                 }
                 else {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter only numeric digits(0-9)");
                     phoneF.setText("");
                 }
@@ -210,6 +221,11 @@ public class NewCustomer extends JFrame implements ActionListener, WindowListene
             }
         }
         catch(Exception e) {
+            UIManager.put("Button.background", Color.BLACK);
+            UIManager.put("Button.foreground", Color.white);
+            JOptionPane.showMessageDialog(null, "Error Occurred." +
+                    " Will be resolved in the next update." +
+                    " Thanks.");
             System.out.println(e);
         }
 
@@ -242,6 +258,8 @@ public class NewCustomer extends JFrame implements ActionListener, WindowListene
                     depositF.setEditable(true);
                 }
                 else {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter only numeric digits(0-9)");
                     depositF.setText("");
                 }
@@ -251,19 +269,21 @@ public class NewCustomer extends JFrame implements ActionListener, WindowListene
 
         submit = new JButton("SUBMIT");
         submit.setForeground(Color.WHITE);
-        submit.setToolTipText("Submit form");
+        submit.setToolTipText("Submit form...");
         submit.setBackground(new Color(66, 34, 130));
         submit.setFont(new Font("times new roman", Font.PLAIN, 20));
         submit.addActionListener(this);
+        submit.setFocusable(false);
         submit.setBounds(210, 410, 115, 30);
         add(submit);
 
         back = new JButton("BACK");
         back.setForeground(Color.WHITE);
-        back.setToolTipText("Move Back");
+        back.setToolTipText("Back to reception...");
         back.setBackground(new Color(66, 34, 130));
         back.setFont(new Font("times new roman", Font.PLAIN, 20));
         back.addActionListener(this);
+        back.setFocusable(false);
         back.setBounds(340, 410, 115, 30);
         add(back);
 
@@ -271,6 +291,7 @@ public class NewCustomer extends JFrame implements ActionListener, WindowListene
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLayout(null);
         setUndecorated(true);
+        setLocationRelativeTo(null);
         setVisible(true);
         addWindowListener(this);
 
@@ -299,8 +320,8 @@ public class NewCustomer extends JFrame implements ActionListener, WindowListene
                     String query = "INSERT INTO CUSTOMER VALUES ('" + name + "', " + "'" + phone + "', " + "'" +
                             gender + "', " + "'" + id + "', " + "'" + country + "', " + "'" + room_no + "', " + "'" + deposit + "','check_in')";
                     String query3 = "UPDATE room SET availability = 'occupied' WHERE room_no = '" + room_no + "'";
-                    conn.createStatement().execute(query3);
                     String queryy = "SELECT * FROM CUSTOMER WHERE room_no = '" + room_no + "'" ;
+                    String depA = "SELECT price FROM ROOM WHERE room_no = '" + room_no + "'";
                     String dep = "SELECT * FROM Room WHERE price = '" + deposit + "' AND room_no = '" + room_no + "'";
 
                     if(!(name.isBlank() || phone.isBlank() || gender.isBlank() || Objects.requireNonNull(id).isBlank() || Objects.requireNonNull(country).isBlank()
@@ -310,11 +331,17 @@ public class NewCustomer extends JFrame implements ActionListener, WindowListene
                         ResultSet rr = conn.createStatement().executeQuery(dep);
                         ResultSet res = conn.createStatement().executeQuery(query1);
                         ResultSet r = conn.createStatement().executeQuery(queryy);
-
+                        ResultSet dA = conn.createStatement().executeQuery(depA);
+                        dA.next();
+                        String ma = dA.getString(1);
+                        String m = "The price for room " + room_no + " is: " + ma;
+                        UIManager.put("Button.background", Color.BLACK);
+                        UIManager.put("Button.foreground", Color.white);
                         if(rr.next()){
                             conn.createStatement().execute(query);
                             String message = "New Customer Added in Room no " + room_no + " !!!";
                             JOptionPane.showMessageDialog(null, message);
+                            conn.createStatement().execute(query3);
                             this.setVisible(false);
                             new Reception();
                         }
@@ -326,6 +353,7 @@ public class NewCustomer extends JFrame implements ActionListener, WindowListene
                         }
                         else {
                             JOptionPane.showMessageDialog(null, "Wrong price for room " + room_no);
+                            JOptionPane.showMessageDialog(null, m);
                         }
                     }
                     else{
@@ -334,6 +362,8 @@ public class NewCustomer extends JFrame implements ActionListener, WindowListene
                 }
 
                 catch(Exception ae) {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Error Occurred." +
                             " Will be resolved in the next update." +
                             " Thanks.");
@@ -341,6 +371,8 @@ public class NewCustomer extends JFrame implements ActionListener, WindowListene
                 }
             }
             else{
+                UIManager.put("Button.background", Color.BLACK);
+                UIManager.put("Button.foreground", Color.white);
                 JOptionPane.showMessageDialog(null, "Phone Number is not valid!");
             }
         }
@@ -360,6 +392,8 @@ public class NewCustomer extends JFrame implements ActionListener, WindowListene
             conn = DriverManager.getConnection(url, uname, password);
         }
         catch (Exception ae) {
+            UIManager.put("Button.background", Color.BLACK);
+            UIManager.put("Button.foreground", Color.white);
             JOptionPane.showMessageDialog(null, "Error Occurred." +
                     " Will be resolved in the next update." +
                     " Thanks.");

@@ -1,6 +1,7 @@
 package HotelManagementJavaProject;
 
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
 
 import java.awt.event.*;
 
@@ -16,6 +17,13 @@ public class Dashboard extends JFrame implements ActionListener, WindowListener 
     JPasswordField pf;
 
     public Dashboard() {
+        UIManager.put("OptionPane.messageFont", new Font("System", Font.PLAIN, 20));
+        UIManager.put("OptionPane.buttonFont", new Font("System", Font.BOLD, 20));
+        UIManager.put("OptionPane.background",new ColorUIResource(Color.BLACK));
+        UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 24));
+        UIManager.put("ToolTip.foreground", Color.BLACK);
+        UIManager.put("ToolTip.background", Color.white);
+
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
         setResizable(false);
         my_image = new ImageIcon(path2);
@@ -130,6 +138,8 @@ public class Dashboard extends JFrame implements ActionListener, WindowListener 
 
         else if(e.getActionCommand().equals("Add Employee")) {
             pf = new JPasswordField();
+            UIManager.put("Button.background", Color.black);
+            UIManager.put("Button.foreground", Color.white);
             int psd = JOptionPane.showConfirmDialog(null, pf, "Enter Password", JOptionPane.OK_CANCEL_OPTION,
                     JOptionPane.PLAIN_MESSAGE);
             if(psd == JOptionPane.OK_OPTION) {
@@ -146,6 +156,8 @@ public class Dashboard extends JFrame implements ActionListener, WindowListener 
         }
         else if(e.getActionCommand().equals("Add Item")) {
             pf = new JPasswordField();
+            UIManager.put("Button.background", Color.black);
+            UIManager.put("Button.foreground", Color.white);
             int psd = JOptionPane.showConfirmDialog(null, pf, "Enter Password", JOptionPane.OK_CANCEL_OPTION,
                     JOptionPane.PLAIN_MESSAGE);
             if(psd == JOptionPane.OK_OPTION) {
@@ -161,6 +173,8 @@ public class Dashboard extends JFrame implements ActionListener, WindowListener 
         }
         else if(e.getActionCommand().equals("Remove Item")) {
             pf = new JPasswordField();
+            UIManager.put("Button.background", Color.black);
+            UIManager.put("Button.foreground", Color.white);
             int psd = JOptionPane.showConfirmDialog(null, pf, "Enter Password", JOptionPane.OK_CANCEL_OPTION,
                     JOptionPane.PLAIN_MESSAGE);
             if(psd == JOptionPane.OK_OPTION) {
@@ -176,6 +190,8 @@ public class Dashboard extends JFrame implements ActionListener, WindowListener 
         }
         else if(e.getActionCommand().equals("Add Room")) {
             pf = new JPasswordField();
+            UIManager.put("Button.background", Color.black);
+            UIManager.put("Button.foreground", Color.white);
             int psd = JOptionPane.showConfirmDialog(null, pf, "Enter Password", JOptionPane.OK_CANCEL_OPTION,
                     JOptionPane.PLAIN_MESSAGE);
             if(psd == JOptionPane.OK_OPTION) {
@@ -192,6 +208,8 @@ public class Dashboard extends JFrame implements ActionListener, WindowListener 
         }
         else if(e.getActionCommand().equals("Add Car")) {
             pf = new JPasswordField();
+            UIManager.put("Button.background", Color.black);
+            UIManager.put("Button.foreground", Color.white);
             int psd = JOptionPane.showConfirmDialog(null, pf, "Enter Password", JOptionPane.OK_CANCEL_OPTION,
                     JOptionPane.PLAIN_MESSAGE);
             if(psd == JOptionPane.OK_OPTION) {
@@ -208,6 +226,8 @@ public class Dashboard extends JFrame implements ActionListener, WindowListener 
 
         else if(e.getActionCommand().equals("Customer Info")) {
             pf = new JPasswordField();
+            UIManager.put("Button.background", Color.black);
+            UIManager.put("Button.foreground", Color.white);
             int psd = JOptionPane.showConfirmDialog(null, pf, "Enter Password", JOptionPane.OK_CANCEL_OPTION,
                     JOptionPane.PLAIN_MESSAGE);
             if(psd == JOptionPane.OK_OPTION) {
@@ -224,6 +244,8 @@ public class Dashboard extends JFrame implements ActionListener, WindowListener 
 
         else if(e.getActionCommand().equals("Employee Info")) {
             pf = new JPasswordField();
+            UIManager.put("Button.background", Color.black);
+            UIManager.put("Button.foreground", Color.white);
             int psd = JOptionPane.showConfirmDialog(null, pf, "Enter Password", JOptionPane.OK_CANCEL_OPTION,
                     JOptionPane.PLAIN_MESSAGE);
             if(psd == JOptionPane.OK_OPTION) {
@@ -240,6 +262,8 @@ public class Dashboard extends JFrame implements ActionListener, WindowListener 
 
         else if(e.getActionCommand().equals("Pickup Info")) {
             pf = new JPasswordField();
+            UIManager.put("Button.background", Color.black);
+            UIManager.put("Button.foreground", Color.white);
             int psd = JOptionPane.showConfirmDialog(null, pf, "Enter Password", JOptionPane.OK_CANCEL_OPTION,
                     JOptionPane.PLAIN_MESSAGE);
             if(psd == JOptionPane.OK_OPTION) {
@@ -256,6 +280,8 @@ public class Dashboard extends JFrame implements ActionListener, WindowListener 
 
         else if(e.getActionCommand().equals("Update Room Status")) {
             pf = new JPasswordField();
+            UIManager.put("Button.background", Color.black);
+            UIManager.put("Button.foreground", Color.white);
             int psd = JOptionPane.showConfirmDialog(null, pf, "Enter Password", JOptionPane.OK_CANCEL_OPTION,
                     JOptionPane.PLAIN_MESSAGE);
             if(psd == JOptionPane.OK_OPTION) {
@@ -272,6 +298,8 @@ public class Dashboard extends JFrame implements ActionListener, WindowListener 
 
         else if(e.getActionCommand().equals("Feedback Info")) {
             pf = new JPasswordField();
+            UIManager.put("Button.background", Color.black);
+            UIManager.put("Button.foreground", Color.white);
             int psd = JOptionPane.showConfirmDialog(null, pf, "Enter Password", JOptionPane.OK_CANCEL_OPTION,
                     JOptionPane.PLAIN_MESSAGE);
             if(psd == JOptionPane.OK_OPTION) {
@@ -286,7 +314,7 @@ public class Dashboard extends JFrame implements ActionListener, WindowListener 
             }
         }
 
-        else if(e.getActionCommand().equals("Log Out")) {
+        else if(e.getActionCommand().equals("LOG OUT")) {
             new Login();
             this.setVisible(false);
         }

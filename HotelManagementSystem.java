@@ -1,6 +1,7 @@
 package HotelManagementJavaProject;
 
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
 
 import java.awt.event.*;
 import java.awt.BorderLayout;
@@ -13,9 +14,15 @@ import java.util.Random;
 
 public class HotelManagementSystem extends JFrame implements ActionListener, WindowListener {
     ImageIcon my_image;
-    JButton button, exit;
+    JButton button, exit, ok;
 
     public HotelManagementSystem() {
+        UIManager.put("OptionPane.messageFont", new Font("System", Font.PLAIN, 20));
+        UIManager.put("OptionPane.buttonFont", new Font("System", Font.BOLD, 25));
+        UIManager.put("OptionPane.background",new ColorUIResource(Color.BLACK));
+        UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 24));
+        UIManager.put("ToolTip.foreground", Color.BLACK);
+        UIManager.put("ToolTip.background", Color.white);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setResizable(false);
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
@@ -59,6 +66,7 @@ public class HotelManagementSystem extends JFrame implements ActionListener, Win
         button.setBackground(new Color(66, 34, 130));
         button.setForeground(Color.WHITE);
         button.setFocusable(false);
+        button.addActionListener(this);
         button.setToolTipText("Move To Sign Up Page");
         button.setFont(new Font("serif", Font.BOLD, 20));
         main_image_label.add(button);
@@ -72,19 +80,20 @@ public class HotelManagementSystem extends JFrame implements ActionListener, Win
 
     public static void main(String[] args) {
         new HotelManagementSystem();
-
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == button){
-            new SIgnUp().setVisible(true);
+        if (e.getSource() == exit){
             this.setVisible(false);
-        }
-        else if (e.getSource() == exit){
-            this.setVisible(false);
+            UIManager.put("Button.background", Color.black);
+            UIManager.put("Button.foreground", Color.white);
             JOptionPane.showMessageDialog(null, "Exit Successful \n" +
                     "Do come again!");
+        }
+        else if (e.getSource() == button){
+            new SIgnUp().setVisible(true);
+            this.setVisible(false);
         }
 
 
@@ -99,6 +108,8 @@ public class HotelManagementSystem extends JFrame implements ActionListener, Win
     public void windowClosing(WindowEvent e) {
         System.out.println("Window Closing");
         dispose();
+        UIManager.put("Button.background", Color.BLACK);
+        UIManager.put("Button.foreground", Color.white);
         JOptionPane.showMessageDialog(null, "Exit Successful \n" +
                 "Do come again!");
     }

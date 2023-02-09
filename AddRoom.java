@@ -1,6 +1,7 @@
 package HotelManagementJavaProject;
 
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
 
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -26,6 +27,13 @@ public class AddRoom extends JFrame implements ActionListener, WindowListener {
 
     public AddRoom() {
         loadSql();
+        UIManager.put("OptionPane.messageFont", new Font("System", Font.PLAIN, 20));
+        UIManager.put("OptionPane.buttonFont", new Font("System", Font.BOLD, 25));
+        UIManager.put("OptionPane.background",new ColorUIResource(Color.BLACK));
+        UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 24));
+        UIManager.put("ToolTip.foreground", Color.BLACK);
+        UIManager.put("ToolTip.background", Color.white);
+
         setResizable(false);
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
 
@@ -168,6 +176,7 @@ public class AddRoom extends JFrame implements ActionListener, WindowListener {
         setLayout(null);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
+        setLocationRelativeTo(null);
         setVisible(true);
         addWindowListener(this);
     }
@@ -195,25 +204,25 @@ public class AddRoom extends JFrame implements ActionListener, WindowListener {
                 if(!(room_no.isBlank() || availability.isBlank() || cleaning_Status.isBlank() || bed_type.isBlank() || price.isBlank())) {
                     ResultSet res = conn.createStatement().executeQuery(query1);
                     if (res.next()) {
+                        UIManager.put("Button.background", Color.BLACK);
+                        UIManager.put("Button.foreground", Color.white);
                         JOptionPane.showMessageDialog( null, "Room already exists");
                     }
                     else {
                         conn.createStatement().execute(query);
-
+                        UIManager.put("Button.background", Color.BLACK);
+                        UIManager.put("Button.foreground", Color.white);
                         String message = "New Room " + room_no + " Added !!!";
                         JOptionPane.showMessageDialog(null, message);
                     }
                 }
-
-
-
-
             }
 
             catch(Exception ae) {
+                UIManager.put("Button.background", Color.BLACK);
+                UIManager.put("Button.foreground", Color.white);
                 JOptionPane.showMessageDialog(null, "Fill in the fields!!!");
             }
-
         }
     }
 
@@ -227,6 +236,8 @@ public class AddRoom extends JFrame implements ActionListener, WindowListener {
 
         }
         catch (Exception ae) {
+            UIManager.put("Button.background", Color.BLACK);
+            UIManager.put("Button.foreground", Color.white);
             JOptionPane.showMessageDialog(null, "Error Occurred." +
                         " Will be resolved in the next update." +
                         " Thanks.");

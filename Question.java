@@ -1,6 +1,7 @@
 package HotelManagementJavaProject;
 
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.Connection;
@@ -20,6 +21,14 @@ public class Question extends JFrame implements ActionListener, WindowListener {
     Statement st;
     public Question(){
         loadSql();
+
+        UIManager.put("OptionPane.messageFont", new Font("System", Font.PLAIN, 20));
+        UIManager.put("OptionPane.buttonFont", new Font("System", Font.BOLD, 25));
+        UIManager.put("OptionPane.background",new ColorUIResource(Color.BLACK));
+        UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 24));
+        UIManager.put("ToolTip.foreground", Color.BLACK);
+        UIManager.put("ToolTip.background", Color.white);
+
         setResizable(false);
         font = new Font("serif", Font.PLAIN, 15);
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
@@ -79,7 +88,6 @@ public class Question extends JFrame implements ActionListener, WindowListener {
             String mail = emailF.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
-                char ch = ke.getKeyChar();
 
                  if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE ||  ke.getKeyCode() == KeyEvent.VK_SPACE
                          || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK || ke.getKeyCode() == KeyEvent.VK_DOWN
@@ -89,6 +97,8 @@ public class Question extends JFrame implements ActionListener, WindowListener {
                     emailF.setEditable(true);
                  }
                  else{
+                     UIManager.put("Button.background", Color.BLACK);
+                     UIManager.put("Button.foreground", Color.white);
                      JOptionPane.showMessageDialog(null, "Try again");
                  }
             }
@@ -103,6 +113,8 @@ public class Question extends JFrame implements ActionListener, WindowListener {
             public void keyPressed(KeyEvent ke) {
                 char ch = ke.getKeyChar();
                 if(Character.isDigit(ch)) {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only !");
                 }
                 else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE){
@@ -114,6 +126,8 @@ public class Question extends JFrame implements ActionListener, WindowListener {
                         || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT
                         || ke.getKeyCode() == KeyEvent.VK_ALT || ke.getKeyCode() == KeyEvent.VK_F4)){
                     colorF.setEditable(true);
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Try again!");
                 }
 
@@ -129,6 +143,8 @@ public class Question extends JFrame implements ActionListener, WindowListener {
             public void keyPressed(KeyEvent ke) {
                 char ch = ke.getKeyChar();
                 if(Character.isDigit(ch)) {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only !");
                 }
                 else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE){
@@ -140,6 +156,8 @@ public class Question extends JFrame implements ActionListener, WindowListener {
                         || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT
                         || ke.getKeyCode() == KeyEvent.VK_ALT || ke.getKeyCode() == KeyEvent.VK_F4)){
                     foodF.setEditable(true);
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only");
                 }
             }
@@ -149,10 +167,8 @@ public class Question extends JFrame implements ActionListener, WindowListener {
         ageF = new JTextField();
         ageF.setBounds(790, 450, 150, 30);
         ageF.addKeyListener(new KeyAdapter() {
-            String value = ageF.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
-                int l = value.length();
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     ageF.setEditable(true);
                 }
@@ -164,6 +180,8 @@ public class Question extends JFrame implements ActionListener, WindowListener {
                     ageF.setEditable(true);
                 }
                 else {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter only numeric digits(0-9)");
                     ageF.setText("");
                 }
@@ -179,6 +197,8 @@ public class Question extends JFrame implements ActionListener, WindowListener {
             public void keyPressed(KeyEvent ke) {
                 char ch = ke.getKeyChar();
                 if(Character.isDigit(ch)) {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only !");
                 }
                 else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE){
@@ -190,6 +210,8 @@ public class Question extends JFrame implements ActionListener, WindowListener {
                         || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT
                         || ke.getKeyCode() == KeyEvent.VK_ALT || ke.getKeyCode() == KeyEvent.VK_F4)){
                     ONameF.setEditable(true);
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only");
                 }
             }
@@ -200,6 +222,7 @@ public class Question extends JFrame implements ActionListener, WindowListener {
         chk.setBounds(700, 555, 100, 30);
         chk.setBackground(Color.BLACK);
         chk.setForeground(Color.WHITE);
+        chk.setToolTipText("Submit your security questions...");
         chk.setFocusable(false);
         font = new Font("serif", Font.PLAIN, 15);
         chk.setFont(font);
@@ -238,20 +261,28 @@ public class Question extends JFrame implements ActionListener, WindowListener {
 
                     ResultSet result = conn.createStatement().executeQuery(query1);
                     if (result.next()) {
+                        UIManager.put("Button.background", Color.BLACK);
+                        UIManager.put("Button.foreground", Color.white);
                         conn.createStatement().execute(query);
                         JOptionPane.showMessageDialog(null,"Successfully inputted" );
                         new Question().setVisible(false);
                         new Login();
                     }
                     else{
+                        UIManager.put("Button.background", Color.BLACK);
+                        UIManager.put("Button.foreground", Color.white);
                         JOptionPane.showMessageDialog(null, "Error! Email doesn't exist!");
                     }
                 }
                 else {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Fields cannot be empty");
                 }
             }
             catch(Exception ae) {
+                UIManager.put("Button.background", Color.BLACK);
+                UIManager.put("Button.foreground", Color.white);
                 JOptionPane.showMessageDialog(null, "Error Occurred." +
                         " Will be resolved in the next update." +
                         " Thanks.");
@@ -271,6 +302,8 @@ public class Question extends JFrame implements ActionListener, WindowListener {
 
         }
         catch (Exception ae) {
+            UIManager.put("Button.background", Color.BLACK);
+            UIManager.put("Button.foreground", Color.white);
             JOptionPane.showMessageDialog(null, "Error Occurred." +
                     " Will be resolved in the next update." +
                     " Thanks.");

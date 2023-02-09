@@ -1,6 +1,7 @@
 package HotelManagementJavaProject;
 
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.Connection;
@@ -22,6 +23,13 @@ public class AddItem extends JFrame implements ActionListener, WindowListener {
 
     public AddItem(){
         loadSQL();
+        UIManager.put("OptionPane.messageFont", new Font("System", Font.PLAIN, 20));
+        UIManager.put("OptionPane.buttonFont", new Font("System", Font.BOLD, 25));
+        UIManager.put("OptionPane.background",new ColorUIResource(Color.BLACK));
+        UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 24));
+        UIManager.put("ToolTip.foreground", Color.BLACK);
+        UIManager.put("ToolTip.background", Color.white);
+
         setResizable(false);
         font = new Font("serif", Font.BOLD, 25);
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
@@ -39,7 +47,7 @@ public class AddItem extends JFrame implements ActionListener, WindowListener {
 
         back = new JButton(new_icon);
         back.setText("BACK");
-        back.setToolTipText("Move Back");
+        back.setToolTipText("Back to dashboard...");
         back.setBounds(1255, 1, 100, 30);
         back.setBackground(Color.WHITE);
         back.setForeground(Color.BLACK);
@@ -70,6 +78,8 @@ public class AddItem extends JFrame implements ActionListener, WindowListener {
                     ItemNoF.setEditable(true);
                 }
                 else {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter only numeric digits(0-9)");
                     ItemNoF.setText("");
                 }
@@ -90,6 +100,8 @@ public class AddItem extends JFrame implements ActionListener, WindowListener {
             public void keyPressed(KeyEvent ke) {
                 char ch = ke.getKeyChar();
                 if(Character.isDigit(ch)) {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only !");
                 }
                 else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE){
@@ -101,6 +113,8 @@ public class AddItem extends JFrame implements ActionListener, WindowListener {
                         || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT
                         || ke.getKeyCode() == KeyEvent.VK_ALT || ke.getKeyCode() == KeyEvent.VK_F4 )) {
                     ItemNameF.setEditable(true);
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only and _ !");
                 }
 
@@ -130,6 +144,8 @@ public class AddItem extends JFrame implements ActionListener, WindowListener {
                     ItemPF.setEditable(true);
                 }
                 else {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter only numeric digits(0-9)");
                     ItemPF.setText("");
                 }
@@ -186,13 +202,19 @@ public class AddItem extends JFrame implements ActionListener, WindowListener {
                     ResultSet result = conn.createStatement().executeQuery(query1);
                     ResultSet res = conn.createStatement().executeQuery(query2);
                     if (result.next()) {
+                        UIManager.put("Button.background", Color.BLACK);
+                        UIManager.put("Button.foreground", Color.white);
                         JOptionPane.showMessageDialog( null, "Item No already exists");
                     }
                     else{
                        if (res.next()){
+                           UIManager.put("Button.background", Color.BLACK);
+                           UIManager.put("Button.foreground", Color.white);
                            JOptionPane.showMessageDialog(null, "Item already exists");
                        }
                        else {
+                           UIManager.put("Button.background", Color.BLACK);
+                           UIManager.put("Button.foreground", Color.white);
                            conn.createStatement().execute(query);
                            JOptionPane.showMessageDialog(null, "Successfully inputted...");
                            this.setVisible(false);
@@ -202,10 +224,16 @@ public class AddItem extends JFrame implements ActionListener, WindowListener {
 
 
                 }
-                else JOptionPane.showMessageDialog(null, "Fill in the fields!");
+                else{
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
+                    JOptionPane.showMessageDialog(null, "Fill in the fields!");
+                }
 
             }
             catch(Exception ae) {
+                UIManager.put("Button.background", Color.BLACK);
+                UIManager.put("Button.foreground", Color.white);
                 JOptionPane.showMessageDialog(null, "Error Occurred." +
                         " Will be resolved in the next update." +
                         " Thanks.");
@@ -229,6 +257,8 @@ public class AddItem extends JFrame implements ActionListener, WindowListener {
 
         }
         catch (Exception ae) {
+            UIManager.put("Button.background", Color.BLACK);
+            UIManager.put("Button.foreground", Color.white);
             JOptionPane.showMessageDialog(null, "Error Occurred." +
                     " Will be resolved in the next update." +
                     " Thanks.");

@@ -15,17 +15,26 @@ import java.sql.Statement;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
+import javax.swing.plaf.ColorUIResource;
 
 public class AddCar extends JFrame implements ActionListener, WindowListener {
     ImageIcon my_image;
     JTextField companyF, modelF, car_noF, colorF, priceF;
     ButtonGroup fuel_typeG;
-    JButton submit;
+    JButton submit, back;
     Connection conn;
     Statement st;
+    JRadioButton electric, petrol, diesel;
 
     public AddCar() {
         loadSql();
+        UIManager.put("OptionPane.messageFont", new Font("System", Font.PLAIN, 20));
+        UIManager.put("OptionPane.buttonFont", new Font("System", Font.BOLD, 25));
+        UIManager.put("OptionPane.background",new ColorUIResource(Color.BLACK));
+        UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 24));
+        UIManager.put("ToolTip.foreground", Color.BLACK);
+        UIManager.put("ToolTip.background", Color.white);
+
         setResizable(false);
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
 
@@ -75,6 +84,8 @@ public class AddCar extends JFrame implements ActionListener, WindowListener {
                         || ke.getKeyCode() == KeyEvent.VK_DOWN || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_ALT || ke.getKeyCode() == KeyEvent.VK_F4  || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT
                 )) {
                     companyF.setEditable(true);
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets and Numerics Only !");
                 }
 
@@ -106,6 +117,8 @@ public class AddCar extends JFrame implements ActionListener, WindowListener {
                         || ke.getKeyCode() == KeyEvent.VK_SHIFT || ke.getKeyCode() == KeyEvent.VK_ALT
                         || ke.getKeyCode() == KeyEvent.VK_F4 )) {
                     modelF.setEditable(true);
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets and Numerics only !");
                 }
 
@@ -135,6 +148,8 @@ public class AddCar extends JFrame implements ActionListener, WindowListener {
                     car_noF.setEditable(true);
                 }
                 else {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter only numeric digits(0-9)");
                     car_noF.setText("");
                 }
@@ -148,7 +163,7 @@ public class AddCar extends JFrame implements ActionListener, WindowListener {
         fuelL.setBounds(50, 190, 100, 20);
         add(fuelL);
 
-        JRadioButton petrol = new JRadioButton("Petrol");
+        petrol = new JRadioButton("Petrol");
         petrol.setActionCommand("petrol");
         petrol.setFont(new Font("Tahoma", Font.PLAIN, 14));
         petrol.setBackground(new Color(32, 32, 32));
@@ -157,7 +172,7 @@ public class AddCar extends JFrame implements ActionListener, WindowListener {
         add(petrol);
 
 
-        JRadioButton diesel = new JRadioButton("Diesel");
+        diesel = new JRadioButton("Diesel");
         diesel.setActionCommand("diesel");
         diesel.setFont(new Font("Tahoma", Font.PLAIN, 14));
         diesel.setBackground(new Color(32, 32, 32));
@@ -165,7 +180,7 @@ public class AddCar extends JFrame implements ActionListener, WindowListener {
         diesel.setBounds(140, 220, 80, 20);
         add(diesel);
 
-        JRadioButton electric = new JRadioButton("Electric");
+        electric = new JRadioButton("Electric");
         electric.setActionCommand("electric");
         electric.setFont(new Font("Tahoma", Font.PLAIN, 14));
         electric.setBackground(new Color(32, 32, 32));
@@ -192,6 +207,8 @@ public class AddCar extends JFrame implements ActionListener, WindowListener {
             public void keyPressed(KeyEvent ke) {
                 char ch = ke.getKeyChar();
                 if(Character.isDigit(ch)) {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only !");
                 }
                 else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE){
@@ -203,6 +220,8 @@ public class AddCar extends JFrame implements ActionListener, WindowListener {
                         || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT
                         || ke.getKeyCode() == KeyEvent.VK_ALT || ke.getKeyCode() == KeyEvent.VK_F4)) {
                     colorF.setEditable(true);
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only !");
                 }
 
@@ -233,6 +252,8 @@ public class AddCar extends JFrame implements ActionListener, WindowListener {
                     priceF.setEditable(true);
                 }
                 else {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter only numeric digits(0-9)");
                     priceF.setText("");
                 }
@@ -249,10 +270,20 @@ public class AddCar extends JFrame implements ActionListener, WindowListener {
         submit.setBounds(325, 400, 115, 30);
         add(submit);
 
+        back = new JButton("BACK");
+        back.setForeground(Color.WHITE);
+        back.setBackground(new Color(66, 34, 130));
+        back.setToolTipText("Back to dashboard...");
+        back.setFont(new Font("times new roman", Font.PLAIN, 20));
+        back.addActionListener(this);
+        back.setBounds(500, 400, 115, 30);
+        add(back);
+
         getContentPane().setBackground(new Color(32, 32, 32));
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLayout(null);
         setUndecorated(true);
+        setLocationRelativeTo(null);
         setVisible(true);
         addWindowListener(this);
     }
@@ -281,19 +312,35 @@ public class AddCar extends JFrame implements ActionListener, WindowListener {
                 st.executeUpdate(q);
                 ResultSet res = conn.createStatement().executeQuery(query1);
                 if (res.next()) {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Car already exists");
                 }
                 else {
                     conn.createStatement().execute(query);
                     String message = "New Car " + company + "-" + model + " Added !!!";
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, message);
-                    this.setVisible(false);
+                    companyF.setText("");
+                    modelF.setText("");
+                    car_noF.setText("");
+                    colorF.setText("");
+                    priceF.setText("");
+                    petrol.setSelected(true);
+                    diesel.setSelected(false);
+                    electric.setSelected(false);
                 }
             }
-
-            else JOptionPane.showMessageDialog(null, "Addition failed!!!");
+            else{
+                UIManager.put("Button.background", Color.BLACK);
+                UIManager.put("Button.foreground", Color.white);
+                JOptionPane.showMessageDialog(null, "Addition failed!!!");
+            }
         }
         catch(Exception ae) {
+            UIManager.put("Button.background", Color.BLACK);
+            UIManager.put("Button.foreground", Color.white);
             JOptionPane.showMessageDialog(null, "Error Occurred." +
                     " Will be resolved in the next update." +
                     " Thanks.");
@@ -312,6 +359,8 @@ public class AddCar extends JFrame implements ActionListener, WindowListener {
 
         }
         catch (Exception ae) {
+            UIManager.put("Button.background", Color.BLACK);
+            UIManager.put("Button.foreground", Color.white);
             JOptionPane.showMessageDialog(null, "Error Occurred." +
                     " Will be resolved in the next update." +
                     " Thanks.");

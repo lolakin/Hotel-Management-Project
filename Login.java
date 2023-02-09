@@ -1,6 +1,7 @@
 package HotelManagementJavaProject;
 
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.Connection;
@@ -26,6 +27,12 @@ public class Login extends JFrame implements ActionListener, WindowListener {
 
     public Login() {
         loadSql();
+        UIManager.put("OptionPane.messageFont", new Font("System", Font.PLAIN, 20));
+        UIManager.put("OptionPane.buttonFont", new Font("System", Font.BOLD, 25));
+        UIManager.put("OptionPane.background",new ColorUIResource(Color.BLUE));
+        UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 24));
+        UIManager.put("ToolTip.foreground", Color.BLACK);
+        UIManager.put("ToolTip.background", Color.white);
         setResizable(false);
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
 
@@ -91,6 +98,7 @@ public class Login extends JFrame implements ActionListener, WindowListener {
         Login = new JButton("LOGIN");
         Login.setBounds(660, 550, 140, 30);
         Login.setBackground(Color.GREEN);
+        Login.setToolTipText("Login to your account...");
         Login.setForeground(Color.BLACK);
         Login.setFont(new Font("serif", Font.BOLD, 25));
         Login.addActionListener(this);
@@ -100,6 +108,7 @@ public class Login extends JFrame implements ActionListener, WindowListener {
         cancel.setBounds(820, 550, 140, 30);
         cancel.setBackground(Color.RED);
         cancel.setForeground(Color.WHITE);
+        cancel.setToolTipText("Go back to the home page...");
         cancel.setFont(new Font("serif", Font.BOLD, 25));
         cancel.addActionListener(this);
         add(cancel);
@@ -128,6 +137,8 @@ public class Login extends JFrame implements ActionListener, WindowListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (!clicked) {
+                    UIManager.put("Button.background", Color.BLUE);
+                    UIManager.put("Button.foreground", Color.white);
                     int response = JOptionPane.showConfirmDialog(null, "Do you want to change your password?", "Changing",JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if(response == JOptionPane.YES_OPTION) {
                         clicked = true;
@@ -162,6 +173,8 @@ public class Login extends JFrame implements ActionListener, WindowListener {
                            ResultSet result = st.executeQuery(query);
 
                            while ( result.next()) {
+                               UIManager.put("Button.background", Color.BLUE);
+                               UIManager.put("Button.foreground", Color.white);
                                JOptionPane.showMessageDialog(null, result.getString("Email"));
                                if (ans.equals(result.getString(1))) {
                                    JOptionPane.showMessageDialog(null, "Success");
@@ -178,6 +191,8 @@ public class Login extends JFrame implements ActionListener, WindowListener {
                }
                catch(Exception ae) {
                    ae.printStackTrace();
+                   UIManager.put("Button.background", Color.BLUE);
+                   UIManager.put("Button.foreground", Color.white);
                    JOptionPane.showMessageDialog(null, "Error Occurred." +
                            " Will be resolved in the next update." +
                            " Thanks.");
@@ -220,20 +235,29 @@ public class Login extends JFrame implements ActionListener, WindowListener {
                 if (!(username.isBlank() || Password.isBlank())) {
                     ResultSet result = conn.createStatement().executeQuery(query);
                     if (result.next()) {
+                        UIManager.put("Button.background", Color.BLUE);
+                        UIManager.put("Button.foreground", Color.white);
                         JOptionPane.showMessageDialog(null, "Login successful...");
                         new Dashboard();
                         this.setVisible(false);
 
                     }
-                    else
+                    else{
+                        UIManager.put("Button.background", Color.BLUE);
+                        UIManager.put("Button.foreground", Color.white);
                         JOptionPane.showMessageDialog(null, "invalid username/password!", "WARNING",
-                                JOptionPane.WARNING_MESSAGE);
+                                JOptionPane.WARNING_MESSAGE);}
 
                 }
-                else JOptionPane.showMessageDialog(null, "Login Failed!!!");
+                else {
+                    UIManager.put("Button.background", Color.BLUE);
+                    UIManager.put("Button.foreground", Color.white);
+                    JOptionPane.showMessageDialog(null, "Login Failed!!!");}
 
             }
             catch(Exception ae) {
+                UIManager.put("Button.background", Color.BLUE);
+                UIManager.put("Button.foreground", Color.white);
                 JOptionPane.showMessageDialog(null, "Error Occurred." +
                         " Will be resolved in the next update." +
                         " Thanks.");
@@ -253,12 +277,12 @@ public class Login extends JFrame implements ActionListener, WindowListener {
         String url = "jdbc:mysql://localhost:3306/master";
 
         try {
-
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(url, uname, password);
-
         }
         catch (Exception ae) {
+            UIManager.put("Button.background", Color.BLUE);
+            UIManager.put("Button.foreground", Color.white);
             JOptionPane.showMessageDialog(null, "Error Occurred." +
                     " Will be resolved in the next update." +
                     " Thanks.");

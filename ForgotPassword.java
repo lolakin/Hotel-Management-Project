@@ -2,6 +2,7 @@ package HotelManagementJavaProject;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -28,6 +29,14 @@ public class ForgotPassword extends JFrame implements ActionListener, WindowList
 
     public ForgotPassword(){
         loadSql();
+
+        UIManager.put("OptionPane.messageFont", new Font("System", Font.PLAIN, 20));
+        UIManager.put("OptionPane.buttonFont", new Font("System", Font.BOLD, 25));
+        UIManager.put("OptionPane.background",new ColorUIResource(Color.BLACK));
+        UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 24));
+        UIManager.put("ToolTip.foreground", Color.BLACK);
+        UIManager.put("ToolTip.background", Color.white);
+
         font = new Font("serif", Font.PLAIN, 20);
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
 
@@ -86,6 +95,8 @@ public class ForgotPassword extends JFrame implements ActionListener, WindowList
             public void keyPressed(KeyEvent ke) {
                 char ch = ke.getKeyChar();
                 if(Character.isDigit(ch)) {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only !");
                 }
                 else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE ||  ke.getKeyCode() == KeyEvent.VK_SPACE
@@ -98,6 +109,8 @@ public class ForgotPassword extends JFrame implements ActionListener, WindowList
                 else if(!(Character.isAlphabetic(ch) || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK || ke.getKeyCode() == KeyEvent.VK_SPACE
                         || ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT)){
                     questionF.setEditable(true);
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only");
                 }
 
@@ -121,6 +134,8 @@ public class ForgotPassword extends JFrame implements ActionListener, WindowList
                     passF.setEditable(true);
                 }
                 else {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter only numeric digits(0-9)");
                     passF.setText("");
                 }
@@ -144,6 +159,8 @@ public class ForgotPassword extends JFrame implements ActionListener, WindowList
                     CpassF.setEditable(true);
                 }
                 else {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter only numeric digits(0-9)");
                     CpassF.setText("");
                 }
@@ -155,12 +172,11 @@ public class ForgotPassword extends JFrame implements ActionListener, WindowList
         submit.setBounds(720, 470, 120, 30);
         submit.setBackground(Color.BLACK);
         submit.setForeground(Color.WHITE);
+        submit.setToolTipText("Change password?");
         submit.setFont(new Font("serif", Font.BOLD, 18));
         submit.setFocusable(false);
         submit.addActionListener(this);
         add(submit);
-
-
 
 
         getContentPane().setBackground(new Color(102, 7, 8));
@@ -230,12 +246,16 @@ public class ForgotPassword extends JFrame implements ActionListener, WindowList
                     if (result.next()) {
                         ResultSet res = conn.createStatement().executeQuery(query3);
                         if(res.next()){
+                            UIManager.put("Button.background", Color.BLACK);
+                            UIManager.put("Button.foreground", Color.white);
                             JOptionPane.showMessageDialog(null, "Duplicate Password!");
                         }
                         else{
                             if (pass.equals(confirm)){
                                 st = conn.createStatement();
                                 st.executeUpdate(query2);
+                                UIManager.put("Button.background", Color.BLACK);
+                                UIManager.put("Button.foreground", Color.white);
                                 JOptionPane.showMessageDialog(null, "Successful!");
                                 emailF.setText("");
                                 questionF.setText("");
@@ -243,19 +263,31 @@ public class ForgotPassword extends JFrame implements ActionListener, WindowList
                                 CpassF.setText("");
 
                             }
-                            else JOptionPane.showMessageDialog(null, "Password mismatch!");
+                            else{
+                                UIManager.put("Button.background", Color.BLACK);
+                                UIManager.put("Button.foreground", Color.white);
+                                JOptionPane.showMessageDialog(null, "Password mismatch!");
+                            }
                         }
 
                     }
-                    else JOptionPane.showMessageDialog(null, "Error! Email/Question not correct!");
+                    else{
+                        UIManager.put("Button.background", Color.BLACK);
+                        UIManager.put("Button.foreground", Color.white);
+                        JOptionPane.showMessageDialog(null, "Error! Email/Question not correct!");
+                    }
 
                 }
                 else{
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Fields cannot be empty!");
                 }
 
             }
             catch(Exception ae) {
+                UIManager.put("Button.background", Color.BLACK);
+                UIManager.put("Button.foreground", Color.white);
                 JOptionPane.showMessageDialog(null, "Error Occurred." +
                         " Will be resolved in the next update." +
                         " Thanks.");
@@ -275,6 +307,8 @@ public class ForgotPassword extends JFrame implements ActionListener, WindowList
 
         }
         catch (Exception ae) {
+            UIManager.put("Button.background", Color.BLACK);
+            UIManager.put("Button.foreground", Color.white);
             JOptionPane.showMessageDialog(null, "Error Occurred." +
                     " Will be resolved in the next update." +
                     " Thanks.");

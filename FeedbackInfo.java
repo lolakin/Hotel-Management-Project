@@ -1,6 +1,7 @@
 package HotelManagementJavaProject;
 
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
 
 import java.awt.event.*;
 import java.sql.Connection;
@@ -20,18 +21,29 @@ public class FeedbackInfo extends JFrame implements ActionListener, WindowListen
     ImageIcon my_image;
     JButton check, back;
     JTable table;
-    JCheckBox foreigner;
     Connection conn;
+    Font fn;
 
     public FeedbackInfo() {
         loadSql();
+
+        UIManager.put("OptionPane.messageFont", new Font("System", Font.PLAIN, 20));
+        UIManager.put("OptionPane.buttonFont", new Font("System", Font.BOLD, 25));
+        UIManager.put("OptionPane.background",new ColorUIResource(Color.BLACK));
+        UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 24));
+        UIManager.put("ToolTip.foreground", Color.BLACK);
+        UIManager.put("ToolTip.background", Color.white);
+
         setResizable(false);
+        fn = new Font("Tahoma", Font.BOLD, 20);
+
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
 
         my_image = new ImageIcon(path2);
         setIconImage(my_image.getImage());
 
         setBounds(160, 65, 1250, 700);
+
         JLabel heading = new JLabel("FEEDBACK INFO");
         heading.setForeground(new Color(204, 246, 221));
         heading.setFont(new Font("monospaced", Font.BOLD, 40));
@@ -72,17 +84,16 @@ public class FeedbackInfo extends JFrame implements ActionListener, WindowListen
         feedb.setBounds(1000,  85,  100,  30);
         add(feedb);
 
-
-
         table = new JTable();
         table.setBackground(new Color(32, 32, 32));
         table.setForeground(Color.WHITE);
-        table.setFont(new Font("arial", Font.PLAIN, 15));
-        table.setRowHeight(20);
+        table.setFont(fn);
+        table.setRowHeight(25);
         table.setBounds(10, 200, 1250, 400);
         add(table);
 
         check = new JButton("CHECK");
+        check.setToolTipText("Check for customer feedback...");
         check.setForeground(Color.WHITE);
         check.setBackground(new Color(66, 34, 130));
         check.setFont(new Font("times new roman", Font.PLAIN, 20));
@@ -94,6 +105,7 @@ public class FeedbackInfo extends JFrame implements ActionListener, WindowListen
 
         back = new JButton("BACK");
         back.setForeground(Color.WHITE);
+        back.setToolTipText("Back to dashboard...");
         back.setBackground(new Color(66, 34, 130));
         back.setFont(new Font("times new roman", Font.PLAIN, 20));
         back.addActionListener(this);
@@ -124,6 +136,8 @@ public class FeedbackInfo extends JFrame implements ActionListener, WindowListen
                 table.setModel (DbUtils.resultSetToTableModel(result));
             }
             catch(Exception ae) {
+                UIManager.put("Button.background", Color.BLACK);
+                UIManager.put("Button.foreground", Color.white);
                 JOptionPane.showMessageDialog(null, "Error Occurred." +
                         " Will be resolved in the next update." +
                         " Thanks.");
@@ -148,6 +162,8 @@ public class FeedbackInfo extends JFrame implements ActionListener, WindowListen
 
         }
         catch (Exception ae) {
+            UIManager.put("Button.background", Color.BLACK);
+            UIManager.put("Button.foreground", Color.white);
             JOptionPane.showMessageDialog(null, "Error Occurred." +
                     " Will be resolved in the next update." +
                     " Thanks.");

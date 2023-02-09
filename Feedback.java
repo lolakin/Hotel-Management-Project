@@ -1,6 +1,7 @@
 package HotelManagementJavaProject;
 
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,6 +32,14 @@ public class Feedback extends JFrame implements ActionListener, WindowListener {
 
     public Feedback(){
         loadSql();
+
+        UIManager.put("OptionPane.messageFont", new Font("System", Font.PLAIN, 20));
+        UIManager.put("OptionPane.buttonFont", new Font("System", Font.BOLD, 25));
+        UIManager.put("OptionPane.background",new ColorUIResource(Color.BLACK));
+        UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 24));
+        UIManager.put("ToolTip.foreground", Color.BLACK);
+        UIManager.put("ToolTip.background", Color.white);
+
         setTitle("Feedback Form");
         setResizable(false);
         setSize(540, 550);
@@ -211,27 +220,36 @@ public class Feedback extends JFrame implements ActionListener, WindowListener {
                             String s1= "Thank you for your valuable Feedback!\n\nYour Responses:-\n";
                             String s2= "Name: "+name +"\nEmail: "+mail +"\nAge group: "+ age +"\nRating: "+r+"\nFeedback: "+feedb;
                             String disp =s1+s2;
+                            UIManager.put("Button.background", Color.BLACK);
+                            UIManager.put("Button.foreground", Color.white);
                             JOptionPane.showMessageDialog(f, disp);
 
                             this.setVisible(false);
                             new Reception();
                         }
                         else{
+                            UIManager.put("Button.background", Color.BLACK);
+                            UIManager.put("Button.foreground", Color.white);
                             JOptionPane.showMessageDialog(null, "Email doesn't exist in our database");
                         }
                     }
                     else{
+                        UIManager.put("Button.background", Color.BLACK);
+                        UIManager.put("Button.foreground", Color.white);
                         JOptionPane.showMessageDialog(null, "Name doesn't exist");
                     }
                 }
                 else{
-
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Fields cannot be empty");
                 }
 
 
             }
             catch (Exception ae){
+                UIManager.put("Button.background", Color.BLACK);
+                UIManager.put("Button.foreground", Color.white);
                 JOptionPane.showMessageDialog(null, "Error Occurred." +
                         " Will be resolved in the next update." +
                         " Thanks.");
@@ -264,6 +282,8 @@ public class Feedback extends JFrame implements ActionListener, WindowListener {
 
         }
         catch (Exception ae) {
+            UIManager.put("Button.background", Color.BLACK);
+            UIManager.put("Button.foreground", Color.white);
             JOptionPane.showMessageDialog(null, "Error Occurred." +
                     " Will be resolved in the next update." +
                     " Thanks.");

@@ -1,6 +1,7 @@
 package HotelManagementJavaProject;
 
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
 
 import java.awt.event.*;
 
@@ -14,9 +15,12 @@ import java.util.Random;
 public class Reception extends JFrame implements ActionListener, WindowListener {
 
     ImageIcon my_image;
-    JButton new_customer, check_out, search, pickup_service, restaurant, feedback;
+    JButton new_customer, check_out, search, pickup_service, restaurant, feedback, back;
     public Reception() {
         setResizable(false);
+        UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 24));
+        UIManager.put("ToolTip.foreground", Color.BLACK);
+        UIManager.put("ToolTip.background", Color.white);
         Font f = new Font("serif", Font.BOLD, 26);
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
 
@@ -53,6 +57,8 @@ public class Reception extends JFrame implements ActionListener, WindowListener 
         new_customer.setBackground(red);
         new_customer.setForeground(Color.BLACK);
         new_customer.setFont(f);
+        new_customer.setToolTipText("Hello new customer!" +
+                " Kindly fill this form!");
         new_customer.addActionListener(this);
         new_customer.setBounds(30, 115, 270, 30);
         add(new_customer);
@@ -61,6 +67,7 @@ public class Reception extends JFrame implements ActionListener, WindowListener 
         search.setFocusable(false);
         search.setBackground(orange);
         search.setForeground(Color.BLACK);
+        search.setToolTipText("Search for a room that is available here!");
         search.setFont(f);
         search.addActionListener(this);
         search.setBounds(30, 180, 270, 30);
@@ -70,6 +77,8 @@ public class Reception extends JFrame implements ActionListener, WindowListener 
         check_out.setFocusable(false);
         check_out.setBackground(blue);
         check_out.setForeground(Color.BLACK);
+        check_out.setToolTipText("Ready to check out?" +
+                " Click here!");
         check_out.setFont(f);
         check_out.addActionListener(this);
         check_out.setBounds(30, 245, 270, 30);
@@ -80,6 +89,8 @@ public class Reception extends JFrame implements ActionListener, WindowListener 
         pickup_service.setBackground(purple);
         pickup_service.setForeground(Color.BLACK);
         pickup_service.setFont(f);
+        pickup_service.setToolTipText("Need a lift?" +
+                " Click here to book a ride!");
         pickup_service.addActionListener(this);
         pickup_service.setBounds(30, 310, 270, 30);
         add(pickup_service);
@@ -89,6 +100,8 @@ public class Reception extends JFrame implements ActionListener, WindowListener 
         restaurant.setBackground(red);
         restaurant.setForeground(Color.BLACK);
         restaurant.setFont(f);
+        restaurant.setToolTipText("Want to order a dish?" +
+                " Go ahead and choose one from our menu!");
         restaurant.addActionListener(this);
         restaurant.setBounds(30, 375, 270, 30);
         add(restaurant);
@@ -97,14 +110,29 @@ public class Reception extends JFrame implements ActionListener, WindowListener 
         feedback.setFocusable(false);
         feedback.setBackground(orange);
         feedback.setForeground(Color.BLACK);
+        feedback.setToolTipText("""
+                1. Have any complaints?\s
+                2. Want to rate us?\s
+                Click here!""");
         feedback.setFont(f);
         feedback.addActionListener(this);
         feedback.setBounds(30, 435, 270, 30);
         add(feedback);
 
+        back = new JButton("BACK");
+        back.setBounds(500, 435, 150, 30);
+        back.setBackground(Color.BLACK);
+        back.setForeground(Color.WHITE);
+        back.setFont(f);
+        back.setToolTipText("Back to dashboard...");
+        back.setFocusable(false);
+        back.addActionListener(this);
+        add(back);
+
         getContentPane().setBackground(new Color(32, 32, 32));
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLayout(null);
+        setLocationRelativeTo(null);
         setUndecorated(true);
         setVisible(true);
         addWindowListener(this);
@@ -140,6 +168,10 @@ public class Reception extends JFrame implements ActionListener, WindowListener 
         }
         else if (e.getSource() == feedback){
             new Feedback();
+            this.setVisible(false);
+        }
+        else if(e.getSource() == back){
+            new Dashboard();
             this.setVisible(false);
         }
     }

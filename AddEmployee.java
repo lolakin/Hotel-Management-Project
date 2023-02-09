@@ -1,6 +1,7 @@
 package HotelManagementJavaProject;
 
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
 
 import java.awt.event.*;
 import java.sql.Connection;
@@ -18,13 +19,21 @@ public class AddEmployee extends JFrame implements ActionListener, WindowListene
     JTextField nameF, genderF, ageF, salaryF, phoneF, IdF, emailF;
     ButtonGroup genderG;
     JComboBox<String> job;
-    JComboBox id_C;
-    JButton submit;
+    JButton submit, back;
     Connection conn;
     Statement st;
+    JRadioButton male, female, other;
 
     public AddEmployee() {
         loadSql();
+
+        UIManager.put("OptionPane.messageFont", new Font("System", Font.PLAIN, 20));
+        UIManager.put("OptionPane.buttonFont", new Font("System", Font.BOLD, 25));
+        UIManager.put("OptionPane.background",new ColorUIResource(Color.BLACK));
+        UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 24));
+        UIManager.put("ToolTip.foreground", Color.BLACK);
+        UIManager.put("ToolTip.background", Color.white);
+
         setResizable(false);
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
 
@@ -36,7 +45,7 @@ public class AddEmployee extends JFrame implements ActionListener, WindowListene
         JLabel heading = new JLabel("ADD EMPLOYEE");
         heading.setForeground(new Color(204, 246, 221));
         heading.setFont(new Font("serif", Font.BOLD, 40));
-        heading.setBounds(250,  10, 300, 35);
+        heading.setBounds(250,  10, 370, 35);
         add(heading);
 
         String path = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\employee.jpg";
@@ -75,6 +84,8 @@ public class AddEmployee extends JFrame implements ActionListener, WindowListene
                         || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT
                         || ke.getKeyCode() == KeyEvent.VK_ALT || ke.getKeyCode() == KeyEvent.VK_F4 )) {
                     nameF.setEditable(true);
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only !");
                 }
 
@@ -91,10 +102,8 @@ public class AddEmployee extends JFrame implements ActionListener, WindowListene
         ageF = new JTextField();
         ageF.setBounds(125, 110, 200, 20);
         ageF.addKeyListener(new KeyAdapter() {
-            String value = ageF.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
-                int l = value.length();
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     ageF.setEditable(true);
                 }
@@ -105,6 +114,8 @@ public class AddEmployee extends JFrame implements ActionListener, WindowListene
                     ageF.setEditable(true);
                 }
                 else {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter only numeric digits(0-9)");
                     ageF.setText("");
                 }
@@ -118,7 +129,7 @@ public class AddEmployee extends JFrame implements ActionListener, WindowListene
         gender.setFont(new Font("Tahoma", Font.PLAIN, 15));
         add(gender);
 
-        JRadioButton male = new JRadioButton("Male");
+        male = new JRadioButton("Male");
         male.setActionCommand("male");
         male.setFont(new Font("Tahoma", Font.PLAIN, 14));
         male.setBackground(new Color(32, 32, 32));
@@ -126,7 +137,7 @@ public class AddEmployee extends JFrame implements ActionListener, WindowListene
         male.setBounds(125, 150, 70, 20);
         add(male);
 
-        JRadioButton female = new JRadioButton("Female");
+        female = new JRadioButton("Female");
         female.setActionCommand("female");
         female.setFont(new Font("Tahoma", Font.PLAIN, 14));
         female.setBackground(new Color(32, 32, 32));
@@ -134,7 +145,7 @@ public class AddEmployee extends JFrame implements ActionListener, WindowListene
         female.setBounds(125, 180, 80, 20);
         add(female);
 
-        JRadioButton other = new JRadioButton("Other");
+        other = new JRadioButton("Other");
         other.setActionCommand("other");
         other.setFont(new Font("Tahoma", Font.PLAIN, 14));
         other.setBackground(new Color(32, 32, 32));
@@ -156,8 +167,6 @@ public class AddEmployee extends JFrame implements ActionListener, WindowListene
         String[] job_list = {"Restaurant Manager", "Kitchen Staff", "Head Chef", "Room Service",
                 "Hotel Porter", "Front Desk Employee", "Waiter/Waitress", "Driver", "Housekeeping"};
         job = new JComboBox<>(job_list);
-
-        String id = (String)job.getSelectedItem();
         job.setBackground(Color.WHITE);
         job.setBounds(125, 250, 200, 20);
         add(job);
@@ -184,6 +193,8 @@ public class AddEmployee extends JFrame implements ActionListener, WindowListene
                     salaryF.setEditable(true);
                 }
                 else {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter only numeric digits(0-9)");
                     salaryF.setText("");
                 }
@@ -214,6 +225,8 @@ public class AddEmployee extends JFrame implements ActionListener, WindowListene
                     phoneF.setEditable(true);
                 }
                 else {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter only numeric digits(0-9)");
                     phoneF.setText("");
                 }
@@ -247,7 +260,6 @@ public class AddEmployee extends JFrame implements ActionListener, WindowListene
                 char ch = ke.getKeyChar();
                 if(Character.isDigit(ch)) {
                     emailF.setVisible(true);
-
                 }
                 else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE ||  ke.getKeyCode() == KeyEvent.VK_SPACE
                         || ke.getKeyCode() == KeyEvent.VK_CAPS_LOCK || ke.getKeyCode() == KeyEvent.VK_DOWN
@@ -258,6 +270,8 @@ public class AddEmployee extends JFrame implements ActionListener, WindowListene
                 }
                 else if(!(Character.isAlphabetic(ch) || ke.getKeyChar() == '@' || ke.getKeyChar() == '.' || ke.getKeyCode() == KeyEvent.VK_SHIFT)) {
                     emailF.setEditable(true);
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets, numbers, @ and . !");
                 }
             }
@@ -269,14 +283,25 @@ public class AddEmployee extends JFrame implements ActionListener, WindowListene
         submit.setBackground(new Color(66, 34, 130));
         submit.setFont(new Font("times new roman", Font.PLAIN, 20));
         submit.addActionListener(this);
-        submit.setToolTipText("Add New Employee");
+        submit.setToolTipText("Add New Employee...");
         submit.setBounds(325, 455, 115, 30);
         submit.setFocusable(false);
         add(submit);
 
+        back = new JButton("BACK");
+        back.setForeground(Color.WHITE);
+        back.setBackground(new Color(66, 34, 130));
+        back.setFont(new Font("times new roman", Font.PLAIN, 20));
+        back.addActionListener(this);
+        back.setToolTipText("Back to dashboard...");
+        back.setBounds(460, 455, 115, 30);
+        back.setFocusable(false);
+        add(back);
+
         getContentPane().setBackground(new Color(32, 32, 32));
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLayout(null);
+        setLocationRelativeTo(null);
         setUndecorated(true);
         setVisible(true);
         addWindowListener(this);
@@ -306,7 +331,7 @@ public class AddEmployee extends JFrame implements ActionListener, WindowListene
             if(mt.matches()){
                 if (mt2.matches()){
                     try {
-                        String q = "CREATE TABLE IF NOT EXISTS employee(name char(15), age int, gender char(6), job char(30), " +
+                        String q = "CREATE TABLE IF NOT EXISTS employee(name char(40), age int, gender char(6), job char(30), " +
                                 "salary DECIMAL(10, 2), phone varchar(50), id bigint, email varchar(30))";
                         String qq = "SELECT * FROM employee WHERE id = '" + id + "'";
                         String qqq = "SELECT * FROM employee WHERE email = '" + email + "'";
@@ -321,27 +346,47 @@ public class AddEmployee extends JFrame implements ActionListener, WindowListene
                             ResultSet rs = conn.createStatement().executeQuery(qq);
                             ResultSet rss = conn.createStatement().executeQuery(qqq);
                             if(res.next()){
+                                UIManager.put("Button.background", Color.BLACK);
+                                UIManager.put("Button.foreground", Color.white);
                                 JOptionPane.showMessageDialog(null, "Name already exists!");
                             }
                             else if(rs.next()){
+                                UIManager.put("Button.background", Color.BLACK);
+                                UIManager.put("Button.foreground", Color.white);
                                 JOptionPane.showMessageDialog(null, "ID already exists!");
                             }
                             else if(rss.next()){
+                                UIManager.put("Button.background", Color.BLACK);
+                                UIManager.put("Button.foreground", Color.white);
                                 JOptionPane.showMessageDialog(null, "Email already exists!");
                             }
                             else {
+                                UIManager.put("Button.background", Color.BLACK);
+                                UIManager.put("Button.foreground", Color.white);
                                 conn.createStatement().execute(query);
                                 String message = "New Employee " + name + " Added !!!";
                                 JOptionPane.showMessageDialog(null, message);
-                                this.setVisible(false);
+                                nameF.setText("");
+                                emailF.setText("");
+                                ageF.setText("");
+                                phoneF.setText("");
+                                IdF.setText("");
+                                salaryF.setText("");
+                                male.setSelected(true);
+                                female.setSelected(false);
+                                other.setSelected(false);
                             }
                         }
                         else {
+                            UIManager.put("Button.background", Color.BLACK);
+                            UIManager.put("Button.foreground", Color.white);
                             JOptionPane.showMessageDialog(null, "Fill in the fields!");
                         }
 
                     }
                     catch(Exception ae) {
+                        UIManager.put("Button.background", Color.BLACK);
+                        UIManager.put("Button.foreground", Color.white);
                         JOptionPane.showMessageDialog(null, "Error Occurred." +
                                 " Will be resolved in the next update." +
                                 " Thanks.");
@@ -349,13 +394,20 @@ public class AddEmployee extends JFrame implements ActionListener, WindowListene
                     }
                 }
                 else{
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Email Not Valid!");
                 }
             }
             else{
-
+                UIManager.put("Button.background", Color.BLACK);
+                UIManager.put("Button.foreground", Color.white);
                 JOptionPane.showMessageDialog(null, "Phone Number Not Valid!");
             }
+        }
+        else if (e.getSource() == back){
+            new Dashboard().setVisible(true);
+            this.setVisible(false);
         }
     }
 
@@ -370,6 +422,8 @@ public class AddEmployee extends JFrame implements ActionListener, WindowListene
 
         }
         catch (Exception ae) {
+            UIManager.put("Button.background", Color.BLACK);
+            UIManager.put("Button.foreground", Color.white);
             JOptionPane.showMessageDialog(null, "Error Occurred." +
                     " Will be resolved in the next update." +
                     " Thanks.");

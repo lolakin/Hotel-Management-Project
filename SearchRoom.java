@@ -1,6 +1,7 @@
 package HotelManagementJavaProject;
 
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
 
 import net.proteanit.sql.DbUtils;
 import java.awt.event.ActionListener;
@@ -22,9 +23,18 @@ public class SearchRoom extends JFrame implements ActionListener, WindowListener
     JCheckBox available;
     JRadioButton double_bed, single_bed;
     Connection conn;
+    Font font = new Font("Tahoma", Font.BOLD, 20);
+    Font f = new Font("Tahoma", Font.PLAIN, 25);
 
     public SearchRoom() {
         loadSql();
+        UIManager.put("OptionPane.messageFont", new Font("System", Font.PLAIN, 20));
+        UIManager.put("OptionPane.buttonFont", new Font("System", Font.BOLD, 25));
+        UIManager.put("OptionPane.background",new ColorUIResource(Color.BLACK));
+        UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 24));
+        UIManager.put("ToolTip.foreground", Color.BLACK);
+        UIManager.put("ToolTip.background", Color.white);
+
         setResizable(false);
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
         my_image = new ImageIcon(path2);
@@ -35,13 +45,13 @@ public class SearchRoom extends JFrame implements ActionListener, WindowListener
         JLabel heading = new JLabel("SEARCH ROOM");
         heading.setForeground(new Color(204, 246, 221));
         heading.setFont(new Font("serif", Font.BOLD, 40));
-        heading.setBounds(345, 15, 300, 35);
+        heading.setBounds(345, 15, 400, 35);
         add(heading);
 
         JLabel bedTypeL = new JLabel("Bed Type: ");
         bedTypeL.setForeground(Color.WHITE);
-        bedTypeL.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        bedTypeL.setBounds(275, 75, 150, 20);
+        bedTypeL.setFont(f);
+        bedTypeL.setBounds(230, 75, 150, 30);
         add(bedTypeL);
 
         single_bed = new JRadioButton("Single Bed");
@@ -73,39 +83,38 @@ public class SearchRoom extends JFrame implements ActionListener, WindowListener
 
         JLabel room_no = new JLabel("ROOM NO");
         room_no.setForeground(Color.WHITE);
-        room_no.setFont(new Font("Tahoma", Font.BOLD, 15));
+        room_no.setFont(f);
         room_no.setBounds(65, 140, 150, 20);
         add(room_no);
 
         JLabel availability_status = new JLabel("AVAILABILITY");
         availability_status.setForeground(Color.WHITE);
-        availability_status.setFont(new Font("Tahoma", Font.BOLD, 15));
-        availability_status.setBounds(235, 140, 150, 20);
+        availability_status.setFont(f);
+        availability_status.setBounds(235, 140, 200, 20);
         add(availability_status);
 
         JLabel cleaning_status = new JLabel("CLEANING");
         cleaning_status.setForeground(Color.WHITE);
-        cleaning_status.setFont(new Font("Tahoma", Font.BOLD, 15));
+        cleaning_status.setFont(f);
         cleaning_status.setBounds(450, 140, 150, 20);
         add(cleaning_status);
 
         JLabel bed_type = new JLabel("BED TYPE");
         bed_type.setForeground(Color.WHITE);
-        bed_type.setFont(new Font("Tahoma", Font.BOLD, 15));
+        bed_type.setFont(f);
         bed_type.setBounds(660, 140, 150, 20);
         add(bed_type);
 
         JLabel price = new JLabel("PRICE");
         price.setForeground(Color.WHITE);
-        price.setFont(new Font("Tahoma", Font.BOLD, 15));
+        price.setFont(f);
         price.setBounds(860, 140, 150, 20);
         add(price);
 
         rooms_table = new JTable();
         rooms_table.setBackground(new Color(32, 32, 32));
         rooms_table.setForeground(Color.WHITE);
-        rooms_table.setFont(new Font("arial", Font.PLAIN, 15));
-        rooms_table.setRowHeight(20);
+        rooms_table.setRowHeight(25);
         rooms_table.setBounds(0, 175, 1000, 300);
         add(rooms_table);
 
@@ -122,7 +131,7 @@ public class SearchRoom extends JFrame implements ActionListener, WindowListener
         back = new JButton("BACK");
         back.setForeground(Color.WHITE);
         back.setFocusable(false);
-        back.setToolTipText("Move Back");
+        back.setToolTipText("Back to reception...");
         back.setBackground(new Color(66, 34, 130));
         back.setFont(new Font("times new roman", Font.PLAIN, 20));
         back.addActionListener(this);
@@ -151,23 +160,28 @@ public class SearchRoom extends JFrame implements ActionListener, WindowListener
                     String query = "SELECT * FROM room WHERE availability = 'available' AND bed_type = '" + bed_type + "'";
                     ResultSet result = conn.createStatement().executeQuery(query);
                     rooms_table.setModel (DbUtils.resultSetToTableModel(result));
+                    rooms_table.setFont(font);
                 }
 
                 else if(single_bed.isSelected()){
                     String query = "SELECT * FROM room WHERE bed_type = '" + bed_type + "'";
                     ResultSet result = conn.createStatement().executeQuery(query);
                     rooms_table.setModel(DbUtils.resultSetToTableModel(result));
+                    rooms_table.setFont(font);
                 }
                 else if(double_bed.isSelected()){
                     String query = "SELECT * FROM room WHERE bed_type = '" + bed_type + "'";
                     ResultSet result = conn.createStatement().executeQuery(query);
                     rooms_table.setModel(DbUtils.resultSetToTableModel(result));
+                    JScrollPane sp = new JScrollPane(rooms_table);
+                    add(sp);
+                    rooms_table.setFont(font);
                 }
             }
             catch(Exception ae) {
-                JOptionPane.showMessageDialog(null, "Error Occurred." +
-                        " Will be resolved in the next update." +
-                        " Thanks.");
+                UIManager.put("Button.background", Color.BLACK);
+                UIManager.put("Button.foreground", Color.white);
+                JOptionPane.showMessageDialog(null, "Select a bed type!");
                 System.out.println(ae);
             }
         }
@@ -187,6 +201,8 @@ public class SearchRoom extends JFrame implements ActionListener, WindowListener
             conn = DriverManager.getConnection(url, uname, password);
         }
         catch (Exception ae) {
+            UIManager.put("Button.background", Color.BLACK);
+            UIManager.put("Button.foreground", Color.white);
             JOptionPane.showMessageDialog(null, "Error Occurred." +
                     " Will be resolved in the next update." +
                     " Thanks.");

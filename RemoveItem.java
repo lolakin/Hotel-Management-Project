@@ -1,6 +1,7 @@
 package HotelManagementJavaProject;
 
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.Connection;
@@ -21,6 +22,14 @@ public class RemoveItem extends JFrame implements ActionListener, WindowListener
 
     public RemoveItem(){
         loadSql();
+
+        UIManager.put("OptionPane.messageFont", new Font("System", Font.PLAIN, 20));
+        UIManager.put("OptionPane.buttonFont", new Font("System", Font.BOLD, 25));
+        UIManager.put("OptionPane.background",new ColorUIResource(Color.BLACK));
+        UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 24));
+        UIManager.put("ToolTip.foreground", Color.BLACK);
+        UIManager.put("ToolTip.background", Color.white);
+
         setResizable(false);
         font = new Font("Tahoma", Font.BOLD, 20);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -38,7 +47,7 @@ public class RemoveItem extends JFrame implements ActionListener, WindowListener
 
         back = new JButton(new_icon);
         back.setText("BACK");
-        back.setToolTipText("Move Back");
+        back.setToolTipText("Back to dashboard...");
         back.setBounds(1255, 1, 100, 30);
         back.setBackground(Color.WHITE);
         back.setForeground(Color.BLACK);
@@ -56,11 +65,12 @@ public class RemoveItem extends JFrame implements ActionListener, WindowListener
         itemF = new JTextField();
         itemF.setBounds(650, 290, 300, 30);
         itemF.addKeyListener(new KeyAdapter() {
-            String value = itemF.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
                 char ch = ke.getKeyChar();
                 if(Character.isDigit(ch)) {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only !");
                 }
                 else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE){
@@ -72,9 +82,10 @@ public class RemoveItem extends JFrame implements ActionListener, WindowListener
                         || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT
                         || ke.getKeyCode() == KeyEvent.VK_ALT || ke.getKeyCode() == KeyEvent.VK_F4)) {
                     itemF.setEditable(true);
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only and _ !");
                 }
-
             }
         });
         add(itemF);
@@ -85,7 +96,7 @@ public class RemoveItem extends JFrame implements ActionListener, WindowListener
         new_icon = new ImageIcon(img);
         remB = new JButton(new_icon);
         remB.setText("REMOVE ITEM");
-        remB.setToolTipText("Go Back");
+        remB.setToolTipText("Remove item from the restaurant...");
         remB.setBounds(590, 390, 200, 70);
         remB.setBackground(Color.WHITE);
         remB.setForeground(Color.BLACK);
@@ -120,19 +131,27 @@ public class RemoveItem extends JFrame implements ActionListener, WindowListener
                   if(result.next()){
                       st = conn.createStatement();
                       st.executeUpdate(query1);
+                      UIManager.put("Button.background", Color.BLACK);
+                      UIManager.put("Button.foreground", Color.white);
                       JOptionPane.showMessageDialog(null, "Item Removed");
                       this.setVisible(false);
                       new Restaurant();
                   }
                   else{
+                      UIManager.put("Button.background", Color.BLACK);
+                      UIManager.put("Button.foreground", Color.white);
                       JOptionPane.showMessageDialog(null, "Item doesn't exist!");
                   }
               }
               else{
+                  UIManager.put("Button.background", Color.BLACK);
+                  UIManager.put("Button.foreground", Color.white);
                   JOptionPane.showMessageDialog(null, "Fill in the fields!");
               }
             }
             catch (Exception ae) {
+                UIManager.put("Button.background", Color.BLACK);
+                UIManager.put("Button.foreground", Color.white);
                 JOptionPane.showMessageDialog(null, "Error Occurred." +
                         " Will be resolved in the next update." +
                         " Thanks.");
@@ -156,6 +175,8 @@ public class RemoveItem extends JFrame implements ActionListener, WindowListener
 
         }
         catch (Exception ae) {
+            UIManager.put("Button.background", Color.BLACK);
+            UIManager.put("Button.foreground", Color.white);
             JOptionPane.showMessageDialog(null, "Error Occurred." +
                     " Will be resolved in the next update." +
                     " Thanks.");

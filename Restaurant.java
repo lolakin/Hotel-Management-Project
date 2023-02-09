@@ -3,6 +3,7 @@ package HotelManagementJavaProject;
 import net.proteanit.sql.DbUtils;
 
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,13 +18,24 @@ public class Restaurant extends JFrame implements ActionListener, WindowListener
     JTable table;
     ImageIcon my_image;
     Connection conn;
-    Font Tfont,font;
+    Font Tfont,font, fn;
     JPasswordField pf;
 
     public Restaurant(){
-        font = new Font("Tahoma", Font.BOLD, 15);
-        Tfont = new Font("arial", Font.PLAIN, 15);
         loadSql();
+
+        UIManager.put("OptionPane.messageFont", new Font("System", Font.PLAIN, 20));
+        UIManager.put("OptionPane.buttonFont", new Font("System", Font.BOLD, 25));
+        UIManager.put("OptionPane.background",new ColorUIResource(Color.BLACK));
+        UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 24));
+        UIManager.put("ToolTip.foreground", Color.BLACK);
+        UIManager.put("ToolTip.background", Color.white);
+
+
+        font = new Font("Tahoma", Font.BOLD, 15);
+        fn = new Font("Tahoma", Font.BOLD, 20);
+        Tfont = new Font("arial", Font.PLAIN, 15);
+
         setResizable(false);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
@@ -36,6 +48,7 @@ public class Restaurant extends JFrame implements ActionListener, WindowListener
         Home.setBackground(Color.WHITE);
         Home.setForeground(Color.BLACK);
         Home.setFont(font);
+        Home.setToolTipText("Back to dashboard...");
         Home.setFocusable(false);
         Home.addActionListener(this);
         add(Home);
@@ -46,6 +59,7 @@ public class Restaurant extends JFrame implements ActionListener, WindowListener
         back.setForeground(Color.BLACK);
         back.setFont(font);
         back.setFocusable(false);
+        back.setToolTipText("back to reception...");
         back.addActionListener(this);
         add(back);
 
@@ -54,6 +68,7 @@ public class Restaurant extends JFrame implements ActionListener, WindowListener
         logout.setBackground(Color.WHITE);
         logout.setForeground(Color.BLACK);
         logout.setFont(font);
+        logout.setToolTipText("Back to login page...");
         logout.setFocusable(false);
         logout.addActionListener(this);
         add(logout);
@@ -61,15 +76,17 @@ public class Restaurant extends JFrame implements ActionListener, WindowListener
         table = new JTable();
         table.setBackground(new Color(255, 204, 204));
         table.setBounds(350, 100, 700, 450);
-        table.setRowHeight(20);
+        table.setRowHeight(25);
+        table.setFont(fn);
         table.setForeground(Color.BLACK);
         add(table);
 
         bookfood = new JButton("BOOK FOOD");
         bookfood.addActionListener(this);
-        bookfood.setBounds(650, 600, 130, 30);
+        bookfood.setBounds(650, 600, 130, 40);
         bookfood.setBackground(Color.WHITE);
         bookfood.setForeground(Color.BLACK);
+        bookfood.setToolTipText("Order food...");
         bookfood.setFont(font);
         bookfood.setFocusable(false);
         add(bookfood);
@@ -117,6 +134,8 @@ public class Restaurant extends JFrame implements ActionListener, WindowListener
 
         }
         catch (Exception ae) {
+            UIManager.put("Button.background", Color.BLACK);
+            UIManager.put("Button.foreground", Color.white);
             JOptionPane.showMessageDialog(null, "Error Occurred." +
                     " Will be resolved in the next update." +
                     " Thanks.");
@@ -130,6 +149,8 @@ public class Restaurant extends JFrame implements ActionListener, WindowListener
             table.setModel (DbUtils.resultSetToTableModel(result));
         }
         catch(Exception ae) {
+            UIManager.put("Button.background", Color.BLACK);
+            UIManager.put("Button.foreground", Color.white);
             JOptionPane.showMessageDialog(null, "Error Occurred." +
                     " Will be resolved in the next update." +
                     " Thanks.");

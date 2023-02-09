@@ -65,6 +65,11 @@ public class UpdateRoomStatus extends JFrame implements ActionListener, WindowLi
             }
         }
         catch(Exception e) {
+            UIManager.put("Button.background", Color.BLACK);
+            UIManager.put("Button.foreground", Color.white);
+            JOptionPane.showMessageDialog(null, "Error Occurred." +
+                    " Will be resolved in the next update." +
+                    " Thanks.");
             System.out.println(e);
         }
 
@@ -120,6 +125,7 @@ public class UpdateRoomStatus extends JFrame implements ActionListener, WindowLi
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLayout(null);
         setUndecorated(true);
+        setLocationRelativeTo(null);
         setVisible(true);
         addWindowListener(this);
     }
@@ -141,6 +147,11 @@ public class UpdateRoomStatus extends JFrame implements ActionListener, WindowLi
                 }
             }
             catch(Exception ae) {
+                UIManager.put("Button.background", Color.BLACK);
+                UIManager.put("Button.foreground", Color.white);
+                JOptionPane.showMessageDialog(null, "Error Occurred." +
+                        " Will be resolved in the next update." +
+                        " Thanks.");
                 System.out.println(ae);
             }
         }
@@ -150,6 +161,8 @@ public class UpdateRoomStatus extends JFrame implements ActionListener, WindowLi
             String cleaning_status = cleaning_statusF.getText();
 
             if (room_no == null) {
+                UIManager.put("Button.background", Color.BLACK);
+                UIManager.put("Button.foreground", Color.white);
                 String message = "No Room Selected !!!";
                 JOptionPane.showMessageDialog(null, message, "WARNING", JOptionPane.WARNING_MESSAGE);
             }
@@ -157,13 +170,16 @@ public class UpdateRoomStatus extends JFrame implements ActionListener, WindowLi
                 try {
                     String query = "UPDATE room SET cleaning_status = '" + cleaning_status + "' WHERE room_no = '" + room_no + "'";
                     conn.createStatement().execute(query);
-
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     String message = "Changed clean status of room " + room_no + " to " + cleaning_status+ "!!!";
                     JOptionPane.showMessageDialog(null, message);
                     this.setVisible(false);
                 }
 
                 catch(Exception ae) {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Error Occurred." +
                             " Will be resolved in the next update." +
                             " Thanks.");
@@ -189,6 +205,8 @@ public class UpdateRoomStatus extends JFrame implements ActionListener, WindowLi
 
         }
         catch (Exception ae) {
+            UIManager.put("Button.background", Color.BLACK);
+            UIManager.put("Button.foreground", Color.white);
             JOptionPane.showMessageDialog(null, "Error Occurred." +
                     " Will be resolved in the next update." +
                     " Thanks.");

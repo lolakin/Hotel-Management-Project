@@ -1,6 +1,7 @@
 package HotelManagementJavaProject;
 
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
 
 import java.awt.event.*;
 import java.sql.Connection;
@@ -8,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.awt.Color;
 import java.awt.Font;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class CheckOut extends JFrame implements ActionListener, WindowListener {
@@ -18,6 +20,13 @@ public class CheckOut extends JFrame implements ActionListener, WindowListener {
 
     public CheckOut() {
         loadSql();
+        UIManager.put("OptionPane.messageFont", new Font("System", Font.PLAIN, 20));
+        UIManager.put("OptionPane.buttonFont", new Font("System", Font.BOLD, 25));
+        UIManager.put("OptionPane.background",new ColorUIResource(Color.BLACK));
+        UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 24));
+        UIManager.put("ToolTip.foreground", Color.BLACK);
+        UIManager.put("ToolTip.background", Color.white);
+
         setResizable(false);
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
 
@@ -79,7 +88,7 @@ public class CheckOut extends JFrame implements ActionListener, WindowListener {
         back = new JButton("BACK");
         back.setForeground(Color.WHITE);
         back.setBackground(new Color(66, 34, 130));
-        back.setToolTipText("Move Back");
+        back.setToolTipText("Back to dashboard...");
         back.setFont(new Font("times new roman", Font.PLAIN, 20));
         back.addActionListener(this);
         back.setBounds(70, 175, 115, 30);
@@ -90,6 +99,7 @@ public class CheckOut extends JFrame implements ActionListener, WindowListener {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setLayout(null);
         setUndecorated(true);
+        setLocationRelativeTo(null);
         setVisible(true);
         addWindowListener(this);
 
@@ -115,16 +125,22 @@ public class CheckOut extends JFrame implements ActionListener, WindowListener {
                     String query1 = "UPDATE room SET availability = 'available' WHERE room_no = '" + room_no + "'";
                     String query2 = "UPDATE customer SET check_status = 'check_out' WHERE room_no = '" + room_no + "' AND check_status = 'check_in'";
                     String query3 = "UPDATE room SET cleaning_status = 'occupied' WHERE room_no = '" + room_no + "'";
-
+                    String q = "DELETE FROM customer WHERE room_no = '" + room_no + "'";
                     conn.createStatement().execute(query1);
                     conn.createStatement().execute(query2);
                     conn.createStatement().execute(query3);
 
                     String message = "Room no " + room_no + " is now available !!!";
                     JOptionPane.showMessageDialog(null, message);
+                    Statement stmt = conn.createStatement();
+                    stmt.execute(q);
+                    JOptionPane.showMessageDialog(null, "You have checked out...");
                     this.setVisible(false);
+                    new Reception();
                 }
                 catch(Exception ae) {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Error Occurred." +
                             " Will be resolved in the next update." +
                             " Thanks.");
@@ -149,6 +165,8 @@ public class CheckOut extends JFrame implements ActionListener, WindowListener {
             conn = DriverManager.getConnection(url, uname, password);
         }
         catch (Exception ae) {
+            UIManager.put("Button.background", Color.BLACK);
+            UIManager.put("Button.foreground", Color.white);
             JOptionPane.showMessageDialog(null, "Error Occurred." +
                     " Will be resolved in the next update." +
                     " Thanks.");

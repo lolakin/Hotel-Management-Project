@@ -1,6 +1,7 @@
 package HotelManagementJavaProject;
 
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -18,14 +19,23 @@ public class EmployeeInfo extends JFrame implements ActionListener, WindowListen
     JButton back;
     ImageIcon my_image;
     JTable table;
+    Font fn;
 
     public EmployeeInfo() {
         loadSql();
+
+        UIManager.put("OptionPane.messageFont", new Font("System", Font.PLAIN, 20));
+        UIManager.put("OptionPane.buttonFont", new Font("System", Font.BOLD, 25));
+        UIManager.put("OptionPane.background",new ColorUIResource(Color.BLACK));
+        UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 24));
+        UIManager.put("ToolTip.foreground", Color.BLACK);
+        UIManager.put("ToolTip.background", Color.white);
+
+        fn = new Font("Tahoma", Font.BOLD, 20);
         setResizable(false);
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
         my_image = new ImageIcon(path2);
         setIconImage(my_image.getImage());
-
 
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         JLabel heading = new JLabel("EMPLOYEE INFO");
@@ -87,8 +97,8 @@ public class EmployeeInfo extends JFrame implements ActionListener, WindowListen
         table = new JTable();
         table.setBackground(new Color(32, 32, 32));
         table.setForeground(Color.WHITE);
-        table.setFont(new Font("arial", Font.PLAIN, 15));
-        table.setRowHeight(20);
+        table.setFont(fn);
+        table.setRowHeight(25);
         table.setBounds(0, 130, 1300, 400);
         add(table);
 
@@ -99,7 +109,7 @@ public class EmployeeInfo extends JFrame implements ActionListener, WindowListen
         back.addActionListener(this);
         back.setBounds(550, 600, 100, 30);
         back.setFocusable(false);
-        back.setToolTipText("Move Back");
+        back.setToolTipText("Back to dashboard...");
         add(back);
 
         load();
@@ -115,7 +125,6 @@ public class EmployeeInfo extends JFrame implements ActionListener, WindowListen
 
     public static void main(String[] args) {
         new EmployeeInfo();
-
     }
 
     @Override
@@ -151,6 +160,8 @@ public class EmployeeInfo extends JFrame implements ActionListener, WindowListen
             table.setModel (DbUtils.resultSetToTableModel(result));
         }
         catch(Exception ae) {
+            UIManager.put("Button.background", Color.BLACK);
+            UIManager.put("Button.foreground", Color.white);
             JOptionPane.showMessageDialog(null, "Error Occurred." +
                     " Will be resolved in the next update." +
                     " Thanks.");

@@ -1,6 +1,7 @@
 package HotelManagementJavaProject;
 
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.Connection;
@@ -12,13 +13,21 @@ public class FinalChangePassword extends JFrame implements ActionListener, Windo
     JLabel currentPwLabel, newPwLabel, confirmPwLabel, usernameL;
     JPasswordField currentPasswordField, newPasswordField, confirmPasswordField, uField;
     JButton okButton, cancelButton;
-    String currentPassword, newPassword, confirmPassword, uname;
+    String uname;
     ImageIcon my_image;
     Connection conn;
     Statement st;
 
     public FinalChangePassword(){
         loadSql();
+
+        UIManager.put("OptionPane.messageFont", new Font("System", Font.PLAIN, 20));
+        UIManager.put("OptionPane.buttonFont", new Font("System", Font.BOLD, 25));
+        UIManager.put("OptionPane.background",new ColorUIResource(Color.BLACK));
+        UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 24));
+        UIManager.put("ToolTip.foreground", Color.BLACK);
+        UIManager.put("ToolTip.background", Color.white);
+
         setResizable(false);
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
 
@@ -70,11 +79,12 @@ public class FinalChangePassword extends JFrame implements ActionListener, Windo
         uField.setForeground(Color.WHITE);
         uField.setBounds(800, 400, 150, 30);
         uField.addKeyListener(new KeyAdapter() {
-            String value = uField.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
                 char ch = ke.getKeyChar();
                 if(Character.isDigit(ch)) {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only !");
                 }
                 else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE){
@@ -86,6 +96,8 @@ public class FinalChangePassword extends JFrame implements ActionListener, Windo
                         || ke.getKeyCode() == KeyEvent.VK_RIGHT || ke.getKeyCode() == KeyEvent.VK_SHIFT
                         || ke.getKeyCode() == KeyEvent.VK_ALT || ke.getKeyCode() == KeyEvent.VK_F4)) {
                     uField.setEditable(true);
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only and _ !");
                 }
 
@@ -109,6 +121,8 @@ public class FinalChangePassword extends JFrame implements ActionListener, Windo
                         || ke.getKeyCode() == KeyEvent.VK_ALT || ke.getKeyCode() == KeyEvent.VK_F4) {
                     currentPasswordField.setEditable(true);
                 } else {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter only numeric digits(0-9)");
                     currentPasswordField.setText("");
                 }
@@ -132,6 +146,8 @@ public class FinalChangePassword extends JFrame implements ActionListener, Windo
                         || ke.getKeyCode() == KeyEvent.VK_ALT || ke.getKeyCode() == KeyEvent.VK_F4) {
                     newPasswordField.setEditable(true);
                 } else {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter only numeric digits(0-9)");
                     newPasswordField.setText("");
                 }
@@ -155,6 +171,8 @@ public class FinalChangePassword extends JFrame implements ActionListener, Windo
                         || ke.getKeyCode() == KeyEvent.VK_ALT || ke.getKeyCode() == KeyEvent.VK_F4) {
                     confirmPasswordField.setEditable(true);
                 } else {
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Enter only numeric digits(0-9)");
                     confirmPasswordField.setText("");
                 }
@@ -166,6 +184,7 @@ public class FinalChangePassword extends JFrame implements ActionListener, Windo
         okButton.setBounds(660, 620, 100, 30);
         okButton.setBackground(new Color(177, 167, 166));
         okButton.setForeground(Color.BLACK);
+        okButton.setToolTipText("Proceed to change your password?");
         okButton.setFont(new Font("serif", Font.BOLD, 20));
         okButton.addActionListener(this);
         okButton.setFocusable(false);
@@ -175,6 +194,7 @@ public class FinalChangePassword extends JFrame implements ActionListener, Windo
         cancelButton.setBounds(780, 620, 100, 30);
         cancelButton.setBackground(new Color(177, 167, 166));
         cancelButton.setForeground(Color.BLACK);
+        cancelButton.setToolTipText("Back to Login...");
         cancelButton.setFont(new Font("serif", Font.BOLD, 20));
         cancelButton.addActionListener(this);
         cancelButton.setFocusable(false);
@@ -208,34 +228,48 @@ public class FinalChangePassword extends JFrame implements ActionListener, Windo
                     if (result.next()) {
                         ResultSet res = conn.createStatement().executeQuery(query2);
                         if(res.next()){
+                            UIManager.put("Button.background", Color.BLACK);
+                            UIManager.put("Button.foreground", Color.white);
                             JOptionPane.showMessageDialog(null, "Duplicate Password!");
                         }
                         else{
                             if(newPassword.length()>3){
                                 if(newPassword.equals(conPassword)){
+                                    UIManager.put("Button.background", Color.BLACK);
+                                    UIManager.put("Button.foreground", Color.white);
                                     st = conn.createStatement();
                                     st.executeUpdate(query1);
                                     JOptionPane.showMessageDialog(null, "Successful!");
                                 }
                                 else{
+                                    UIManager.put("Button.background", Color.BLACK);
+                                    UIManager.put("Button.foreground", Color.white);
                                     JOptionPane.showMessageDialog(null, "Password mismatch!");
                                 }
                             }
                             else{
+                                UIManager.put("Button.background", Color.BLACK);
+                                UIManager.put("Button.foreground", Color.white);
                                 JOptionPane.showMessageDialog(null, "Password cannot be less than 4 digits!");
                             }
                         }
                     }
 
                     else{
+                        UIManager.put("Button.background", Color.BLACK);
+                        UIManager.put("Button.foreground", Color.white);
                         JOptionPane.showMessageDialog(null, "Error! Username/Current Password not correct!");
                     }
                 }
                 else{
+                    UIManager.put("Button.background", Color.BLACK);
+                    UIManager.put("Button.foreground", Color.white);
                     JOptionPane.showMessageDialog(null, "Fill in the fields!");
                 }
             }
             catch(Exception ae) {
+                UIManager.put("Button.background", Color.BLACK);
+                UIManager.put("Button.foreground", Color.white);
                 JOptionPane.showMessageDialog(null, "Error Occurred." +
                         " Will be resolved in the next update." +
                         " Thanks.");
@@ -258,6 +292,8 @@ public class FinalChangePassword extends JFrame implements ActionListener, Windo
 
         }
         catch (Exception ae) {
+            UIManager.put("Button.background", Color.BLACK);
+            UIManager.put("Button.foreground", Color.white);
             JOptionPane.showMessageDialog(null, "Error Occurred." +
                     " Will be resolved in the next update." +
                     " Thanks.");
