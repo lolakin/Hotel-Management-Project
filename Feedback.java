@@ -168,7 +168,7 @@ public class Feedback extends JFrame implements ActionListener, WindowListener {
     public  static void main(String[] args){
         new Feedback();
     }
-//
+
     @Override
     public void actionPerformed(ActionEvent e) {
         boolean flag=false;
@@ -232,7 +232,10 @@ public class Feedback extends JFrame implements ActionListener, WindowListener {
 
             }
             catch (Exception ae){
-                JOptionPane.showMessageDialog(null, ae);
+                JOptionPane.showMessageDialog(null, "Error Occurred." +
+                        " Will be resolved in the next update." +
+                        " Thanks.");
+//                JOptionPane.showMessageDialog(null, ae);
             }
         }
 
@@ -261,6 +264,9 @@ public class Feedback extends JFrame implements ActionListener, WindowListener {
 
         }
         catch (Exception ae) {
+            JOptionPane.showMessageDialog(null, "Error Occurred." +
+                    " Will be resolved in the next update." +
+                    " Thanks.");
             System.out.println(ae);
         }
     }

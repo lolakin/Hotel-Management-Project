@@ -178,6 +178,9 @@ public class Login extends JFrame implements ActionListener, WindowListener {
                }
                catch(Exception ae) {
                    ae.printStackTrace();
+                   JOptionPane.showMessageDialog(null, "Error Occurred." +
+                           " Will be resolved in the next update." +
+                           " Thanks.");
                    System.out.println(ae);
                }
 
@@ -231,6 +234,9 @@ public class Login extends JFrame implements ActionListener, WindowListener {
 
             }
             catch(Exception ae) {
+                JOptionPane.showMessageDialog(null, "Error Occurred." +
+                        " Will be resolved in the next update." +
+                        " Thanks.");
                 System.out.println(ae);
             }
         }
@@ -239,11 +245,6 @@ public class Login extends JFrame implements ActionListener, WindowListener {
             setVisible(false);
             new HotelManagementSystem().setVisible(true);
         }
-//
-//		else if(e.getSource() == signup) {
-//			setVisible(false);
-//			new NewCustomer();
-//		}
 
     }
 
@@ -258,6 +259,9 @@ public class Login extends JFrame implements ActionListener, WindowListener {
 
         }
         catch (Exception ae) {
+            JOptionPane.showMessageDialog(null, "Error Occurred." +
+                    " Will be resolved in the next update." +
+                    " Thanks.");
             System.out.println(ae);
         }
     }

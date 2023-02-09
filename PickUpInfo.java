@@ -51,7 +51,6 @@ public class PickUpInfo extends JFrame implements ActionListener, WindowListener
         time.setForeground(Color.WHITE);
         time.setBounds(550, 115, 70, 30);
         time.setFont(new Font("Tahoma", Font.BOLD, 15));
-//		time.addKeyListener(null);
         add(time);
 
         table = new JTable();
@@ -103,6 +102,9 @@ public class PickUpInfo extends JFrame implements ActionListener, WindowListener
 
         }
         catch (Exception ae) {
+            JOptionPane.showMessageDialog(null, "Error Occurred." +
+                    " Will be resolved in the next update." +
+                    " Thanks.");
             System.out.println(ae);
         }
     }
@@ -114,6 +116,9 @@ public class PickUpInfo extends JFrame implements ActionListener, WindowListener
             table.setModel(DbUtils.resultSetToTableModel(result));
         }
         catch(Exception ae) {
+            JOptionPane.showMessageDialog(null, "Error Occurred." +
+                    " Will be resolved in the next update." +
+                    " Thanks.");
             System.out.println(ae);
         }
 

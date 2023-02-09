@@ -327,7 +327,6 @@ public class NewCustomer extends JFrame implements ActionListener, WindowListene
                         else {
                             JOptionPane.showMessageDialog(null, "Wrong price for room " + room_no);
                         }
-
                     }
                     else{
                         JOptionPane.showMessageDialog(null, "Registration failed!!!");
@@ -335,8 +334,9 @@ public class NewCustomer extends JFrame implements ActionListener, WindowListene
                 }
 
                 catch(Exception ae) {
-//                    JOptionPane.showMessageDialog(null, "Fill in the fields!!!");
-//                    JDialog d = new JDialog((Dialog) null, "Error");
+                    JOptionPane.showMessageDialog(null, "Error Occurred." +
+                            " Will be resolved in the next update." +
+                            " Thanks.");
                     System.out.println(ae);
                 }
             }
@@ -360,6 +360,9 @@ public class NewCustomer extends JFrame implements ActionListener, WindowListene
             conn = DriverManager.getConnection(url, uname, password);
         }
         catch (Exception ae) {
+            JOptionPane.showMessageDialog(null, "Error Occurred." +
+                    " Will be resolved in the next update." +
+                    " Thanks.");
             System.out.println(ae);
         }
     }

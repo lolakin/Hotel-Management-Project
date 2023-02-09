@@ -202,7 +202,6 @@ public class AddRoom extends JFrame implements ActionListener, WindowListener {
 
                         String message = "New Room " + room_no + " Added !!!";
                         JOptionPane.showMessageDialog(null, message);
-//						this.setVisible(false);
                     }
                 }
 
@@ -213,7 +212,6 @@ public class AddRoom extends JFrame implements ActionListener, WindowListener {
 
             catch(Exception ae) {
                 JOptionPane.showMessageDialog(null, "Fill in the fields!!!");
-//				System.out.println(ae);
             }
 
         }
@@ -229,6 +227,9 @@ public class AddRoom extends JFrame implements ActionListener, WindowListener {
 
         }
         catch (Exception ae) {
+            JOptionPane.showMessageDialog(null, "Error Occurred." +
+                        " Will be resolved in the next update." +
+                        " Thanks.");
             System.out.println(ae);
         }
     }

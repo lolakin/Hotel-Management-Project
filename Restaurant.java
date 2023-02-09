@@ -117,6 +117,9 @@ public class Restaurant extends JFrame implements ActionListener, WindowListener
 
         }
         catch (Exception ae) {
+            JOptionPane.showMessageDialog(null, "Error Occurred." +
+                    " Will be resolved in the next update." +
+                    " Thanks.");
             System.out.println(ae);
         }
     }
@@ -127,6 +130,9 @@ public class Restaurant extends JFrame implements ActionListener, WindowListener
             table.setModel (DbUtils.resultSetToTableModel(result));
         }
         catch(Exception ae) {
+            JOptionPane.showMessageDialog(null, "Error Occurred." +
+                    " Will be resolved in the next update." +
+                    " Thanks.");
             System.out.println(ae);
         }
     }

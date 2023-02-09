@@ -28,8 +28,6 @@ public class ForgotPassword extends JFrame implements ActionListener, WindowList
 
     public ForgotPassword(){
         loadSql();
-
-//        addWindowListener(this);
         font = new Font("serif", Font.PLAIN, 20);
         String path2 = "C:\\Users\\lois7\\OneDrive\\Pictures\\Pins\\hotel2.png";
 
@@ -79,21 +77,11 @@ public class ForgotPassword extends JFrame implements ActionListener, WindowList
 
         emailF = new JTextField();
         emailF.setBounds(810, 260, 150, 30);
-        emailF.addKeyListener(new KeyAdapter() {
-            String email = emailF.getText();
-            @Override
-            public void keyPressed(KeyEvent ke) {
-                confirmEmail(email);
-
-            }
-
-        });
         add(emailF);
 
         questionF = new JTextField();
         questionF.setBounds(810, 310, 150, 30);
         questionF.addKeyListener(new KeyAdapter() {
-            String value = questionF.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
                 char ch = ke.getKeyChar();
@@ -120,10 +108,8 @@ public class ForgotPassword extends JFrame implements ActionListener, WindowList
         passF = new JPasswordField();
         passF.setBounds(810, 360, 150, 30);
         passF.addKeyListener(new KeyAdapter() {
-            String value = passF.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
-                int l = value.length();
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     passF.setEditable(true);
                 }
@@ -145,10 +131,8 @@ public class ForgotPassword extends JFrame implements ActionListener, WindowList
         CpassF = new JPasswordField();
         CpassF.setBounds(810, 410, 150, 30);
         CpassF.addKeyListener(new KeyAdapter() {
-            String value = CpassF.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
-                int l = value.length();
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     CpassF.setEditable(true);
                 }
@@ -188,43 +172,43 @@ public class ForgotPassword extends JFrame implements ActionListener, WindowList
 
     }
 
-    private static void createAndShowGUI()
-    {
-        SwingUtilities.invokeLater(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                try
-                {
-                    JDialog dialog = new JDialog();
-                    dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-                    dialog.setTitle("Image Loading Demo");
+//    private static void createAndShowGUI()
+//    {
+//        SwingUtilities.invokeLater(new Runnable()
+//        {
+//            @Override
+//            public void run()
+//            {
+//                try
+//                {
+//                    JDialog dialog = new JDialog();
+//                    dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+//                    dialog.setTitle("Image Loading Demo");
+//
+//                    ImageIcon new_login_image = new ImageIcon(IMAGE_URL);
+//
+//                    JLabel login_image_label = new  JLabel(new_login_image);
+//                    dialog.add(login_image_label);
+//
+////                    dialog.add(new JLabel(new ImageIcon(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(IMAGE_URL))))));
+//                    JLabel error = new JLabel("Error occurred!");
+//                    error.setFont(new Font("Serif", Font.BOLD, 30));
+//                    error.setForeground(Color.WHITE);
+//                    login_image_label.add(error);
+//
+//                    dialog.pack();
+//                    dialog.setLocationByPlatform(true);
+//                    dialog.setVisible(true);
+//                }
+//                catch (Exception e)
+//                {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//    }
 
-                    ImageIcon new_login_image = new ImageIcon(IMAGE_URL);
-
-                    JLabel login_image_label = new  JLabel(new_login_image);
-                    dialog.add(login_image_label);
-
-//                    dialog.add(new JLabel(new ImageIcon(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(IMAGE_URL))))));
-                    JLabel error = new JLabel("Error occurred!");
-                    error.setFont(new Font("Serif", Font.BOLD, 30));
-                    error.setForeground(Color.WHITE);
-                    login_image_label.add(error);
-
-                    dialog.pack();
-                    dialog.setLocationByPlatform(true);
-                    dialog.setVisible(true);
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    public static void main(String args[])throws NullPointerException{
+    public static void main(String[] args)throws NullPointerException{
         new ForgotPassword();
     }
 
@@ -249,7 +233,6 @@ public class ForgotPassword extends JFrame implements ActionListener, WindowList
                             JOptionPane.showMessageDialog(null, "Duplicate Password!");
                         }
                         else{
-                            System.out.println("hiiiii");
                             if (pass.equals(confirm)){
                                 st = conn.createStatement();
                                 st.executeUpdate(query2);
@@ -268,13 +251,14 @@ public class ForgotPassword extends JFrame implements ActionListener, WindowList
 
                 }
                 else{
-//                    createAndShowGUI();
                     JOptionPane.showMessageDialog(null, "Fields cannot be empty!");
                 }
 
             }
             catch(Exception ae) {
-                createAndShowGUI();
+                JOptionPane.showMessageDialog(null, "Error Occurred." +
+                        " Will be resolved in the next update." +
+                        " Thanks.");
                 System.out.println(ae);
             }
         }
@@ -291,16 +275,13 @@ public class ForgotPassword extends JFrame implements ActionListener, WindowList
 
         }
         catch (Exception ae) {
+            JOptionPane.showMessageDialog(null, "Error Occurred." +
+                    " Will be resolved in the next update." +
+                    " Thanks.");
             System.out.println(ae);
         }
     }
 
-    public boolean confirmEmail(String email){
-        String Cemail ="[^0-9@.][a-zA-Z0-9_\\-.]{8,}@[a-z]+(\\.[a-z]+)+$"; // minimum of 8 characters
-        p = Pattern.compile(Cemail);
-        m = p.matcher(email);
-        return m.matches();
-    }
 
     @Override
     public void windowOpened(WindowEvent e) {

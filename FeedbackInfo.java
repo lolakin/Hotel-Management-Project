@@ -32,7 +32,6 @@ public class FeedbackInfo extends JFrame implements ActionListener, WindowListen
         setIconImage(my_image.getImage());
 
         setBounds(160, 65, 1250, 700);
-//        setBounds(425, 85, 700, 700);
         JLabel heading = new JLabel("FEEDBACK INFO");
         heading.setForeground(new Color(204, 246, 221));
         heading.setFont(new Font("monospaced", Font.BOLD, 40));
@@ -125,6 +124,9 @@ public class FeedbackInfo extends JFrame implements ActionListener, WindowListen
                 table.setModel (DbUtils.resultSetToTableModel(result));
             }
             catch(Exception ae) {
+                JOptionPane.showMessageDialog(null, "Error Occurred." +
+                        " Will be resolved in the next update." +
+                        " Thanks.");
                 System.out.println(ae);
             }
         }
@@ -146,6 +148,9 @@ public class FeedbackInfo extends JFrame implements ActionListener, WindowListen
 
         }
         catch (Exception ae) {
+            JOptionPane.showMessageDialog(null, "Error Occurred." +
+                    " Will be resolved in the next update." +
+                    " Thanks.");
             System.out.println(ae);
         }
     }

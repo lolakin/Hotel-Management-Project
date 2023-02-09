@@ -192,7 +192,6 @@ public class AddCar extends JFrame implements ActionListener, WindowListener {
             public void keyPressed(KeyEvent ke) {
                 char ch = ke.getKeyChar();
                 if(Character.isDigit(ch)) {
-//	            	 nameF.setEditable(true);
                     JOptionPane.showMessageDialog(null, "Enter Alphabets Only !");
                 }
                 else if(ke.getKeyCode()==KeyEvent.VK_BACK_SPACE){
@@ -295,6 +294,9 @@ public class AddCar extends JFrame implements ActionListener, WindowListener {
             else JOptionPane.showMessageDialog(null, "Addition failed!!!");
         }
         catch(Exception ae) {
+            JOptionPane.showMessageDialog(null, "Error Occurred." +
+                    " Will be resolved in the next update." +
+                    " Thanks.");
             System.out.println(ae);
         }
     }
@@ -310,6 +312,9 @@ public class AddCar extends JFrame implements ActionListener, WindowListener {
 
         }
         catch (Exception ae) {
+            JOptionPane.showMessageDialog(null, "Error Occurred." +
+                    " Will be resolved in the next update." +
+                    " Thanks.");
             System.out.println(ae);
         }
     }

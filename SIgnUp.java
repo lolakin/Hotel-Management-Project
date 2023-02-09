@@ -272,6 +272,9 @@ public class SIgnUp extends JFrame implements ActionListener, WindowListener {
                     else JOptionPane.showMessageDialog(null, "Registration Failed!!");
                 }
                 catch(Exception ae) {
+                    JOptionPane.showMessageDialog(null, "Error Occurred." +
+                            " Will be resolved in the next update." +
+                            " Thanks.");
                     System.out.println(ae);
                 }
             }
@@ -298,6 +301,9 @@ public class SIgnUp extends JFrame implements ActionListener, WindowListener {
 
         }
         catch (Exception ae) {
+            JOptionPane.showMessageDialog(null, "Error Occurred." +
+                    " Will be resolved in the next update." +
+                    " Thanks.");
             System.out.println(ae);
         }
     }

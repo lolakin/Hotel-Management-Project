@@ -342,6 +342,9 @@ public class AddEmployee extends JFrame implements ActionListener, WindowListene
 
                     }
                     catch(Exception ae) {
+                        JOptionPane.showMessageDialog(null, "Error Occurred." +
+                                " Will be resolved in the next update." +
+                                " Thanks.");
                         System.out.println(ae);
                     }
                 }
@@ -367,6 +370,9 @@ public class AddEmployee extends JFrame implements ActionListener, WindowListene
 
         }
         catch (Exception ae) {
+            JOptionPane.showMessageDialog(null, "Error Occurred." +
+                    " Will be resolved in the next update." +
+                    " Thanks.");
             System.out.println(ae);
         }
     }

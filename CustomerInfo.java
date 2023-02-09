@@ -155,6 +155,9 @@ public class CustomerInfo extends JFrame implements ActionListener, WindowListen
                 }
             }
             catch(Exception ae) {
+                JOptionPane.showMessageDialog(null, "Error Occurred." +
+                        " Will be resolved in the next update." +
+                        " Thanks.");
                 System.out.println(ae);
             }
         }
@@ -175,6 +178,9 @@ public class CustomerInfo extends JFrame implements ActionListener, WindowListen
 
         }
         catch (Exception ae) {
+            JOptionPane.showMessageDialog(null, "Error Occurred." +
+                    " Will be resolved in the next update." +
+                    " Thanks.");
             System.out.println(ae);
         }
     }

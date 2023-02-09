@@ -225,8 +225,9 @@ public class PickUpService extends JFrame implements ActionListener, WindowListe
                 }
 
                 catch(Exception ae) {
-//                    JOptionPane.showMessageDialog(null, "Honorable Chief Agba Java " +
-//                            "Developer, Akinyele Ibrahim...ko le work!!!");
+                    JOptionPane.showMessageDialog(null, "Error Occurred." +
+                            " Will be resolved in the next update." +
+                            " Thanks.");
                     System.out.println(ae);
                 }
             }
@@ -252,6 +253,9 @@ public class PickUpService extends JFrame implements ActionListener, WindowListe
 
         }
         catch (Exception ae) {
+            JOptionPane.showMessageDialog(null, "Error Occurred." +
+                    " Will be resolved in the next update." +
+                    " Thanks.");
             System.out.println(ae);
         }
     }

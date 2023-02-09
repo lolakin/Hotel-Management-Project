@@ -125,6 +125,9 @@ public class CheckOut extends JFrame implements ActionListener, WindowListener {
                     this.setVisible(false);
                 }
                 catch(Exception ae) {
+                    JOptionPane.showMessageDialog(null, "Error Occurred." +
+                            " Will be resolved in the next update." +
+                            " Thanks.");
                     System.out.println(ae);
                 }
             }
@@ -146,6 +149,9 @@ public class CheckOut extends JFrame implements ActionListener, WindowListener {
             conn = DriverManager.getConnection(url, uname, password);
         }
         catch (Exception ae) {
+            JOptionPane.showMessageDialog(null, "Error Occurred." +
+                    " Will be resolved in the next update." +
+                    " Thanks.");
             System.out.println(ae);
         }
     }

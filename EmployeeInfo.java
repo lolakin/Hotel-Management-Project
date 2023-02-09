@@ -14,11 +14,11 @@ import java.util.Random;
 import net.proteanit.sql.DbUtils;
 
 public class EmployeeInfo extends JFrame implements ActionListener, WindowListener {
-
     Connection conn;
     JButton back;
     ImageIcon my_image;
     JTable table;
+
     public EmployeeInfo() {
         loadSql();
         setResizable(false);
@@ -137,6 +137,9 @@ public class EmployeeInfo extends JFrame implements ActionListener, WindowListen
 
         }
         catch (Exception ae) {
+            JOptionPane.showMessageDialog(null, "Error Occurred." +
+                    " Will be resolved in the next update." +
+                    " Thanks.");
             System.out.println(ae);
         }
     }
@@ -148,6 +151,9 @@ public class EmployeeInfo extends JFrame implements ActionListener, WindowListen
             table.setModel (DbUtils.resultSetToTableModel(result));
         }
         catch(Exception ae) {
+            JOptionPane.showMessageDialog(null, "Error Occurred." +
+                    " Will be resolved in the next update." +
+                    " Thanks.");
             System.out.println(ae);
         }
 

@@ -98,10 +98,8 @@ public class FinalChangePassword extends JFrame implements ActionListener, Windo
         currentPasswordField.setForeground(Color.WHITE);
         currentPasswordField.setBounds(800, 450, 150, 30);
         currentPasswordField.addKeyListener(new KeyAdapter() {
-           String value = currentPasswordField.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
-                int l = value.length();
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     currentPasswordField.setEditable(true);
                 } else if (ke.getKeyCode()==KeyEvent.VK_BACK_SPACE ||  ke.getKeyCode() == KeyEvent.VK_SPACE
@@ -123,10 +121,8 @@ public class FinalChangePassword extends JFrame implements ActionListener, Windo
         newPasswordField.setForeground(Color.WHITE);
         newPasswordField.setBounds(800, 500, 150, 30);
         newPasswordField.addKeyListener(new KeyAdapter() {
-            String value = newPasswordField.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
-                int l = value.length();
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     newPasswordField.setEditable(true);
                 } else if (ke.getKeyCode()==KeyEvent.VK_BACK_SPACE ||  ke.getKeyCode() == KeyEvent.VK_SPACE
@@ -148,10 +144,8 @@ public class FinalChangePassword extends JFrame implements ActionListener, Windo
         confirmPasswordField.setForeground(Color.WHITE);
         confirmPasswordField.setBounds(800, 550, 150, 30);
         confirmPasswordField.addKeyListener(new KeyAdapter() {
-            String value = confirmPasswordField.getText();
             @Override
             public void keyPressed(KeyEvent ke) {
-                int l = value.length();
                 if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
                     confirmPasswordField.setEditable(true);
                 } else if (ke.getKeyCode()==KeyEvent.VK_BACK_SPACE ||  ke.getKeyCode() == KeyEvent.VK_SPACE
@@ -194,7 +188,7 @@ public class FinalChangePassword extends JFrame implements ActionListener, Windo
         addWindowListener(this);
     }
 
-    public static void main(String args[])throws NullPointerException{
+    public static void main(String[] args)throws NullPointerException{
         new FinalChangePassword();
     }
 
@@ -242,6 +236,9 @@ public class FinalChangePassword extends JFrame implements ActionListener, Windo
                 }
             }
             catch(Exception ae) {
+                JOptionPane.showMessageDialog(null, "Error Occurred." +
+                        " Will be resolved in the next update." +
+                        " Thanks.");
 				System.out.println(ae);
             }
         }
@@ -261,6 +258,9 @@ public class FinalChangePassword extends JFrame implements ActionListener, Windo
 
         }
         catch (Exception ae) {
+            JOptionPane.showMessageDialog(null, "Error Occurred." +
+                    " Will be resolved in the next update." +
+                    " Thanks.");
             System.out.println(ae);
         }
     }

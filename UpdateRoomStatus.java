@@ -164,6 +164,9 @@ public class UpdateRoomStatus extends JFrame implements ActionListener, WindowLi
                 }
 
                 catch(Exception ae) {
+                    JOptionPane.showMessageDialog(null, "Error Occurred." +
+                            " Will be resolved in the next update." +
+                            " Thanks.");
                     System.out.println(ae);
                 }
             }
@@ -186,6 +189,9 @@ public class UpdateRoomStatus extends JFrame implements ActionListener, WindowLi
 
         }
         catch (Exception ae) {
+            JOptionPane.showMessageDialog(null, "Error Occurred." +
+                    " Will be resolved in the next update." +
+                    " Thanks.");
             System.out.println(ae);
         }
     }

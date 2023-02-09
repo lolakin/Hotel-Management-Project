@@ -165,6 +165,9 @@ public class SearchRoom extends JFrame implements ActionListener, WindowListener
                 }
             }
             catch(Exception ae) {
+                JOptionPane.showMessageDialog(null, "Error Occurred." +
+                        " Will be resolved in the next update." +
+                        " Thanks.");
                 System.out.println(ae);
             }
         }
@@ -184,6 +187,9 @@ public class SearchRoom extends JFrame implements ActionListener, WindowListener
             conn = DriverManager.getConnection(url, uname, password);
         }
         catch (Exception ae) {
+            JOptionPane.showMessageDialog(null, "Error Occurred." +
+                    " Will be resolved in the next update." +
+                    " Thanks.");
             System.out.println(ae);
         }
     }
