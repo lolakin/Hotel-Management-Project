@@ -150,7 +150,7 @@ public class Login extends JFrame implements ActionListener, WindowListener {
         });
         changePass.setForeground(Color.orange);
         changePass.setBounds(664, 650, 190, 30);
-        changePass.setFont(new Font("serif", Font.PLAIN, 20));
+        changePass.setFont(new Font("serif", Font.PLAIN, 25));
         add(changePass);
 
         JLabel forgot = new JLabel("Forgot Password?");
@@ -202,8 +202,8 @@ public class Login extends JFrame implements ActionListener, WindowListener {
             }
         });
         forgot.setForeground(Color.orange);
-        forgot.setBounds(840, 650, 230, 30);
-        forgot.setFont(new Font("serif", Font.PLAIN, 20));
+        forgot.setBounds(900, 650, 230, 30);
+        forgot.setFont(new Font("serif", Font.PLAIN, 25));
         add(forgot);
 
         getContentPane().setBackground(new Color(11, 9, 10));
@@ -218,7 +218,6 @@ public class Login extends JFrame implements ActionListener, WindowListener {
 
     public static void main(String[] args) {
         new Login();
-
     }
 
 
