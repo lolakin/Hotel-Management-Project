@@ -35,6 +35,7 @@ public class Dashboard extends JFrame implements ActionListener, WindowListener 
         menu_bar.setBackground(new Color(23, 32, 42));
 
         UIManager.put("Menu.font", new Font("Verdana", Font.BOLD, 25));
+        UIManager.put("MenuItem.font", new Font("Verdana", Font.BOLD, 23));
         setJMenuBar(menu_bar);
 
         JMenu menu1 = new JMenu("Hotel Management");
